@@ -1,0 +1,8 @@
+#!/bin/bash
+
+./flc-ring
+./flc-shell
+
+gnuplot -p ring.gpi
+gnuplot -p shell.gpi
+

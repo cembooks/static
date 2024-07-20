@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./mms-vt-i-cube
+./mms-vt-i-sphere
+

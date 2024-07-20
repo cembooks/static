@@ -1,0 +1,8 @@
+#!/bin/bash
+
+./clone -d 2 -f square.geo -r 9 1 12
+./clone -d 2 -f circle.geo -r 9 1 12
+
+./clone -d 3 -f cube.geo -r 8 1 11
+./clone -d 3 -f sphere.geo -r 8 1 11
+

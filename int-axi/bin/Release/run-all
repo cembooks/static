@@ -1,0 +1,9 @@
+#!/bin/bash
+
+./int-axi-cylinder
+./int-axi-sphere
+
+gnuplot -p cylinder.gpi
+gnuplot -p sphere.gpi
+gnuplot -p cylinder_sphere.gpi
+

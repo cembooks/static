@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ $# == 0 ]; then
+	cd ../../
+	./backup
+	cd ./build/Debug/
+fi
+
+rm -rf `ls -I build -I clean`
+rm -rf ../../.cache
+rm -rf ../../bin/Debug/ssol-i*
+rm -rf ../../bin/Debug/Data/*
+rm -rf ../../bin/Debug/*.log
+rm -rf ../../bin/Debug/*.csv
+
+mkdir ../../bin/Debug/Data/sphere
+

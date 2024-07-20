@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ $# == 0 ]; then
+	cd ../../
+	./backup
+	cd ./build/Release/
+fi
+
+rm -rf `ls -I build -I clean`
+rm -rf ../../.cache
+rm -rf ../../bin/Release/mms-axi*
+rm -rf ../../bin/Release/*.csv
+rm -rf ../../bin/Release/Data/*
+
+mkdir ../../bin/Release/Data/cylinder2d
+mkdir ../../bin/Release/Data/cylinder3d
+

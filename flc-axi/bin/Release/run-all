@@ -1,0 +1,9 @@
+#!/bin/bash
+
+./flc-axi-cylinder
+./flc-axi-sphere
+
+gnuplot -p cylinder.gpi
+gnuplot -p sphere.gpi
+gnuplot -p cylinder_sphere.gpi
+

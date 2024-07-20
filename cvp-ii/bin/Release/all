@@ -1,0 +1,7 @@
+#!/bin/bash
+
+./cvp-ii-linear
+
+./combine_data_1 -d cvp-ii -f circle-linear -lb 12 -la 4 -p 1 -s table_T -a T 
+./combine_data_1 -d cvp-ii -f circle-linear -lb 12 -la 4 -p 1 -s table_J -a J 
+

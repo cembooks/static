@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./clone -d 2 -f cylinder.geo -r 3 1 6
+./clone -d 2 -f sphere.geo -r 3 1 6
+

@@ -1,0 +1,303 @@
+#!/bin/bash
+# @header
+
+# This function clones gmsh geo files. Type clone -h for more details.
+
+error_fcn()
+{
+	echo "$1"
+	echo "See help, try clone -h."
+}
+
+# Block 1. The main function that does cloning.
+###############################################################################
+clone_file()
+{
+
+# This is the name of the master file to be cloned.
+# We check if it exists and readable.
+	local GEO_FILENAME="${fname}.geo"
+
+	if [ ! -e ${GEO_FILENAME} ]; then
+		echo "File ${GEO_FILENAME} does not exist."
+		echo "Exiting ..."
+		return 3
+	fi
+
+	if [ ! -r ${GEO_FILENAME} ]; then
+		echo "Cannot read ${GEO_FILENAME}"
+		echo "Exiting ..."
+		return 4
+	fi
+
+	if [ ! -e data ]; then
+		echo "Directory data/ does not exist."
+		echo "Creating data/ ..."
+		mkdir data
+	fi
+
+	if [ ! -r data ]; then
+		echo "Cannot read from directory data/."
+		echo "Change permissions of data/ directory or delete it."
+		echo "Exiting ..."
+		return 5
+	fi
+
+	if [ ! -w data ]; then
+		echo "Cannot write to directory data/."
+		echo "Change permissions of data/ directory or delete it."
+		echo "Exiting ..."
+		return 6
+	fi
+
+	if [ ! -x data ]; then
+		echo "Cannot execute directory data/."
+		echo "Change permissions of data/ directory or delete it."
+		echo "Exiting ..."
+		return 7
+	fi
+
+# The main loop.
+		for indexm in ${index_m[@]}
+		do
+			for indexr in ${index_r[@]}
+			do
+#This is the name of the current clone of the file.
+				if [[ ${do_clone_m} == 1 ]]; then
+					local NEW_GEO_FILENAME=data/$(echo \
+					${GEO_FILENAME%.*})_m${indexm}_r${indexr}.geo
+				else
+					local NEW_GEO_FILENAME=data/$(echo \
+					${GEO_FILENAME%.*})_r${indexr}.geo
+				fi
+				echo "Cloning ${NEW_GEO_FILENAME} ..."
+
+# Delete the clone file if it already exists. Make an empty clone file.
+				rm -f ${NEW_GEO_FILENAME}
+				touch ${NEW_GEO_FILENAME}
+
+# The idea is that we read the master file, ${GEO_FILENAME}, line by line
+# and put the lines into the clone file, NEW_GEO_FILENAME. For each line we
+# check if it contains the tag @1. If if does, we put a modified line in the
+# clone file and discard the original line read in the master file.
+				while read line
+				do
+					if [[ ${line} == *@* ]]; then
+						local tag=${line#*@*}
+						if [[ ${tag} == 1 ]]; then
+							echo "r = ${indexr}; //@1" \
+							>> "${NEW_GEO_FILENAME}"
+						fi
+						if [[ ${do_clone_m} == 1 ]];then
+							if [[ ${tag} == 2 ]]; then
+								echo "m = ${indexm}; //@2" \
+								>> "${NEW_GEO_FILENAME}"
+							fi
+						fi
+					else
+						echo "${line}" >> "${NEW_GEO_FILENAME}"
+					fi
+				done < ${GEO_FILENAME} # End while loop.
+			done # End for index_r.
+		done # End for index_m.
+}
+# End block 1. At this point we should have a number of cloned geo files in the
+# data/ directory.
+###############################################################################
+
+# The end of section that describes functions. Below is the script.
+
+# Block 2. Here we parse the input parameters and check for errors.
+###############################################################################
+
+# This converts a script into a proper pipe filter.
+	declare -a A=("$@")
+		[[ -p /dev/stdin ]] && { \
+			mapfile -t -O ${#A[@]} A; set -- "${A[@]}"; \
+					}
+
+	indxr=0
+	indxm=0
+	options=" "
+	for item in $@
+	do
+		if [[ ${item} == -* ]] || [[ ${item} == --* ]]; then
+			option=${item}
+			options="${options} ${item}"
+			if [[ ${option} == -h ]]; then
+echo
+echo "This script makes clones of a master gmsh geo file and puts them into"
+echo "data/ directory. After that it calls gmsh to generate meshes from the"
+echo "cloned files. The cloned files are exact copies of the master file"
+echo "with one or two modified lines. The lines to be modified are marked by"
+echo "\'@1\' or \'@2\'. These lines are replaced with 'r=R0 //@1\' and"
+echo "'m=M0 //@2\' in the clone file, where R0 is an index in the r-index"
+echo "range and M0 is an index in the m-index range, see below. If the m-index"
+echo "range is not specified by the user, the script does not clone along the"
+echo "m-index range. Specification of the r-index range is mandatory."
+echo
+echo "Example:"
+echo
+echo "clone -d 3 -f masterfile.geo -r 5 1 6"
+echo "where:"
+echo "-d - space dimensions, either 2 or 3."
+echo "-f - master file. Must have geo extension."
+echo "-r - the r-index range. 5 - the first index, 6 - the last index, 1 - step."
+echo "Clones along the r-index range. Resultant file names:"
+echo "data/masterfile_r5.msh and data/masterfile_r6.msh."
+echo
+echo "or"
+echo
+echo "clone -d 3 -f masterfile.geo -r 5 1 6 -m 2 1 3"
+echo "where:"
+echo "-d - space dimensions, either 2 or 3."
+echo "-f - master file. Must have geo extension."
+echo "-r - the r-index range. 5 - the first index, 6 - the last index, 1 - step."
+echo "-m - the m-index range. 2 - the first index, 3 - the last index, 1 - step."
+echo "Clones along the r-index and m-index ranges. Resultant file names:"
+echo "data/masterfile_m1_r5.msh, data/masterfile_m1_r6.msh."
+echo "data/masterfile_m2_r5.msh, data/masterfile_m2_r6.msh."
+echo
+echo "clone -h"
+echo "Prints this help."
+echo
+echo "It is recommended to install GNU Parallel for faster mesh generation."
+echo
+
+				exit 0
+			fi
+		else
+			if [[ ${option} == -d ]]; then
+				dim=${item}
+			elif [[ ${option} == -f ]]; then
+				fname=${item}
+			elif [[ ${option} == -r ]]; then
+				if [[ ${indxr} == 0 ]]; then
+					r1=${item}
+				elif [[ ${indxr} == 1 ]]; then
+					r2=${item}
+				elif [[ ${indxr} == 2 ]]; then
+					r3=${item}
+				fi
+				indxr=$((indxr+1))
+			elif [[ ${option} == -m ]]; then
+				if [[ ${indxm} == 0 ]]; then
+					m1=${item}
+				elif [[ ${indxm} == 1 ]]; then
+					m2=${item}
+				elif [[ ${indxm} == 2 ]]; then
+					m3=${item}
+				fi
+				indxm=$((indxm+1))
+			else
+				error_fcn "Illegal option: ${option}"
+				exit 8
+			fi
+		fi
+	done
+
+	if [[ ! ${indxr} == 3 ]];then
+		error_fcn "Wrong number of parameters in -r option."
+		exit 9
+	fi
+
+	if [[ ! ${options} == *-f* ]]; then
+		error_fcn "Missing -f option."
+		exit 10
+	fi
+
+	if [[ ! ${options} == *-d* ]]; then
+		error_fcn "Missing -d option."
+		exit 11
+	fi
+
+	if [[ ! ${options} == *-r* ]]; then
+		error_fcn "Missing -r option. See help clone -h"
+		exit 12
+	fi
+
+	if [[ ! ${dim} == 2 ]] && [[ ! ${dim} == 3 ]]; then
+		error_fcn "Space dimensionality can be either 2 or 3."
+		exit 13
+	fi
+
+	index_r=`seq ${r1} ${r2} ${r3}`
+	extension=$(echo ${fname} | cut -f 2 -d '.')
+	fname=$(echo ${fname} | cut -f 1 -d '.')
+
+	if [[ ! ${extension} == geo ]]; then
+		error_fcn "The master file must be gmsh geo file."
+		exit 14
+	fi
+
+	if [[ ${options} == *-m* ]]; then
+		do_clone_m=1
+		index_m=`seq ${m1} ${m2} ${m3}`
+		if [ ! ${indxm} = 3 ];then
+			error_fcn "Wrong number of parameters in -m option."
+			exit 15
+		fi
+	else
+		do_clone_m=0
+		index_m=0
+	fi
+
+# End block 2. Now we have the following global variables to use:
+# 1) fname - Name of the master file without extension.
+# 2) extension - The extension of the master file.
+# 3) index_r -  The set of indexes r to feed to the clone files.
+# 4) index_m -  The set of indexes r to feed to the clone files.
+# 5) do_clone_m - if equals to 1, use m index as well.
+# 6) dim - The spacial dimensions (2 or 3)
+#
+# Uncomment the following lines to print them
+#
+#	echo "Indexes r:"
+#	for indx in ${index_r}
+#	do
+#		echo "${indx}"
+#	done
+#
+#	echo "Indexes m:"
+#	for indx in ${index_m}
+#	do
+#		echo "${indx}"
+#	done
+#
+#	echo "Master file name = ${fname}"
+#	echo "Master file extension = ${extension}"
+#	echo "do_clone_m = ${do_clone_m}"
+# echo "dim = ${dim}"
+#  exit 0
+###############################################################################
+
+clone_file
+
+if [ ! $? == 0 ]; then
+	exit $?
+fi
+
+cd data
+
+echo
+echo "Verification ..."
+
+find -type f -name "${fname}*.geo" -exec grep -H "@" {} +
+
+echo
+echo "Generating meshes ..."
+
+retval=`which parallel`
+if [[ "${retval}" == "" ]];then
+	find . -name  "${fname}*.geo" -exec gmsh -format msh2 -${dim} -v 0 {} \;
+else
+	ls ${fname}*.geo | time parallel -j+0 --eta gmsh -format msh2 -${dim} -v 0
+fi
+
+cd ..
+
+echo
+echo "Done ..."
+echo
+echo
+

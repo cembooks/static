@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./mms-axi-cylinder-2d
+./mms-axi-cylinder-3d
+

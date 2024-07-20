@@ -1,0 +1,4 @@
+#!/bin/bash
+
+../shared/scripts/backup_shared -d int
+

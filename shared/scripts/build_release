@@ -1,0 +1,24 @@
+#!/bin/bash
+
+cmake -DCMAKE_BUILD_TYPE=Release -DDEAL_II_DIR=${DEAL_II_DIR} ../..
+cmake --build . -j8 #--verbose
+
+# Check if there are meshes. Build them if there are not.
+if [ ! "$(ls -1 ../../gmsh/data/*.msh)" ]; then
+	echo  "No meshes found. Building meshes ..."
+	(cd ../../gmsh; ./clean)
+	(cd ../../gmsh; ./build)
+fi
+
+# List available meshes.
+OUT_STRING=""
+for FILE in ../../gmsh/data/*.msh
+do
+	OUT_STRING="${OUT_STRING}${FILE}; "
+done
+
+echo "Have found some meshes: ${OUT_STRING}"
+
+# An alternative to the line 7 above:
+# if [ ! "$(find ../../gmsh/data/*.msh -maxdepth 1 -type f -iname \*.msh)" ]; then
+

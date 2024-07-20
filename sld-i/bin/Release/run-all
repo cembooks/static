@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./sld-i-square
+./sld-i-cube
+

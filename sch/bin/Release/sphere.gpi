@@ -1,0 +1,20 @@
+set datafile separator " "
+
+set xrange [0.0:1.0]
+set yrange [0.0:1.1]
+
+set grid
+set grid lw 1 lc rgb "black"
+
+set key font ",16"
+
+set xtics font ",16"
+set ytics font ",16"
+
+set title font ",16"
+
+set title "Shell"
+
+plot "./Data/sphere/solution_p3_r6_slice.gpi" u 1:4 w lp lw 2 pt 0 \
+lc rgb "black" tit "Potential"
+

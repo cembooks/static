@@ -1,0 +1,6 @@
+#!/bin/bash
+
+./ssol-ii-axi-circle
+
+gnuplot -p circle.gpi
+

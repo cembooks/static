@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./mms-vt-ii-square
+./mms-vt-ii-circle
+

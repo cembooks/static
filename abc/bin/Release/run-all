@@ -1,0 +1,16 @@
+#!/bin/bash
+
+dirs=(
+ppc-neumann #0
+ppc-dirichlet #1
+ppc-abc #2
+shell-neumann #0
+shell-dirichlet #1
+shell-abc #2
+)
+
+for dir in "${dirs[@]}"
+do
+	./abc-${dir}
+done
+

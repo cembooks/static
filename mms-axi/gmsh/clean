@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# == 0 ]; then
+	cd ../
+	./backup
+	cd gmsh
+fi
+
+rm -rf data
+mkdir data
+

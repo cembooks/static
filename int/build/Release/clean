@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ $# == 0 ]; then
+	cd ../../
+	./backup
+	cd ./build/Release/
+fi
+
+rm -rf `ls -I build -I clean`
+rm -rf ../../.cache
+rm -rf ../../bin/Release/int*
+rm -rf ../../bin/Release/Data/*
+
+mkdir ../../bin/Release/Data/ring
+mkdir ../../bin/Release/Data/shell
+

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ $# == 0 ]; then
+	cd ../../
+	./backup
+	cd ./build/Debug/
+fi
+
+rm -rf `ls -I build -I clean`
+rm -rf ../../.cache
+rm -rf ../../bin/Debug/int-axi*
+rm -rf ../../bin/Debug/Data/*
+
+mkdir ../../bin/Debug/Data/cylinder-axi
+mkdir ../../bin/Debug/Data/sphere-axi
+

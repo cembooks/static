@@ -1,0 +1,71 @@
+#!/bin/bash
+DO_BACKUP=1
+
+if [[ ${DO_BACKUP} == 1 ]];then
+# Block 1. Here we parse the input parameters and check for errors.
+###############################################################################
+
+# This converts a script into a propper pipe filter.
+	declare -a A=("$@")
+		[[ -p /dev/stdin ]] && { \
+			mapfile -t -O ${#A[@]} A; set -- "${A[@]}"; \
+					}
+
+	options=" "
+	for item in $@
+	do
+		if [[ ${item} == -* ]] || [[ ${item} == --* ]]; then
+			option=${item}
+			options="${options} ${item}"
+			if [[ ${option} == -h ]]; then
+echo
+echo This script makes a backup of the source files and scritps of a numerical
+echo experiment. The backup is placed in the backup/ directory
+echo
+echo Example:
+echo
+echo ./backup_shared -d mms
+echo where:
+echo -d - the name of the progect \(numerical experiment\).
+echo
+echo or
+echo
+echo ./backup_shared -h
+echo Prints this help.
+echo
+				exit 0
+			fi
+		else
+			if [[ ${option} == -d ]]; then
+				PRJ_NAME=${item}
+			else
+				error_fcn "Illegal option: ${option}"
+				exit 2
+			fi
+		fi
+	done
+
+	if [[ ! ${options} == *-d* ]]; then
+		error_fcn "Missing -d option."
+		exit 11
+	fi
+
+# End block 1. Now we have:
+# 1) PRG_NAME - Name of the numerical experiment.
+###############################################################################
+
+TAR_NAME=`date +%F`-`date +%T | sed -e's/:/./g'`-dealii-${PRJ_NAME}.tar.gz
+
+echo Backing up into ${TAR_NAME} ...
+
+find -L . -type f \( \
+-name "clean" -o -name "build" -o -name "clone*" -o -name "combine_data*" \
+-o -name "run_all" -o -name "*.cc" -o -name "*.[ch]pp" -o -name "*.h" \
+-o -name "*.ufl" -o -name "*.geo" -o -name "*.sh" -o -name "*.gpi" \
+-o -name "CMakeLists.txt" -o -name "*.vim" \
+\) ! -name CMakeCXXCompilerId.cpp -exec tar -chzf ${TAR_NAME} {} +
+
+mv ${TAR_NAME} ../backup/.
+
+echo Done ...
+fi

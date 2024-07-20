@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./clone -d 2 -f ring.geo -r 15 1 18
+./clone -d 3 -f shell.geo -r 9 1 12
+

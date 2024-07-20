@@ -1,0 +1,7 @@
+#!/bin/bash
+
+./run-all
+
+./combine_data_1 -d rho\\_axi -f cylinder-axi -lb 12 -la 4 -p 1 -s table_PHI -a PHI 
+./combine_data_1 -d rho\\_axi -f sphere-axi -lb 12 -la 4 -p 1 -s table_PHI -a PHI
+

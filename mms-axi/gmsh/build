@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./clone -d 2 -f cylinder_2d.geo -r 27 1 30
+./clone -d 3 -f cylinder_3d.geo -r 5 1 8
+

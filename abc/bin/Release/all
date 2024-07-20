@@ -1,0 +1,9 @@
+#!/bin/bash
+
+./run-all
+
+./combine_data_abc -n l2 -c 0
+./combine_data_abc -n h1 -c 0
+./combine_data_abc -n l2 -c 1
+./combine_data_abc -n h1 -c 1
+

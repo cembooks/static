@@ -1,0 +1,25 @@
+#!/bin/bash
+
+trap exit__ ERR
+
+exit__()
+{
+	echo "Something is wrong. Exiting..."
+	exit -1
+}
+
+list_dirs=`ls -I backup -I shared -I doc -I clean -I build -I setup -I run-all` 
+
+lock=1
+
+for local_dir in ${list_dirs[@]}
+do
+	cd ${local_dir}/build/Debug
+	./clean -o
+	cd ../Release/
+	./clean -o
+	cd ../../gmsh
+	./clean
+	cd ../../
+done
+

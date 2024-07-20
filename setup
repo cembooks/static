@@ -1,0 +1,40 @@
+#!/bin/bash
+
+trap exit__ ERR
+
+exit__()
+{
+	echo "Something is wrong. Exiting..."
+	exit -1
+}
+
+list_dirs=`ls -I backup -I shared -I doc -I clean -I build -I setup -I run-all`
+
+shared_include=`ls shared/include`
+shared_src=`ls shared/src`
+
+for local_dir  in ${list_dirs[@]}
+do
+	echo Setting up ${local_dir} ...
+
+	cd ${local_dir}
+	rm -rf compile_commands.json
+	ln -s build/Debug/compile_commands.json
+	cd ../
+
+	cd ${local_dir}/build/Debug
+	rm -rf build
+	ln -s ../../../shared/scripts/build_debug build
+	cd ../Release
+	rm -rf build
+	ln -s ../../../shared/scripts/build_release build
+	cd ../../bin/Release/
+	cd ../../../
+
+	cd ${local_dir}/gmsh
+	rm -rf clone
+	ln -s ../../shared/scripts/clone
+	cd ../../
+
+done
+

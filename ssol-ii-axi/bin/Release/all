@@ -1,0 +1,8 @@
+#!/bin/bash
+
+./run-all
+
+./combine_data_1 -d ssol-ii-axi -f circle -lb 12 -la 4 -p 1 -s table_A -a A 
+./combine_data_1 -d ssol-ii-axi -f circle -lb 12 -la 4 -p 1 -s table_B -a B 
+./combine_data_1 -d ssol-ii-axi -f circle -lb 12 -la 4 -p 1 -s table_H -a H 
+

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./clone -d 2 -f ppc.geo -r 1 1 3 -m 1 1 5
+./clone -d 3 -f shell.geo -r 1 1 3 -m 1 1 5
+

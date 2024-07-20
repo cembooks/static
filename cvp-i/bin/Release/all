@@ -1,0 +1,6 @@
+#!/bin/bash
+
+./cvp-i-linear
+
+./combine_data_1 -d cvp-i -f sphere-linear -lb 12 -la 4 -p 0 -s table_J -a J 
+

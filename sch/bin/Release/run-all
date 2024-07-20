@@ -1,0 +1,8 @@
+#!/bin/bash
+
+./sch-circle
+./sch-sphere
+
+gnuplot -p circle.gpi
+gnuplot -p sphere.gpi
+

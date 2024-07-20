@@ -1,0 +1,35 @@
+set datafile separator " "
+
+set xrange [0.3:1.0]
+set yrange [0.0:1.2]
+
+set grid
+set grid lw 1 lc rgb "black"
+
+set lmargin 15
+set bmargin 5
+
+set xlabel offset  0, -1.5 
+set ylabel offset -3.5, 0 
+
+set xtics offset  0, -1.0 
+set ytics offset -1.0, 0 
+
+set key font ",16"
+set xtics font ",16"
+set ytics font ",16"
+set xlabel font ",16"
+set ylabel font ",16"
+set title font ",16"
+
+set xlabel "r [m]"
+set ylabel "Potential [V]"
+
+set title "Sphere"
+
+set pointsize 3
+
+plot "./Data/sphere-axi/solution_PHI_p3_r8_slice.gpi" u 1:3 w p lw 2 pt 6 \
+lc rgb "black" tit "Axisymmetric 2D (int-axi/)", \
+"ref_sphere.gpi" u 1:4 w lp lw 2 pt 0 \
+lc rgb "black" tit "3D (int/)"

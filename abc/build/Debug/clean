@@ -1,0 +1,32 @@
+#!/bin/bash
+
+if [ $# == 0 ]; then
+	cd ../../
+	./backup
+	cd ./build/Debug/
+fi
+
+rm -rf `ls -I build -I clean`
+rm -rf ../../.cache
+rm -rf ../../bin/Debug/abc-*
+rm -rf ../../bin/Debug/Data/*
+rm -rf ../../bin/Debug/gpi-h1
+rm -rf ../../bin/Debug/gpi-l2
+rm -rf ../../bin/Debug/the_*
+rm -rf ../../bin/Debug/*.csv
+rm -rf ../../bin/Debug/*.log
+
+dirs=(
+ppc-neumann #0
+ppc-dirichlet #1
+ppc-abc #2
+shell-neumann #0
+shell-dirichlet #1
+shell-abc #2
+)
+
+for dir in "${dirs[@]}"
+do
+	mkdir ../../bin/Debug/Data/${dir}
+done
+

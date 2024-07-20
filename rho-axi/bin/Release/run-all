@@ -1,0 +1,9 @@
+#!/bin/bash
+
+./rho-axi-cylinder
+./rho-axi-sphere
+
+gnuplot -p cylinder.gpi
+gnuplot -p sphere.gpi
+gnuplot -p cylinder_sphere.gpi
+

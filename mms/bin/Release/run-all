@@ -1,0 +1,7 @@
+#!/bin/bash
+
+./mms-square
+./mms-circle
+./mms-cube
+./mms-sphere
+

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+./cbnd-ring
+./cbnd-ring-exact
+./cbnd-shell
+./cbnd-shell-exact
+
+gnuplot -p ring.gpi
+gnuplot -p shell.gpi
+

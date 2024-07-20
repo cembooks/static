@@ -1,0 +1,8 @@
+#!/bin/bash
+
+./int-ring
+./int-shell
+
+gnuplot -p ring.gpi
+gnuplot -p shell.gpi
+
