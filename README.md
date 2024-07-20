@@ -1,2 +1,0 @@
-# static
-Supplemented computer code
