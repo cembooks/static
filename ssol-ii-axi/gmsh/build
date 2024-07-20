@@ -1,0 +1,4 @@
+#!/bin/bash
+
+./clone -d 2 -f circle.geo -r 15 1 18
+
