@@ -9,11 +9,11 @@ set grid lw 1 lc rgb "black"
 set lmargin 15
 set bmargin 5
 
-set xlabel offset  0, -1.5 
-set ylabel offset -3.5, 0 
+set xlabel offset  0, -1.5
+set ylabel offset -3.5, 0
 
-set xtics offset  0, -1.0 
-set ytics offset -1.0, 0 
+set xtics offset  0, -1.0
+set ytics offset -1.0, 0
 
 set key font ",16"
 set xtics font ",16"

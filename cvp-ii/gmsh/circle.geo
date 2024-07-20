@@ -1,4 +1,4 @@
-r = 5; //@1 
+r = 5; //@1
 
 d1 = 0.1;
 a1 = 0.3;
@@ -73,16 +73,16 @@ l = newl;  Line(l) = {0, 3};
 l = newl;  Line(l) = {0, 76};
 l = newl;  Line(l) = {0, 171};
 
-ll = newll; Line Loop(ll) = {10, 11, -106, 105}; 
+ll = newll; Line Loop(ll) = {10, 11, -106, 105};
 s = news; Plane Surface(s) = {ll};
 
-ll = newll; Line Loop(ll) = {106, -22, -37, -107}; 
+ll = newll; Line Loop(ll) = {106, -22, -37, -107};
 s = news; Plane Surface(s) = {ll};
 
-ll = newll; Line Loop(ll) = {-108, 107, -51, -66}; 
+ll = newll; Line Loop(ll) = {-108, 107, -51, -66};
 s = news; Plane Surface(s) = {ll};
 
-ll = newll; Line Loop(ll) = {-96, -105, 108, -81}; 
+ll = newll; Line Loop(ll) = {-96, -105, 108, -81};
 s = news; Plane Surface(s) = {ll};
 
 Physical Surface(1) = {Surface{:}} ;

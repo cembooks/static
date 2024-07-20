@@ -66,9 +66,9 @@ private:
 
 	const std::string fname;
 	const unsigned int r;
-	
+
 	SphericalManifold<3> sphere;
-	
+
 	const DirichletBC_CVPI  dirichlet_bc;
 
 	virtual void make_mesh() override final;

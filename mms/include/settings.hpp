@@ -48,7 +48,7 @@ public:
 
 /**
  * \brief The [Dirichlet boundary condition](@ref mms_bcs) will be applied
- * to the boundaries marked by ID = 1. The boundary IDs are set in the 
+ * to the boundaries marked by ID = 1. The boundary IDs are set in the
  * geo files that are located in the gmsh directory.
  *****************************************************************************/
 	const types::boundary_id bid_dirichlet = 1;
@@ -81,12 +81,12 @@ public:
  * \f$\vec{D}_M\f$, see this
  * [page](@ref page_mms),
  * will be modeled on the same mesh and by the same finite elements
- * that are used to model the solution 
+ * that are used to model the solution
  * (\f$\Phi_M\f$ - Lagrange,  \f$\vec{E}_M\f$ - Nedelec, and
- * \f$\vec{D}_M\f$ - Raviart-Thomas). 
- * The projected exact solution will  be saved in the vtk file next 
+ * \f$\vec{D}_M\f$ - Raviart-Thomas).
+ * The projected exact solution will  be saved in the vtk file next
  * to the solution. This option can be useful when debugging. It only
- * works if the exact solutions are passed to the constructors of the 
+ * works if the exact solutions are passed to the constructors of the
  * corresponding solver or projector objects.
  *****************************************************************************/
 	const bool project_exact_solution = false;

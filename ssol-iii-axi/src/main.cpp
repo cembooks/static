@@ -99,7 +99,7 @@ public:
 					table_H.add_value("L2", projector.get_L2_norm());
 					table_H.add_value("H1", 0.0);
 				}
-				{ // Calculate B'. 
+				{ // Calculate B'.
 					fname = dir + "solution_B_p" + std::to_string(p) +
 						"_r" + std::to_string(r);
 

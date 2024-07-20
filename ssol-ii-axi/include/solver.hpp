@@ -52,7 +52,7 @@ public:
  * makes sense to attach a meaningful manifold to the triangulation if this
  * parameter is greater than 1.
  * @param[in] r - The parameter that encodes the degree of mesh refinement.
- * Must coincide with one of the values set in ssol-ii-axi/gmsh/build. This 
+ * Must coincide with one of the values set in ssol-ii-axi/gmsh/build. This
  * parameter is used to compose the name of the mesh file to be uploaded from
  * ssol-ii-axi/gmsh/data/.
  * @param[in] fname - The name of the vtk file without extension to save

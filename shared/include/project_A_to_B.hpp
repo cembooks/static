@@ -22,7 +22,7 @@ namespace StaticVectorSolver
  * i.e., \f$\vec{B} = \vec{\nabla} \times \vec{A}\f$.
  *
  * The problem is assumed to be three-dimensional. This class template
- * is meant to be used in conjunction with StaticVectorSolver::Solver1 or 
+ * is meant to be used in conjunction with StaticVectorSolver::Solver1 or
  * StaticVectorSolver::Solver2.
  *
  * The magnetic vector potential, \f$\vec{A}\f$, is assumed to be an output of

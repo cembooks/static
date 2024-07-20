@@ -28,9 +28,9 @@ using namespace dealii;
 /**
  * \brief Describes exact solutions, \f$\Phi\f$, of the
  * [Surface charge](@ref page_sch)
- * numerical experiment in 
+ * numerical experiment in
  * [two](@ref sch_exact_solution_2D)
- * and 
+ * and
  * [three](@ref sch_exact_solution_3D)
  * dimensions.
  *****************************************************************************/

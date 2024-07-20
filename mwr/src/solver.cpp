@@ -24,7 +24,7 @@ void SolverMWR::fill_dirichlet_stack()
 {
 	Solver<2>::dirichlet_stack =
 		{{bid, & dirichlet_function}};
-	
+
 }
 
 void SolverMWR::mark_materials()
@@ -40,7 +40,7 @@ void SolverMWR::mark_materials()
 		{
 			cell->set_material_id(mid_2);
 		}
-		
+
 		for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; f++)
 		{
 			double dif_norm = 0.0;

@@ -50,7 +50,7 @@ public:
 				1,
 				2, // The right-hand side is volume free-current density.
 				fname,
-				& exact_solution, 
+				& exact_solution,
 				false, // Is axisymmetric.
 				true, // Is vector potential.
 				SettingsMMSVTII::print_time_tables,

@@ -103,11 +103,11 @@ public:
 /**
  * \brief If set to true, the program will project the exact solution.
  *
- * The exact solutions will be modeled on the same mesh and by the same 
- * finite elements that are used to model the numerical solution. 
- * The projected exact solution will  be saved in the vtk file next 
+ * The exact solutions will be modeled on the same mesh and by the same
+ * finite elements that are used to model the numerical solution.
+ * The projected exact solution will  be saved in the vtk file next
  * to the solution. This option can be useful when debugging. It only
- * works if the exact solutions are passed to the constructors of the 
+ * works if the exact solutions are passed to the constructors of the
  * corresponding solver or projector objects.
  *****************************************************************************/
 	const bool project_exact_solution = false;

@@ -1,4 +1,4 @@
 #!/bin/bash
 
-../shared/scripts/backup_shared -d ssol-i-axi 
+../shared/scripts/backup_shared -d ssol-i-axi
 

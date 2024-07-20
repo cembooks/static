@@ -58,7 +58,7 @@ public:
 		{
 			dir = ( DIMENSION__ == 2 ) ? "Data/circle/" : "Data/sphere/";
 		}
-		
+
 		std::cout
 			<< "Program: mms-v\n"
 			<< "Dimensions: " << DIMENSION__ << "\n"

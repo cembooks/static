@@ -43,7 +43,7 @@ public:
 	const double mu_0 = permeability_fs;
 
 /**
- * \brief A constant that defines the magnitude of the surface free-current 
+ * \brief A constant that defines the magnitude of the surface free-current
  * density.
  *****************************************************************************/
 	const double K_0 = 1.0;
@@ -59,15 +59,15 @@ public:
 	double b = 1.0;
 
 /**
- * \brief The ID of the curved section of the boundary of the problem domain. 
- * The boundary ID is set in the geo files that are located in the 
+ * \brief The ID of the curved section of the boundary of the problem domain.
+ * The boundary ID is set in the geo files that are located in the
  * ssol-i-axi/gmsh directory.
  *****************************************************************************/
 	const types::boundary_id bid_infty = 3;
 
 /**
- * \brief The ID of the straight section of the boundary of the problem domain. 
- * The boundary ID is set in the geo files that are located in the 
+ * \brief The ID of the straight section of the boundary of the problem domain.
+ * The boundary ID is set in the geo files that are located in the
  * ssol-i-axi/gmsh directory.
  *****************************************************************************/
 	const types::boundary_id bid_axi = 1;

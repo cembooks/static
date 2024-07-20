@@ -4,7 +4,7 @@ if [ $# == 0 ]; then
 	cd ../../
 	./backup
 	cd ./build/Release/
-fi 
+fi
 
 rm -rf `ls -I build -I clean`
 rm -rf ../../.cache

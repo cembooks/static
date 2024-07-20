@@ -57,7 +57,7 @@ public:
 			table_B.clear();
 
 			for (unsigned int r = 14; r < 18; r++)
-			{	
+			{
 				fname = dir + "solution_A_p" + std::to_string(p) +
 					"_r" + std::to_string(r);
 

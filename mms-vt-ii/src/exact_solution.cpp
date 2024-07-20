@@ -28,7 +28,7 @@ Tensor<1, 2> ExactSolutionMMSVTII_T::gradient(const Point<2> & r,
 {
 	double Bm = magnetic_field(r[0], r[1], k);
 	double mu = permeability(r[0], r[1], mu_0);
-	
+
 	Point<2> grad_Tm;
 	grad_Tm[0] = - 2.0*r[0]*mu_0/pow(mu,2)*Bm - (k / mu)* sin(k*r[0]);
 	grad_Tm[1] = - 2.0*r[1]*mu_0/pow(mu,2)*Bm - (k / mu)* sin(k*r[1]);

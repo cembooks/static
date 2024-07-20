@@ -4,7 +4,7 @@
 set path+=../../../dealii-9.2.0/include
 
 " English language
-set spell spelllang=en_us 
+set spell spelllang=en_us
 
 "Set fold method
 set foldmethod=syntax
@@ -47,7 +47,7 @@ call vundle#end()
 filetype plugin indent on
 
 " Enable syntax highlighting
-syntax enable 
+syntax enable
 
 " Display all matching files when tab complete
 set wildmenu
@@ -86,7 +86,7 @@ map #8 :YcmCompleter GoToInclude <CR>
 map #9 :YcmCompleter GetType <CR>
 
 "Also very useful for jumping:
-"Cttl-O, Ctrl-I see vim help  
+"Cttl-O, Ctrl-I see vim help
 
 " Source File Outliner settings-------------------------------------------------
 

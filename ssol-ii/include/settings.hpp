@@ -54,7 +54,7 @@ public:
 	const double d = 1.0;
 
 /**
- * \brief A constant that defines the magnitude of the surface free-current 
+ * \brief A constant that defines the magnitude of the surface free-current
  * density.
  *****************************************************************************/
 	const double K_0 = 1.0;
@@ -67,7 +67,7 @@ public:
 /**
  * \brief The ID of the material outside the coil, i.e., Jf>0
  *****************************************************************************/
-	const types::material_id mid_2 = 2; 
+	const types::material_id mid_2 = 2;
 
 /**
  * \brief Two values in double format are considered to be equal if the

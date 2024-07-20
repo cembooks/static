@@ -13,14 +13,14 @@ error_fcn()
 	declare -a A=("$@")
 		[[ -p /dev/stdin ]] && { \
 			mapfile -t -O ${#A[@]} A; set -- "${A[@]}"; \
-					}	
+					}
 
 	options=" "
 	for item in $@
 	do
 		if [[ ${item} == -* ]] || [[ ${item} == --* ]]; then
 			option=${item}
-			options="${options} ${item}"	
+			options="${options} ${item}"
 			if [[ ${option} == -h ]]; then
 echo
 echo "This script is specific for the abc/ numerical experiment."
@@ -32,13 +32,13 @@ echo "controlled as the following. The script rearranges the data line-by-line."
 echo "That is, all the lines from the initial data files are intact except for"
 echo "the fact that all spaces are replaced with a delimiter (,) specified in"
 echo "this script. All data lines contain the simulation conditions: the number"
-echo "of spacial dimensions (d), the type of boundary conditions (b), the" 
+echo "of spacial dimensions (d), the type of boundary conditions (b), the"
 echo "degree of the interpolating polynomials (p), the parameter that encodes"
 echo "the degree of mesh refinement (r), and the parameter that encodes the"
 echo "radius of the outer boundary (m). These simulation conditions in the initial"
-echo "data files can be compared to those in the generated gpi files. This script" 
+echo "data files can be compared to those in the generated gpi files. This script"
 echo "does not modify the initial data files at all."
-echo 
+echo
 echo "Example:"
 echo
 echo "combine_data_abc -n l2 -c 1"
@@ -47,7 +47,7 @@ echo "-n - the type of the error norm. Can take one of two values: l2 or h1."
 echo "-c - 1 - combine plots in one file. 0 - plot in separate files. In the"
 echo "later case, a directory gpi-l2 or gpl-h2 is created, depending on the"
 echo "error norm. All the plots are saved in this new directory."
-echo 
+echo
 echo "combine_data_abc -h"
 exit 0
 			fi
@@ -67,7 +67,7 @@ exit 0
 		error_fcn "missing -n option."
 		exit 3
 	fi
-	
+
 	if [[ ! ${norm} == l2 ]] &&  [[ ! ${norm} == h1 ]]; then
 		error_fcn "wrong -n option."
 		exit 4
@@ -91,27 +91,27 @@ exit 0
 #	exit 0
 ###############################################################################
 
-# The delimiter used in all files created by this script. The data in the 
+# The delimiter used in all files created by this script. The data in the
 # original data files is separated by spaces.
 dlm=","
 
-# This are arrays of directory names. One array stores the names of the 
-# directories that contain the raw data for one *. png file. The script produces 
+# This are arrays of directory names. One array stores the names of the
+# directories that contain the raw data for one *. png file. The script produces
 # four *.png files, so there are four arrays with directory names. Each *.png
-# file has the same name as the corresponding array below. 
-the_list_ppc=(	
+# file has the same name as the corresponding array below.
+the_list_ppc=(
 	ppc-neumann
 	ppc-dirichlet
 	ppc-abc
 	)
 
-the_list_shell=(	
+the_list_shell=(
 	shell-neumann
 	shell-dirichlet
 	shell-abc
 	)
 
-#This code is added to the gnuplot files. 
+#This code is added to the gnuplot files.
 if [[ ${norm} == l2 ]]; then
 plot_line="plot \"-\" u 3:8 w lp lw 2 pt 4 dt 3 lc rgb \"black\" tit \"   \"\\
  ,\"-\" u 3:8 w lp lw 2 pt 12 lc rgb \"black\" tit \"   \"\\
@@ -122,18 +122,18 @@ plot_line="plot \"-\" u 3:10 w lp lw 2 pt 4 dt 3 lc rgb \"black\" tit \"   \"\\
  ,\"-\" u 3:10 w lp lw 2 pt 6 lc rgb \"black\" tit \"   \"\\"
 fi
 
-# If there is an error while executing the script the cleanup() function is 
-# called to remove all the *.csv, *.png, and *.gp files in the current 
+# If there is an error while executing the script the cleanup() function is
+# called to remove all the *.csv, *.png, and *.gp files in the current
 # directory.
 #
-# Expected input: 
-#	Non. 
+# Expected input:
+#	Non.
 trap cleanup ERR
 
 cleanup()
 {
 	echo "Cleaning up ..."
-	
+
 	rm -rf *.csv
 
 	if [[ ${norm} == l2 ]]; then
@@ -143,17 +143,17 @@ cleanup()
 	fi
 
 	echo "Exiting ..."
-	
+
 	exit -1
 }
 
 
 # This function aggregates the data stored in a single directory (i.e.
-# ppc-exact-exact, ppc-dirichlet-dirichlet, and so on) in a file. The data from 
+# ppc-exact-exact, ppc-dirichlet-dirichlet, and so on) in a file. The data from
 # each directory is aggregated in a separate file. The data from the directory
-# ppc-exact-exact, for example, is aggregated in a file ppc-exact-exact.csv. 
-# These files are temporary. They are deleted in the end of the script. This 
-# function also removes all the spaces from the original data and inserts the 
+# ppc-exact-exact, for example, is aggregated in a file ppc-exact-exact.csv.
+# These files are temporary. They are deleted in the end of the script. This
+# function also removes all the spaces from the original data and inserts the
 # delimiter stored in the variable dlm above.
 #
 # Expected input:
@@ -168,7 +168,7 @@ aggregate()
 
 # This function opens a file created by the aggregate() function, selects rows
 # with a given simulation conditions, i.e. p  and r, and saves them in a file.
-# The name of the file contains the simulation conditions: 
+# The name of the file contains the simulation conditions:
 # ppc-exact-exact_p1_r1.csv, ppc-exact-exact_p2_r1.csv, and so on.
 #
 # Expected input:
@@ -184,11 +184,11 @@ select_ph()
 
 	dim=0
 
-	# Here we deduce the dimensions of the simulations (2D or 3D) from the 
+	# Here we deduce the dimensions of the simulations (2D or 3D) from the
 	# directory's name.
-	if [[ $1 == ppc* ]]; 
+	if [[ $1 == ppc* ]];
 	then
-		dim=2 
+		dim=2
 	fi
 
 	if [[ $1 == shell* ]];
@@ -208,8 +208,8 @@ select_ph()
 	done
 }
 
-# This function appends the data for one plot to the gnuplot file. It chooses 
-# proper *.csv files created by the select_ph() function and copies the data 
+# This function appends the data for one plot to the gnuplot file. It chooses
+# proper *.csv files created by the select_ph() function and copies the data
 # line-by-line to the gnuplot file.
 #
 # Expected input:
@@ -221,7 +221,7 @@ select_ph()
 append_gpl()
 {
 	echo "set title \"p=$2 r=$3\"" >> $1
-	echo "${plot_line}" >> $1 
+	echo "${plot_line}" >> $1
 	echo >> $1
 
 	local name=$4[@]
@@ -230,24 +230,24 @@ append_gpl()
 # Append the data.
 	for item in ${the_list[@]}
 	do
-	
+
 		local file_name_ph="${item}_p$2_r$3.csv"
 
 		while read line
 		do
-			echo "${line}" >> $1 
+			echo "${line}" >> $1
 		done < ${file_name_ph}
 
-		echo "e" >> $1 
+		echo "e" >> $1
 	done
-	
+
 	echo >> $1
 }
 
 # Clean up. Remove all files generated by the previous run.
-rm -rf *.csv 
+rm -rf *.csv
 
-if [[ ${combine} == 0 ]]; then	
+if [[ ${combine} == 0 ]]; then
 	if [[ ${norm} == l2 ]]; then
 		rm -rf gpi-l2
 		mkdir gpi-l2
@@ -260,7 +260,7 @@ fi
 # Loop through the arrays with directory names.
 for list in the_list_ppc the_list_shell
 do
-	# Convert the array's name into a list.	
+	# Convert the array's name into a list.
 	name=${list}[@]
 	local_list=("${!name}")
 
@@ -277,10 +277,10 @@ do
 		done
 	done
 
-	# Make gnuplot files.	
-	if [[ ${combine} == 1 ]]; then	
+	# Make gnuplot files.
+	if [[ ${combine} == 1 ]]; then
 		TITLE=`echo ${list} | sed 's/_/ /g' | sed 's/the/The/'`
-		if [[ ${norm} == l2 ]]; then 
+		if [[ ${norm} == l2 ]]; then
 			gpl_file_name="${list}_l2.gpi"
 			cp gpl_template_l2.gpi ${gpl_file_name}
 			echo "set multiplot title \" ${TITLE} {\|\|n\|\|_{L^2}}\" font \",18\" layout 3,3 scale 0.9" >> ${gpl_file_name}
@@ -311,7 +311,7 @@ do
 		do
 			for (( r=1; r<4; r++ ))
 			do
-				# Make gnuplot files.	
+				# Make gnuplot files.
 				if [[ ${norm} == l2 ]]; then
 					gpl_file_name="./gpi-l2/${list}_l2_p${p}_r${r}.gpi"
 					cp gpl_template_l2_2.gpi ${gpl_file_name}
@@ -321,13 +321,13 @@ do
 				fi
 
 				append_gpl ${gpl_file_name} ${p} ${r} local_list
-		
+
 				echo  >> ${gpl_file_name}
 			done
 		done
 	fi
 
-# Clean up. Removes the temporary files. Must clean up. Otherwise the select_ph() is 
+# Clean up. Removes the temporary files. Must clean up. Otherwise the select_ph() is
 # going to write the same data twice.
 rm -rf *.csv
 

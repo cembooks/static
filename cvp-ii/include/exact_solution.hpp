@@ -41,7 +41,7 @@ public:
 };
 
 /**
- * \brief Describes the given volume free-current density, \f$\vec{J}_f\f$, 
+ * \brief Describes the given volume free-current density, \f$\vec{J}_f\f$,
  * in the
  * [Current vector potential (cvp-ii/)](@ref page_cvp_ii)
  * numerical experiment.

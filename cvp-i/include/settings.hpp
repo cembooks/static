@@ -62,7 +62,7 @@ public:
 /**
  * \brief The ID of the material outside the coil, i.e., Jf>0
  *****************************************************************************/
-	const types::material_id mid_2 = 2; 
+	const types::material_id mid_2 = 2;
 
 /**
  * \brief Two values in double format are considered to be equal if the

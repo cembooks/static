@@ -297,7 +297,7 @@ public:
  *
  * @param[in] r - A vector that contains the quadrature points of the cell
  * being processed.
- * @param[in] mid - The material ID. 
+ * @param[in] mid - The material ID.
  * @param[in] cuid - The cell user ID.
  * @param[out] values - The output data.
  ***************************************************************************/

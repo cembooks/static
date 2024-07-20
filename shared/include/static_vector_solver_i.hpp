@@ -73,7 +73,7 @@ namespace StaticVectorSolver
  * magnetostatics that can be formulated in terms of the magnetic vector
  * potential, \f$\vec{A}\f$. It can also be used for calculating the current
  * vector potential, \f$\vec{T}\f$, i.e., converting a closed-form analytical
- * expression for \f$\vec{J}_f\f$ into \f$\vec{T}\f$ expressed as a finite-element 
+ * expression for \f$\vec{J}_f\f$ into \f$\vec{T}\f$ expressed as a finite-element
  * field-function. Such calculated \f$\vec{T}\f$ can be used as an input
  * for StaticVectorSolver::Solver2. The Bossavit's diagrams below illustrate the
  * partial differential equations that can be solved with a help of this class
@@ -180,7 +180,7 @@ public:
  * When solving for the magnetic vector potential, \f$\vec{A}\f$ the following
  * options are available:
  *
- * - type_of_pde_rhs = 0. There is no free-current density in the problem domain. 
+ * - type_of_pde_rhs = 0. There is no free-current density in the problem domain.
  * The right-hand side of the partial differential equation is zero,i.e.,
  * \f[
  * \vec{\nabla}\times\bigg(\dfrac{1}{\mu_0} \vec{\nabla}\times\vec{A}\bigg)
@@ -192,8 +192,8 @@ public:
  * \f]
  * in a two-dimensional space. The data provided by StaticVectorSolver::PdeRhs is not used.
  *
- * - type_of_pde_rhs = 1. The data provided by StaticVectorSolver::PdeRhs is interpreted as the 
- * free-current density, \f$\vec{J}_f\f$, i.e.,  
+ * - type_of_pde_rhs = 1. The data provided by StaticVectorSolver::PdeRhs is interpreted as the
+ * free-current density, \f$\vec{J}_f\f$, i.e.,
  * \f[
  * \vec{\nabla}\times\bigg(\dfrac{1}{\mu_0} \vec{\nabla}\times\vec{A}\bigg)
  * + \eta^2 \vec{A} = \vec{J}_f.
@@ -257,23 +257,23 @@ public:
  * \int_{\Gamma_{\Omega}} T \bigg( \hat{n} \overset{S}{\times} \vec{A}\bigg)dl
  * \f]
  * in a two-dimensional space.
- * 
+ *
  * The option type_of_pde_rhs = 2 differs from the option type_of_pde_rhs = 3
  * at one point only: the boundary integral is not calculated
  * if type_of_pde_rhs = 2. This can help to reduce simulation time a bit if the
- * current vector potential equals zero on the boundary due to a Dirichlet 
- * boundary condition. 
+ * current vector potential equals zero on the boundary due to a Dirichlet
+ * boundary condition.
  *
- * The same four options are available when solving for the current 
+ * The same four options are available when solving for the current
  * vector potential, \f$\vec{T}\f$. In the case of \f$\vec{T}\f$, however,
- * the first two options, i.e., type_of_pde_rhs=0 and type_of_pde_rhs=1, 
- * do not make much sense: the curl of the free-current density must be 
- * present on the right-hand side of the partial differential equation. 
- * The program does not filter out this two options. When solving for 
- * the current vector potential, \f$\vec{T}\f$, the following two options 
+ * the first two options, i.e., type_of_pde_rhs=0 and type_of_pde_rhs=1,
+ * do not make much sense: the curl of the free-current density must be
+ * present on the right-hand side of the partial differential equation.
+ * The program does not filter out this two options. When solving for
+ * the current vector potential, \f$\vec{T}\f$, the following two options
  * make sense:
  *
- * - type_of_pde_rhs = 2. The data provided by StaticVectorSolver::PdeRhs 
+ * - type_of_pde_rhs = 2. The data provided by StaticVectorSolver::PdeRhs
  * is interpreted as free-current density, \f$\vec{J}_f\f$, i.e.,
  * \f[
  * \vec{\nabla}\times\bigg(\vec{\nabla}\times\vec{T}\bigg)
@@ -284,18 +284,18 @@ public:
  * \vec{\nabla}\overset{V}{\times}\bigg(\vec{\nabla}\overset{S}{\times}\vec{T}\bigg)
  * + \eta^2 \vec{T} = \vec{\nabla}\overset{V}{\times} J_f.
  * \f]
- * in a two-dimensional space. Then the corresponding terms of the 
+ * in a two-dimensional space. Then the corresponding terms of the
  * functional are
  * \f[
- * \iiint_{\Omega} \vec{J}_f\cdot\bigg(\vec{\nabla}\times\vec{T}\bigg) dV 
+ * \iiint_{\Omega} \vec{J}_f\cdot\bigg(\vec{\nabla}\times\vec{T}\bigg) dV
  * \f]
  * in a three dimensional space and
  * \f[
- * \iint_{\Omega} J_f \bigg(\vec{\nabla}\overset{S}{\times}\vec{T}\bigg) dS 
+ * \iint_{\Omega} J_f \bigg(\vec{\nabla}\overset{S}{\times}\vec{T}\bigg) dS
  * \f]
  * in a two-dimensional space.
  *
- * - type_of_pde_rhs = 3. The data provided by StaticVectorSolver::PdeRhs 
+ * - type_of_pde_rhs = 3. The data provided by StaticVectorSolver::PdeRhs
  * is interpreted as free-current density, \f$\vec{J}_f\f$.
  * \f[
  * \vec{\nabla}\times\bigg(\vec{\nabla}\times\vec{T}\bigg)
@@ -306,7 +306,7 @@ public:
  * \vec{\nabla}\overset{V}{\times}\bigg(\vec{\nabla}\overset{S}{\times}\vec{T}\bigg)
  * + \eta^2 \vec{T} = \vec{\nabla}\overset{V}{\times} J_f.
  * \f]
- * in a two-dimensional space. Then the 
+ * in a two-dimensional space. Then the
  * corresponding terms of the functional are
  * \f[
  * \iiint_{\Omega} \vec{J}_f\cdot\bigg(\vec{\nabla}\times\vec{T}\bigg) dV -
@@ -319,7 +319,7 @@ public:
  * \f]
  * in a two-dimensional space.
  *
- * Here again the option type_of_pde_rhs = 3 differs from the option 
+ * Here again the option type_of_pde_rhs = 3 differs from the option
  * type_of_pde_rhs = 2 by the boundary integral in the functional.
  *
  * Note, the code that implements the solver for \f$\vec{A}\f$ is identical
@@ -328,15 +328,15 @@ public:
  * argument that toggles the code between two modes: "solving for A"
  * mode and "solving for T" mode. The user toggles the code between
  * these two modes by feeding the right data through StaticVectorSolver::PdeRhs
- * and StaticVectorSolver::TheCoefficient and ignoring options 
+ * and StaticVectorSolver::TheCoefficient and ignoring options
  * type_of_pde_rhs = 0 and type_of_pde_rhs = 1 when solving for \f$\vec{T}\f$.
- * If the magnetic vector potential, \f$\vec{A}\f$, is being computed, 
- * StaticVectorSolver::PdeRhs::value_list must return the values of \f$\vec{T}\f$ 
+ * If the magnetic vector potential, \f$\vec{A}\f$, is being computed,
+ * StaticVectorSolver::PdeRhs::value_list must return the values of \f$\vec{T}\f$
  * (type_of_pde_rhs = 2, type_of_pde_rhs = 3) or values of \f$\vec{J}_f\f$
- * (type_of_pde_rhs = 1). If the current vector potential, \f$\vec{T}\f$, is being 
- * computed, StaticVectorSolver::PdeRhs::value_list must return the values of 
- * \f$\vec{J}_f\f$ (type_of_pde_rhs = 2, type_of_pde_rhs = 3). 
- * The StaticVectorSolver::TheCoefficient must return 1.0 when solving for 
+ * (type_of_pde_rhs = 1). If the current vector potential, \f$\vec{T}\f$, is being
+ * computed, StaticVectorSolver::PdeRhs::value_list must return the values of
+ * \f$\vec{J}_f\f$ (type_of_pde_rhs = 2, type_of_pde_rhs = 3).
+ * The StaticVectorSolver::TheCoefficient must return 1.0 when solving for
  * \f$\vec{T}\f$ and \f$\mu\f$ when solving for \f$\vec{A}\f$.
  *
  * @param[in] p - Degree of the FE_Nedelec finite elements.
@@ -357,10 +357,10 @@ public:
  * the execution of run() or compute_error_norms().
  * @param[in] print_time_tables - If true, prints time tables on the screen.
  * @param[in] project_exact_solution - If true, projects the exact solution
- * onto the space spanned by the Nedelec finite elements and saves 
- * the result into the vtk file next to the solution. This may be useful for 
- * debugging purposes as a comparison between the projected exact solution and 
- * the solution to the boundary value problem can yield a hint on where to 
+ * onto the space spanned by the Nedelec finite elements and saves
+ * the result into the vtk file next to the solution. This may be useful for
+ * debugging purposes as a comparison between the projected exact solution and
+ * the solution to the boundary value problem can yield a hint on where to
  * search for bugs.
  *****************************************************************************/
 	Solver1(

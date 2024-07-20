@@ -47,7 +47,7 @@ void SolverSSOLII_T::make_mesh()
 	for (auto cell : Solver1<3, 0>::triangulation.active_cell_iterators())
 	{
 		cell->set_material_id(mid_1); // The cell is outside the coil.
-		
+
 		if ((cell->center().norm() > a) &&
 				(cell->center().norm() < b))
 			cell->set_material_id(mid_2); // The cell is inside the coil.

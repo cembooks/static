@@ -2,7 +2,7 @@
 
 ./run-all
 
-./combine_data_1 -d cbnd -f ring -lb 12 -la 4 -p 1 -s table_PHI -a PHI 
+./combine_data_1 -d cbnd -f ring -lb 12 -la 4 -p 1 -s table_PHI -a PHI
 ./combine_data_1 -d cbnd -f shell -lb 12 -la 4 -p 1 -s table_PHI -a PHI
 ./combine_data_1 -d cbnd -f ring-exact -lb 12 -la 4 -p 1 -s table_PHI -a PHI
 ./combine_data_1 -d cbnd -f shell-exact -lb 12 -la 4 -p 1 -s table_PHI -a PHI

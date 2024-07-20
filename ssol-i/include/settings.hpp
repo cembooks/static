@@ -44,7 +44,7 @@ public:
 	const double a = 0.5;
 
 /**
- * \brief A constant that defines the magnitude of the surface free-current 
+ * \brief A constant that defines the magnitude of the surface free-current
  * density.
  *****************************************************************************/
 	const double K_0 = 1.0;

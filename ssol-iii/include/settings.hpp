@@ -49,22 +49,22 @@ public:
 	const double mu = mu_r*mu_0;
 
 /**
- * \brief The inner radius of the magnetic core. 
+ * \brief The inner radius of the magnetic core.
  *****************************************************************************/
 	const double a1 = 0.3;
 
 /**
- * \brief The outer radius of the magnetic core. 
+ * \brief The outer radius of the magnetic core.
  *****************************************************************************/
 	const double b1 = 0.6;
 
 /**
- * \brief The inner radius of the coil. 
+ * \brief The inner radius of the coil.
  *****************************************************************************/
 	const double a2 = 0.9;
 
 /**
- * \brief The outer radius of the coil. 
+ * \brief The outer radius of the coil.
  *****************************************************************************/
 	const double b2 = 1.2;
 
@@ -74,7 +74,7 @@ public:
 	const double d2 = 2.4;
 
 /**
- * \brief A constant that defines the magnitude of the surface free-current 
+ * \brief A constant that defines the magnitude of the surface free-current
  * density.
  *****************************************************************************/
 	const double K_0 = 1.0;
@@ -86,19 +86,19 @@ public:
 	const double H_0 = (1.0/3.0)*K_0*(pow(b2,2)-pow(a2,2));
 
 /**
- * \brief The ID of the material outside the coil and the core, 
+ * \brief The ID of the material outside the coil and the core,
  * i.e., Jf=0 and mu=m_0.
  *****************************************************************************/
-	const types::material_id mid_1 = 1; 
+	const types::material_id mid_1 = 1;
 
 /**
- * \brief The ID of the material inside the core, 
+ * \brief The ID of the material inside the core,
  * i.e., Jf=0 and mu=mu_r*m_0.
  *****************************************************************************/
 	const types::material_id mid_2 = 2;
 
 /**
- * \brief The ID of the material inside the coil, 
+ * \brief The ID of the material inside the coil,
  * i.e., Jf>0 and mu=m_0.
  *****************************************************************************/
 	const types::material_id mid_3 = 3;

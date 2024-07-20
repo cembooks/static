@@ -22,7 +22,7 @@ double ExactSolutionSSOLIIAXI_A::value(const Point<2> & p,
 {
 	double r = p.norm();
 	double sin_theta = p[0]/r;
-	
+
 	double G1 = mu_0*K_0*p[0]/3.0;
 	double G2 = mu_0*K_0*sin_theta/(3.0*pow(r,2));
 
@@ -74,7 +74,7 @@ void ExactSolutionSSOLIIAXI_H::vector_value_list(const std::vector<Point<2>> & r
 	std::vector<Vector<double>> &values) const
 {
 	Assert(values.size() == r.size(), ExcDimensionMismatch(values.size(), r.size()));
-	
+
 	B.vector_value_list(r, values);
 
 	for (unsigned int i = 0; i < r.size(); i++)

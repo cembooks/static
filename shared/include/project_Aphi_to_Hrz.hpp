@@ -21,8 +21,8 @@ namespace StaticScalarSolver
  * from scaled magnetic vector potential, \f$A'\f$, i.e.,
  * \f$\vec{H}' = - \mu^{-1} \vec{\nabla} \overset{V}{\times} A'\f$.
  *
- * The problem is assumed to be axisymmetric two-dimensional. The scaled 
- * auxiliary field \f$\vec{H}'\f$ is an in-plane vector. The scaled magnetic 
+ * The problem is assumed to be axisymmetric two-dimensional. The scaled
+ * auxiliary field \f$\vec{H}'\f$ is an in-plane vector. The scaled magnetic
  * vector potential, \f$A'\f$, is an out-of-plane vector.
  *
  * The scaled magnetic vector potential, \f$A'\f$, is assumed to be an output of
@@ -70,7 +70,7 @@ namespace StaticScalarSolver
  * @endcode
  *
  * The output data are saved into a vtk file. The following data are saved:
- * - The calculated H'-field, 
+ * - The calculated H'-field,
  *   \f$\vec{H}' = - \mu^{-1} \vec{\nabla} \overset{V}{\times} A'\f$,
  *   under the name "VectorField".
  * - The \f$L^2\f$ error norm associated with the calculated H'-field

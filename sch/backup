@@ -1,4 +1,4 @@
 #!/bin/bash
 
-../shared/scripts/backup_shared -d sch 
+../shared/scripts/backup_shared -d sch
 

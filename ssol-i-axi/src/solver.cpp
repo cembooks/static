@@ -43,8 +43,8 @@ void SolverSSOLIAXI::mark_materials()
 					cell->face(f)->set_user_index(1);
 					cell->set_user_index(1);
 				}
-			}	
-	
+			}
+
 			if ( std::abs(cell->face(f)->vertex(1).norm()-
 					cell->face(f)->vertex(0).norm()) < eps )
 				cell->face(f)->set_all_manifold_ids(1);

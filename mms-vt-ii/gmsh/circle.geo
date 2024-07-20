@@ -1,5 +1,5 @@
 r = 5; //@1
-m = 1; 
+m = 1;
 
 d1 = 0.2;
 a = 0.5;
@@ -60,16 +60,16 @@ l = newl;  Line(l) = {0, 3};
 l = newl;  Line(l) = {0, 55};
 l = newl;  Line(l) = {0, 114};
 
-ll = newll; Line Loop(ll) = {7, 8, -71, 70}; 
+ll = newll; Line Loop(ll) = {7, 8, -71, 70};
 s = news; Plane Surface(s) = {ll};
 
-ll = newll; Line Loop(ll) = {71, -17, -27, -72}; 
+ll = newll; Line Loop(ll) = {71, -17, -27, -72};
 s = news; Plane Surface(s) = {ll};
 
-ll = newll; Line Loop(ll) = {-73, 72, -36, -46}; 
+ll = newll; Line Loop(ll) = {-73, 72, -36, -46};
 s = news; Plane Surface(s) = {ll};
 
-ll = newll; Line Loop(ll) = {-66, -70, 73, -56}; 
+ll = newll; Line Loop(ll) = {-66, -70, 73, -56};
 s = news; Plane Surface(s) = {ll};
 
 Physical Surface(100) = { 1, 2, 3, 4, 75, 77, 79, 81, Q1[0], Q1[1], Q1[2], Q1[3],

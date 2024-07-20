@@ -8,7 +8,7 @@ exit__()
 	exit -1
 }
 
-list_dirs=`ls -I backup -I shared -I doc -I clean -I build -I setup -I run-all` 
+list_dirs=`ls -I backup -I shared -I doc -I clean -I build -I setup -I run-all`
 
 lock=1
 
@@ -22,7 +22,7 @@ do
 	if [ ${lock} == 0 ]; then
 		echo "${local_dir}..."
 		cd ${local_dir}/bin/Release
-		./run-all 
+		./run-all
 		cd ../../../
 	fi
 

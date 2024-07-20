@@ -28,8 +28,8 @@ namespace StaticVectorSolver
  * equation (i) of the [vector boundary value problem](@ref veibvp_bvp).
  *
  *
- * If the magnetic vector potential \f$\vec{A}\f$ is being computed, the 
- * coefficient must equal the permeability, \f$\mu\f$. If the current vector 
+ * If the magnetic vector potential \f$\vec{A}\f$ is being computed, the
+ * coefficient must equal the permeability, \f$\mu\f$. If the current vector
  * potential \f$\vec{T}\f$ is being computed, the coefficient must equal 1.
  *
  * This class is declared in shared/include/static_vector_input.hpp but
@@ -54,11 +54,11 @@ public:
 	 * \brief Computes values of permeability, \f$\mu\f$, at quadrature
 	 * points.
 	 *
-	 * This function is called by the StaticVectorSolver::Solver1 
-	 * or by StaticVectorSolver::Solver2 class during the  assembly of the system 
-	 * matrix. It is called ones per each cell. This function must fill the vector 
-	 * values[...] with the values of the coefficient. The values[i] is interpreted 
-	 * the coefficient at quadrature point r[i]. The code snippet below provides an 
+	 * This function is called by the StaticVectorSolver::Solver1
+	 * or by StaticVectorSolver::Solver2 class during the  assembly of the system
+	 * matrix. It is called ones per each cell. This function must fill the vector
+	 * values[...] with the values of the coefficient. The values[i] is interpreted
+	 * the coefficient at quadrature point r[i]. The code snippet below provides an
 	 * example in which permeability equals
 	 *
 	 * \f$\mu = \mu_0 \big(x^2+y^2+1\big)\f$,
@@ -107,12 +107,12 @@ public:
  *
  * How the source vector field modeled by this function is
  * [interpreted](@ref svsi-type_of_pde_rhs)
- * by the StaticVectorSolver::Solver1 class template depends on the second 
- * parameter passed to the constructor of StaticVectorSolver::Solver1, i.e., 
- * the parameter type_of_pde_rhs. It can be interpreted as current density, 
- * \f$\vec{J}_f\f$, or as the vector potential of the current density, 
- * \f$\vec{T}\f$. See the documentation of StaticVectorSolver::Solver1 for 
- * more details. The StaticVectorSolver::Solver2 class template simply 
+ * by the StaticVectorSolver::Solver1 class template depends on the second
+ * parameter passed to the constructor of StaticVectorSolver::Solver1, i.e.,
+ * the parameter type_of_pde_rhs. It can be interpreted as current density,
+ * \f$\vec{J}_f\f$, or as the vector potential of the current density,
+ * \f$\vec{T}\f$. See the documentation of StaticVectorSolver::Solver1 for
+ * more details. The StaticVectorSolver::Solver2 class template simply
  * ignores objects derived from this class template.
  *
  * This class is declared in shared/include/static_vector_input.hpp but
@@ -135,10 +135,10 @@ class PdeRhs : public Function<dim>, private Settings
  * \brief Computes the vector field on the right-hand side of the partial
  * differential equation
  *
- * This function is called by the StaticVectorSolver::Solver1 class during the 
- * assembly of the right-hand side. It is called ones per each cell. This function 
- * must fill values[...] vector with the source vectors sampled at quadrature points. 
- * The values[i] is interpreted as the source vector at quadrature point r[i]. The 
+ * This function is called by the StaticVectorSolver::Solver1 class during the
+ * assembly of the right-hand side. It is called ones per each cell. This function
+ * must fill values[...] vector with the source vectors sampled at quadrature points.
+ * The values[i] is interpreted as the source vector at quadrature point r[i]. The
  * code snippet below provides an example in which the source field equals
  *
  * \f[
@@ -213,18 +213,18 @@ public:
  * \brief Computes values of the parameter \f$\gamma\f$ of the Robin boundary
  * condition at quadrature points.
  *
- * This function is called by the StaticVectorSolver::Solver1 or by 
- * StaticVectorSolver::Solver2 class during the assembly of the system matrix. 
- * It is called ones per each boundary face if the boundary ID is an even 
+ * This function is called by the StaticVectorSolver::Solver1 or by
+ * StaticVectorSolver::Solver2 class during the assembly of the system matrix.
+ * It is called ones per each boundary face if the boundary ID is an even
  * integer greater than zero, see
- * [boundary ID convention](@ref veis_bnd_convention). 
- * This function must fill the vector values[...] with the values of 
- * \f$\gamma\f$. The values[i] is interpreted as \f$\gamma\f$ at quadrature 
- * point r[i]. The code snippet below provides an example in which \f$\gamma\f$ 
+ * [boundary ID convention](@ref veis_bnd_convention).
+ * This function must fill the vector values[...] with the values of
+ * \f$\gamma\f$. The values[i] is interpreted as \f$\gamma\f$ at quadrature
+ * point r[i]. The code snippet below provides an example in which \f$\gamma\f$
  * equals
  *
  * \f[
- * \gamma = (1 / \mu) ( \sqrt{x^2+y^2}+2 ) 
+ * \gamma = (1 / \mu) ( \sqrt{x^2+y^2}+2 )
  * \f],
  *
  * where \f$\mu\f$ is the permeability.
@@ -300,14 +300,14 @@ public:
  * \brief Computes values of the vector field \f$\vec{Q}\f$ on the right-hand
  * side of the Robin boundary condition at quadrature points.
  *
- * This function is called by the StaticVectorSolver::Solver1 or by 
- * StaticVectorSolver::Solver2 class during the assembly of the system 
- * right-hand side. It is called ones per each boundary face if the boundary 
- * ID is an even integer greater than zero, see 
- * [boundary ID convention](@ref veis_bnd_convention). 
- * This function must fill the vector values[...] with the values of 
- * \f$\vec{Q}\f$. The values[i] is interpreted as \f$\vec{Q}\f$ at quadrature 
- * point r[i]. The code snippet below provides an example in which \f$\vec{Q}\f$ 
+ * This function is called by the StaticVectorSolver::Solver1 or by
+ * StaticVectorSolver::Solver2 class during the assembly of the system
+ * right-hand side. It is called ones per each boundary face if the boundary
+ * ID is an even integer greater than zero, see
+ * [boundary ID convention](@ref veis_bnd_convention).
+ * This function must fill the vector values[...] with the values of
+ * \f$\vec{Q}\f$. The values[i] is interpreted as \f$\vec{Q}\f$ at quadrature
+ * point r[i]. The code snippet below provides an example in which \f$\vec{Q}\f$
  * equals zero.
  *
  * @code
@@ -380,12 +380,12 @@ class FreeSurfaceCurrent : public Function<dim>, private Settings
  * \brief Computes values of the surface free-current density, \f$\vec{K}\f$,
  * on the right-hand side of the continuity condition at quadrature points.
  *
- * This function is called by the StaticVectorSolver::Solver1 or by 
- * StaticVectorSolver::Solver2 class during the assembly of the system 
- * right-hand side. It is called ones per each face on the interfaces between 
+ * This function is called by the StaticVectorSolver::Solver1 or by
+ * StaticVectorSolver::Solver2 class during the assembly of the system
+ * right-hand side. It is called ones per each face on the interfaces between
  * dissimilar materials. This function must fill the vector values[...] with
  * the values of \f$\vec{K}\f$. The values[i] is interpreted as \f$\vec{K}\f$
- * at quadrature point r[i]. The code snippet below provides an example in 
+ * at quadrature point r[i]. The code snippet below provides an example in
  * which \f$\vec{K}\f$ equals zero.
  *
  * @code

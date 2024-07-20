@@ -103,7 +103,7 @@ void SolverSSOLI::mark_materials()
 		for (unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; ++f)
 		{
 			double dif_norm_a = 0.0;
-		
+
 			for (unsigned int v = 0; v < GeometryInfo<3>::vertices_per_face; v++ )
 				dif_norm_a += std::abs(cell->face(f)->vertex(v).norm()-a);
 

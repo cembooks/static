@@ -22,7 +22,7 @@
 using namespace dealii;
 
 /**
- * \brief Describes the given volume free-current density, \f$\vec{J}_f\f$, 
+ * \brief Describes the given volume free-current density, \f$\vec{J}_f\f$,
  * in the
  * [Current vector potential (cvp-i/)](@ref page_cvp_i)
  * numerical experiment.
@@ -38,7 +38,7 @@ public:
 };
 
 /**
- * \brief Describes the Dirichlet boundary condition 
+ * \brief Describes the Dirichlet boundary condition
  * in the
  * [Current vector potential (cvp-i/)](@ref page_cvp_i)
  * numerical experiment.

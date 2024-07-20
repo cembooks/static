@@ -49,7 +49,7 @@ void SolverCVPI::make_mesh()
 	for (auto cell : Solver1<3>::triangulation.active_cell_iterators())
 	{
 		cell->set_material_id(mid_1); // The cell is outside the coil.
-		
+
 		if ((cell->center().norm() > a1) &&
 				(cell->center().norm() < a2))
 			cell->set_material_id(mid_2); // The cell is inside the coil.

@@ -53,7 +53,7 @@ public:
 			<< "Program: ssol-ii\n"
 			<< "Dimensions: " << "3\n"
 			<< "Writing to: " << dir << "\n";
-		
+
 		MainOutputTable table_J(3);
 		MainOutputTable table_B(3);
 

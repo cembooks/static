@@ -53,7 +53,7 @@ public:
 };
 
 /**
- * \brief The tables that contain the amount of quadrature points used in the 
+ * \brief The tables that contain the amount of quadrature points used in the
  * scalar problems.
  *******************************************************************************/
 template<int dim>
@@ -72,10 +72,10 @@ public:
 
 /**
  * \brief Returns the amount of quadrature points used when assembling
- * system if linear equations. 
+ * system if linear equations.
  *******************************************************************************/
 	unsigned int sim() const;
-	
+
 /**
  * \brief Returns the amount of quadrature points used when calculating the
  * error norms.
@@ -91,7 +91,7 @@ private:
 };
 
 /**
- * \brief The tables that contain the amount of quadrature points used in 
+ * \brief The tables that contain the amount of quadrature points used in
  * vector problems.
  *******************************************************************************/
 template<int dim>
@@ -110,7 +110,7 @@ public:
 
 /**
  * \brief Returns the amount of quadrature points used when assembling
- * system if linear equations. 
+ * system if linear equations.
  *******************************************************************************/
 	unsigned int sim() const;
 

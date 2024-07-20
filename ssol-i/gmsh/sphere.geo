@@ -49,7 +49,7 @@ Curve Loop(6) = {7, -15, 33, -23};
 Surface(6) = {6};
 
 Surface Loop(1) = {1, 4, 16, 5, 8, 26};
-Volume(1) = {1}; 
+Volume(1) = {1};
 
 Surface Loop(2) = {5, 31, 6, 13, 2, 21};
 Volume(2) = {2};
@@ -60,7 +60,7 @@ V3[] = Symmetry {-1, 0, 1, 0} {Duplicata {Volume{1, 2};}};
 V4[] = Symmetry {1, 0, 1, 0} {Duplicata {Volume{1, 2};}};
 
 Surface Loop(4) = {4, 40, 98, 160, 218, 261};
-Volume(4) = {4}; 
+Volume(4) = {4};
 
 Physical Volume(100) = {4};
 
@@ -84,9 +84,9 @@ Physical Volume(61) = {185};
 
 Physical Surface(2) = {6, 196, 134, 76, 254, 297};
 
-// Rotate the shell to get exact approximation on the x axis. This is 
-// needed for projecting the potential on the segment between [a,0,0] 
-// and [b,0,0]. 
+// Rotate the shell to get exact approximation on the x axis. This is
+// needed for projecting the potential on the segment between [a,0,0]
+// and [b,0,0].
 // V0 = Rotate { {0,0,1}, {0,0,0}, -Pi/4} { Volume{:}; };
 // V0 = Rotate { {0,1,0}, {0,0,0}, 0.195913276015303635085*Pi} { Volume{:}; };
 

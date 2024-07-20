@@ -29,7 +29,7 @@ Physical Line(1) = {1, 2, 3, 4};
 Recombine Surface "*";
 
 Transfinite Surface "*";
-Transfinite Line "*" = r; 
+Transfinite Line "*" = r;
 
 //Mesh 2;
 

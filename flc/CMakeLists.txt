@@ -30,7 +30,7 @@ set(SOURCE_FILES
 	"src/static_scalar_input.cpp"
 	"../shared/src/misc.cpp"
 	"../shared/src/constants.cpp")
-	
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 

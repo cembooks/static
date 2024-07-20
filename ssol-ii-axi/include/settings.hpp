@@ -43,7 +43,7 @@ public:
 	const double mu_0 = permeability_fs;
 
 /**
- * \brief A constant that defines the magnitude of the volume free-current 
+ * \brief A constant that defines the magnitude of the volume free-current
  * density.
  *****************************************************************************/
 	const double K_0 = 1.0;
@@ -74,21 +74,21 @@ public:
 	const types::material_id mid_1 = 1;
 
 /**
- * \brief The ID of the material inside the coil, J_f is  nonzero in this 
+ * \brief The ID of the material inside the coil, J_f is  nonzero in this
  * region.
  *****************************************************************************/
 	const types::material_id mid_2 = 2;
 
 /**
- * \brief The ID of the curved section of the  boundary of the problem domain. 
- * The boundary ID is set in the geo files that are located in the 
+ * \brief The ID of the curved section of the  boundary of the problem domain.
+ * The boundary ID is set in the geo files that are located in the
  * ssol-ii-axi/gmsh directory. Is not used in this configuration.
  *****************************************************************************/
 	const types::boundary_id bid_infty = 4;
 
 /**
- * \brief The ID of the straight section of the  boundary of the problem domain. 
- * The boundary ID is set in the geo files that are located in the 
+ * \brief The ID of the straight section of the  boundary of the problem domain.
+ * The boundary ID is set in the geo files that are located in the
  * ssol-ii-axi/gmsh directory.
  *****************************************************************************/
 	const types::boundary_id bid_axi = 1;
@@ -108,9 +108,9 @@ public:
 /**
  * \brief If set to true, the program will project the exact solution.
  *
- * The exact solutions will be modeled on the same mesh and by the same finite 
- * elements that are used to model the solution. The projected exact solution 
- * will be saved in the vtk file next to the solution. This option can be 
+ * The exact solutions will be modeled on the same mesh and by the same finite
+ * elements that are used to model the solution. The projected exact solution
+ * will be saved in the vtk file next to the solution. This option can be
  * useful when debugging.
  *****************************************************************************/
 	const bool project_exact_solution = false;

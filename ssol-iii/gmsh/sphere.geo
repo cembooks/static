@@ -73,22 +73,22 @@ Plane Surface(5) = {5};
 Q1[] = Symmetry {0, 1, 1, 0} {Duplicata {Surface{:};}};
 Q2[] = Symmetry {0, -1, 1, 0} {Duplicata {Surface{:};}};
 
-ll = newll; Line Loop(ll) = {13, -23, 72, -47}; 
+ll = newll; Line Loop(ll) = {13, -23, 72, -47};
 Plane Surface(ll) = {ll};
 
-ll = newll; Line Loop(ll) = {14, 21, -70, 45}; 
+ll = newll; Line Loop(ll) = {14, 21, -70, 45};
 Surface(ll) = {ll};
 
-ll = newll; Line Loop(ll) = {15, 26, -75, 50}; 
+ll = newll; Line Loop(ll) = {15, 26, -75, 50};
 Surface(ll) = {ll};
 
-ll = newll; Line Loop(ll) = {16, 31, -80, 55}; 
+ll = newll; Line Loop(ll) = {16, 31, -80, 55};
 Surface(ll) = {ll};
 
-ll = newll; Line Loop(ll) = {17, 36, -85, 60}; 
+ll = newll; Line Loop(ll) = {17, 36, -85, 60};
 Surface(ll) = {ll};
 
-ll = newll; Line Loop(ll) = {18, 41, -90, 65}; 
+ll = newll; Line Loop(ll) = {18, 41, -90, 65};
 Surface(ll) = {ll};
 
 Surface Loop(1) = {1, 43, 68, 19, 91, 92};
@@ -114,7 +114,7 @@ V4[] = Symmetry {1, 0, -1, 0} {Duplicata {Volume{1, 2, 3, 4, 5};}};
 Surface Loop(6) = {91, 118, 424, 269, 575, 726};
 Volume(6) = {6};
 
-Physical Volume(1) = {Volume{:}}; 
+Physical Volume(1) = {Volume{:}};
 
 Physical Surface(1) = {96, 247, 556, 401, 710, 861};
 

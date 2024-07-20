@@ -13,7 +13,7 @@ set(PRJ_NAME "cbnd")
 
 cmake_minimum_required(VERSION 2.8.12)
 
-include_directories(${DEAL_II_DIR} /usr/include/suitesparse ./include 
+include_directories(${DEAL_II_DIR} /usr/include/suitesparse ./include
 ../shared/include)
 
 set(SOURCE_FILES

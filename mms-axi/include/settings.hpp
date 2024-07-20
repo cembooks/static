@@ -77,11 +77,11 @@ public:
  * \f$\vec{D}_M\f$, see this
  * [page](@ref page_mms_axi),
  * will be modeled on the same mesh and by the same finite elements
- * that are used to model the solution (\f$\Phi_M\f$ - Lagrange, 
- * \f$\vec{E}_M\f$ - Nedelec, and \f$\vec{D}_M\f$ - Raviart-Thomas). 
- * The projected exact solution will be saved in the vtk file next to the 
- * solution. This option can be useful when debugging. It only works if 
- * the exact solutions are passed to the constructors of the corresponding 
+ * that are used to model the solution (\f$\Phi_M\f$ - Lagrange,
+ * \f$\vec{E}_M\f$ - Nedelec, and \f$\vec{D}_M\f$ - Raviart-Thomas).
+ * The projected exact solution will be saved in the vtk file next to the
+ * solution. This option can be useful when debugging. It only works if
+ * the exact solutions are passed to the constructors of the corresponding
  * solver or projector objects.
  *****************************************************************************/
 	const bool project_exact_solution = false;

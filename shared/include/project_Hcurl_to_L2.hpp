@@ -59,9 +59,9 @@ namespace StaticVectorSolver
 /**
  * \brief Projects from \f$H(\text{curl})\f$ to \f$L^2\f$.
  *
- * This class template is not supposed to be used directly. Instead 
- * the wrap-around class template StaticVectorSolver::ProjectAxyToBz 
- * must be used. The name of the wrap-around class template is assumed to be 
+ * This class template is not supposed to be used directly. Instead
+ * the wrap-around class template StaticVectorSolver::ProjectAxyToBz
+ * must be used. The name of the wrap-around class template is assumed to be
  * more familiar to readers in electromagnetics.
  *
  * Implements the following recipes:
@@ -69,9 +69,9 @@ namespace StaticVectorSolver
  *
  * This class template is supposed to be used in pair with
  * StaticVectorSolver::Solver1 or StaticVectorSolver::Solver2. In all planar
- * two-dimensional problems formulated in terms of the magnetic vector potential, 
- * \f$\vec{A}\f$, the numerically calculated potential needs to be converted into 
- * magnetic field, \f$B\f$, as  
+ * two-dimensional problems formulated in terms of the magnetic vector potential,
+ * \f$\vec{A}\f$, the numerically calculated potential needs to be converted into
+ * magnetic field, \f$B\f$, as
  * \f[
  * B = \vec{\nabla} \overset{S}{\times} \vec{A}.
  * \f]
@@ -110,14 +110,14 @@ public:
  * makes sense to attach a meaningful manifold to the triangulation if this
  * parameter is greater than 1.
  * @param[in] triangulation_Hcurl - Reference to the triangulation inside the
- * object of the class StaticVectorSolver::Solver1 or 
- * StaticVectorSolver::Solver2 that has yielded the magnetic vector potential 
+ * object of the class StaticVectorSolver::Solver1 or
+ * StaticVectorSolver::Solver2 that has yielded the magnetic vector potential
  * in the  H(curl) function space.
  * @param[in] dof_handler_Hcurl - Reference to the dof handler inside the class
- * StaticVectorSolver::Solver1 or StaticVectorSolver::Solver2 that has yielded 
+ * StaticVectorSolver::Solver1 or StaticVectorSolver::Solver2 that has yielded
  * the magnetic vector potential in the H(curl) function space.
  * @param[in] solution_Hcurl - Vector filled with the degrees of freedom that
- * together with the shape functions of the Nedelec finite elements model the 
+ * together with the shape functions of the Nedelec finite elements model the
  * magnetic vector potential in the H(curl) function space.
  * @param[in] fname - The name of the output files without extension.
  * @param[in] exact_solution - Points to an object that describes the exact
@@ -176,7 +176,7 @@ public:
  * \brief Returns a reference to triangulation.
  *****************************************************************************/
 	const Triangulation<2> & get_tria() const {return triangulation_Hcurl;}
-	
+
 /**
  * \brief Returns a reference to dof handler associated with the Raviart-Thomas
  * finite elements.

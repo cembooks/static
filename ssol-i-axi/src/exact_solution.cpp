@@ -104,7 +104,7 @@ void ExactSolutionSSOLIAXI_B::vector_value_list(const std::vector<Point<2>> & r,
 //
 //		(*v)[0] = B[1];
 //		(*v)[1] = B[2];
-	
+
 		v++;
 	}
 }
@@ -113,7 +113,7 @@ void ExactSolutionSSOLIAXI_H::vector_value_list(const std::vector<Point<2>> & r,
 	std::vector<Vector<double>> &values) const
 {
 	Assert(values.size() == r.size(), ExcDimensionMismatch(values.size(), r.size()));
-	
+
 	B.vector_value_list(r, values);
 
 	for (unsigned int i = 0; i < r.size(); i++)

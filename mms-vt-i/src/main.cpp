@@ -70,7 +70,7 @@ public:
 		{
 			table_J.clear();
 			table_B.clear();
-			
+
 			for (unsigned int r = 5; r < 9; r++)
 			{
 				table_J.add_value("r", r);
@@ -82,7 +82,7 @@ public:
 // Stage 0 -------------------------------------------------------------
 				std::cout << "Stage 0: solving for T ...\n";
 
-				SolverMMSVTI_T stage0(p, mapping_degree, r, 
+				SolverMMSVTI_T stage0(p, mapping_degree, r,
 					dir + "solution_T_p" + std::to_string(p) +
 					"_r" + std::to_string(r));
 
@@ -153,7 +153,7 @@ public:
 				table_B.add_value("L2", stage3.get_L2_norm());
 				table_B.add_value("H1", 0.0);
 			}
-			
+
 			std::cout << "Table J \n";
 			table_J.save(dir + "main_table_J_p" + std::to_string(p));
 			std::cout << "Table B \n";

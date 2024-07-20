@@ -74,7 +74,7 @@ public:
 
 				table_T.add_value("ndofs", problem.get_n_dofs());
 				table_T.add_value("ncells", problem.get_n_cells());
-				table_T.add_value("L2", problem.get_L2_norm()); 
+				table_T.add_value("L2", problem.get_L2_norm());
 				table_T.add_value("H1", problem.get_H1_norm());
 
 				std::cout << "Converting T to J. \n";
@@ -104,7 +104,7 @@ public:
 
 				table_J.add_value("ndofs", projector.get_n_dofs());
 				table_J.add_value("ncells", projector.get_n_cells());
-				table_J.add_value("L2", projector.get_L2_norm()); 
+				table_J.add_value("L2", projector.get_L2_norm());
 				table_J.add_value("H1", 0.0);
 			}
 			// Saving convergence table

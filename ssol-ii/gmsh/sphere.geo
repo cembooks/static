@@ -77,7 +77,7 @@ V3[] = Symmetry {-1, 0, 1, 0} {Duplicata {Volume{1, 2, 3};}};
 V4[] = Symmetry {1, 0, 1, 0} {Duplicata {Volume{1, 2, 3};}};
 
 Surface Loop(4) = {73, 433, 255, 344, 4, 162};
-Volume(4) = {4}; 
+Volume(4) = {4};
 
 //Physical Volume(1) = {Volume{:}};
 
@@ -109,9 +109,9 @@ Physical Volume(7) = {4};
 
 Physical Surface(2) = {7, 140, 322, 229, 411, 500};
 
-// Rotate the shell to get exact approximation on the x axis. This is 
-// needed for projecting the potential on the segment between [a,0,0] 
-// and [b,0,0]. 
+// Rotate the shell to get exact approximation on the x axis. This is
+// needed for projecting the potential on the segment between [a,0,0]
+// and [b,0,0].
 //V0 = Rotate { {0,0,1}, {0,0,0}, -Pi/4} { Volume{:}; };
 //V0 = Rotate { {0,1,0}, {0,0,0}, 0.195913276015303635085*Pi} { Volume{:}; };
 
@@ -121,5 +121,5 @@ Transfinite Volume "*";
 Recombine Surface "*";
 Recombine Volume "*";
 
-Transfinite Line "*" = r; 
+Transfinite Line "*" = r;
 

@@ -188,10 +188,10 @@ namespace StaticVectorSolver
  * @endcode
  *
  *@note Application examples:
- * - [mms-vt-i/](@ref page_mms_vt_i) 
- * [mms-vt-ii/](@ref page_mms_vt_ii) 
- * [ssol-ii/](@ref page_ssol_ii) 
- * [ssol-iii/](@ref page_ssol_iii) 
+ * - [mms-vt-i/](@ref page_mms_vt_i)
+ * [mms-vt-ii/](@ref page_mms_vt_ii)
+ * [ssol-ii/](@ref page_ssol_ii)
+ * [ssol-iii/](@ref page_ssol_iii)
  *****************************************************************************/
 template<int dim, int stage = 1>
 class Solver2
@@ -224,10 +224,10 @@ public:
  * the execution of run() or compute_error_norms().
  * @param[in] print_time_tables - If true, prints time tables on the screen.
  * @param[in] project_exact_solution - If true, projects the exact solution
- * onto the space spanned by the Nedelec finite elements and saves 
- * the result into the vtk file next to the solution. This may be useful for 
- * debugging purposes as a comparison between the projected exact solution and 
- * the solution to the boundary value problem can yield a hint on where to 
+ * onto the space spanned by the Nedelec finite elements and saves
+ * the result into the vtk file next to the solution. This may be useful for
+ * debugging purposes as a comparison between the projected exact solution and
+ * the solution to the boundary value problem can yield a hint on where to
  * search for bugs.
  *****************************************************************************/
 	Solver2(

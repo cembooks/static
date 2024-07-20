@@ -60,8 +60,8 @@ namespace StaticVectorSolver
 /**
  * \brief Projects from \f$H(\text{curl})\f$ to \f$H(\text{div})\f$.
  *
- * This class template is not supposed to be used directly. Instead, one of 
- * the two wrap-around class templates, StaticVectorSolver::ProjectAtoB 
+ * This class template is not supposed to be used directly. Instead, one of
+ * the two wrap-around class templates, StaticVectorSolver::ProjectAtoB
  * or StaticVectorSolver::ProjectTtoJ, must be used. The names of the
  * wrap-around class templates are assumed to be more familiar to readers in
  * electromagnetics.
@@ -73,7 +73,7 @@ namespace StaticVectorSolver
  * StaticVectorSolver::Solver1 or StaticVectorSolver::Solver2. In all problems
  * formulated in terms of the magnetic vector potential, \f$\vec{A}\f$, the
  * numerically calculated potential needs to be converted into magnetic field,
- * \f$\vec{B}\f$, as  
+ * \f$\vec{B}\f$, as
  * \f[
  * \vec{B} = \vec{\nabla} \times \vec{A}.
  * \f]
@@ -90,7 +90,7 @@ namespace StaticVectorSolver
  * \f[
  * \vec{J}_f = \vec{\nabla} \times \vec{T},
  * \f]
- * for a comparison with a closed-form analytical expression of \f$\vec{J}_f\f$ 
+ * for a comparison with a closed-form analytical expression of \f$\vec{J}_f\f$
  * given by the formulation of the problem.
  *
  * This class template does these two projections. The Bossavit's diagrams
@@ -120,14 +120,14 @@ public:
  * makes sense to attach a meaningful manifold to the triangulation if this
  * parameter is greater than 1.
  * @param[in] triangulation_Hcurl - Reference to the triangulation inside the
- * object of the class StaticVectorSolver::Solver1 or 
- * StaticVectorSolver::Solver2 that has yielded the vector potential in the 
+ * object of the class StaticVectorSolver::Solver1 or
+ * StaticVectorSolver::Solver2 that has yielded the vector potential in the
  * H(curl) function space.
  * @param[in] dof_handler_Hcurl - Reference to the dof handler inside the class
- * StaticVectorSolver::Solver1 or StaticVectorSolver::Solver2 that has yielded 
+ * StaticVectorSolver::Solver1 or StaticVectorSolver::Solver2 that has yielded
  * the vector potential in the H(curl) function space.
  * @param[in] solution_Hcurl - Vector filled with the degrees of freedom that
- * together with the shape functions of the Nedelec finite elements model the 
+ * together with the shape functions of the Nedelec finite elements model the
  * vector potential in the H(curl) function space.
  * @param[in] fname - The name of the output files without extension.
  * @param[in] exact_solution - Points to an object that describes the exact

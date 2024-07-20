@@ -13,7 +13,7 @@ set(PRJ_NAME "abc")
 
 cmake_minimum_required(VERSION 2.8.12)
 
-include_directories(${DEAL_II_DIR} /usr/include/suitesparse ./include 
+include_directories(${DEAL_II_DIR} /usr/include/suitesparse ./include
 ../shared/include)
 
 set(SOURCE_FILES
@@ -57,15 +57,15 @@ set(T_PPC_ABC "${PRJ_NAME}-ppc-abc") #2
 set(T_SHELL_NEUMANN "${PRJ_NAME}-shell-neumann") #0
 set(T_SHELL_DIRICHLET "${PRJ_NAME}-shell-dirichlet") #1
 set(T_SHELL_ABC "${PRJ_NAME}-shell-abc") #2
-  
-foreach(TARGET IN LISTS 
-  T_PPC_NEUMANN 
+
+foreach(TARGET IN LISTS
+  T_PPC_NEUMANN
   T_PPC_DIRICHLET
-  T_PPC_ABC 
+  T_PPC_ABC
   T_SHELL_NEUMANN
   T_SHELL_DIRICHLET
-  T_SHELL_ABC 
-  ) 
+  T_SHELL_ABC
+  )
 
 add_executable(${TARGET} ${SOURCE_FILES})
   DEAL_II_SETUP_TARGET(${TARGET})
@@ -79,18 +79,18 @@ message(STATUS "TARGET=${TARGET}")
 endforeach(TARGET)
 
 #2D
-target_compile_options(${T_PPC_NEUMANN} PRIVATE -DDIMENSION__=2 
+target_compile_options(${T_PPC_NEUMANN} PRIVATE -DDIMENSION__=2
   -DBC_TYPE__=0)
-target_compile_options(${T_PPC_DIRICHLET} PRIVATE -DDIMENSION__=2 
+target_compile_options(${T_PPC_DIRICHLET} PRIVATE -DDIMENSION__=2
   -DBC_TYPE__=1)
-target_compile_options(${T_PPC_ABC} PRIVATE -DDIMENSION__=2 
+target_compile_options(${T_PPC_ABC} PRIVATE -DDIMENSION__=2
   -DBC_TYPE__=2)
 
 #3D
-target_compile_options(${T_SHELL_NEUMANN} PRIVATE -DDIMENSION__=3 
+target_compile_options(${T_SHELL_NEUMANN} PRIVATE -DDIMENSION__=3
   -DBC_TYPE__=0)
 target_compile_options(${T_SHELL_DIRICHLET} PRIVATE -DDIMENSION__=3
   -DBC_TYPE__=1)
-target_compile_options(${T_SHELL_ABC} PRIVATE -DDIMENSION__=3 
+target_compile_options(${T_SHELL_ABC} PRIVATE -DDIMENSION__=3
   -DBC_TYPE__=2)
 

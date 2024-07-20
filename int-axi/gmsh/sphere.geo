@@ -53,5 +53,5 @@ Physical Line(0) = {2, 1, 22, 27};
 Recombine Surface "*";
 
 Transfinite Surface "*";
-Transfinite Line "*" = r; 
+Transfinite Line "*" = r;
 
