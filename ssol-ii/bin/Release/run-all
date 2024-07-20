@@ -1,5 +1,4 @@
 #!/bin/bash
 
-./ssol-ii-dirichlet
-./ssol-ii-neumann
+./ssol-ii-sphere
 

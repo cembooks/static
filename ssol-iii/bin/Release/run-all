@@ -1,5 +1,4 @@
 #!/bin/bash
 
-./ssol-iii-dirichet
-./ssol-iii-neumann
+./ssol-iii-sphere
 
