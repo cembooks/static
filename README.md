@@ -12,9 +12,8 @@ potential, and current vector potential are solved numerically on two- and
 three-dimensional problem domains.
 
 The documentation of the computer code and the numerical experiments
-exists in a form of online Logbook. The Logbook can be found at:
-
-https://cembooks.nl
+exists in a form of online Logbook. The Logbook can be found at 
+https://cembooks.nl.
 
 <h2> Installation </h2>
 
