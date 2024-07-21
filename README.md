@@ -27,7 +27,7 @@ To run the code do the following.
 3) Install a program for viewing vtk files. [Visit](https://visit.llnl.gov) 
 software package of the Lawrence Livermore National Laboratory is a good option.
 
-4) Change into the static/ and run:
+4) Change into the static/ and run
 
 ./clean  
 ./setup  
@@ -36,7 +36,7 @@ software package of the Lawrence Livermore National Laboratory is a good option.
 
 This will build and execute all numerical experiments.The last two steps will
 take some time... Alternatively, you can build and run only the experiments you
-are interested in. To do so, change into static/ and run:
+are interested in. To do so, change into static/ and run
 
 ./clean  
 ./setup  
@@ -47,7 +47,7 @@ mms/. In this directory change into build/Release/ and run
 ./clean  
 ./build  
 
-After that change into mms/bin/Release/ and run:
+After that change into mms/bin/Release/ and run
 
 ./run-all  
 
