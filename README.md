@@ -47,10 +47,10 @@ mms/. In this directory change into build/Release/ and run
 ./clean  
 ./build  
 
-After that change into mms/bin/Release and run:
+After that change into mms/bin/Release/ and run:
 
 ./run-all  
 
 This will execute the mms experiment. The results of the simulations are in
-mms/bin/Release/Data directory.
+mms/bin/Release/Data/ directory.
 
