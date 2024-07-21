@@ -8,7 +8,7 @@ exit__()
 	exit -1
 }
 
-list_dirs=`ls -I backup -I shared -I doc -I clean -I build -I setup -I run-all`
+list_dirs=`ls -I backup -I shared -I doc -I clean -I build -I setup -I run-all -I README.md`
 
 shared_include=`ls shared/include`
 shared_src=`ls shared/src`

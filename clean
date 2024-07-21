@@ -8,18 +8,41 @@ exit__()
 	exit -1
 }
 
-list_dirs=`ls -I backup -I shared -I doc -I clean -I build -I setup -I run-all`
+list_dirs=`ls -I backup -I shared -I doc -I clean -I build -I setup -I run-all -I README.md`
 
 lock=1
+
+if [ ! -d "backup/" ]; then
+		mkdir "backup/"
+fi
 
 for local_dir in ${list_dirs[@]}
 do
 	cd ${local_dir}/build/Debug
+	if [ ! -d "../../bin/Debug/" ]; then
+		mkdir "../../bin/Debug/"
+	fi
+	if [ ! -d "../../bin/Debug/Data" ]; then
+		mkdir "../../bin/Debug/Data"
+	fi
 	./clean -o
+
 	cd ../Release/
+	if [ ! -d "../../bin/Release/" ]; then
+	mkdir "../../bin/Release/"
+	fi
+	if [ ! -d "../../bin/Release/Data" ]; then
+		mkdir "../../bin/Release/Data"
+	fi
 	./clean -o
+	
 	cd ../../gmsh
+	if [ ! -d "data" ]; then
+	mkdir "data"
+	fi
 	./clean
 	cd ../../
+
+
 done
 
