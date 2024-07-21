@@ -32,8 +32,10 @@ To run the code do the following:
 This will build and execute all numerical experiments.The last two steps will
 take some time... Alternatively, you can build and run only the experiments you
 are interested in. To do so, change into static/ and run:
+
 ./clean  
 ./setup  
+
 Then change into the directory of the experiment you are interested in, say
 mms/. In this directory change into build/Release/ and run
 
