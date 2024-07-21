@@ -33,7 +33,7 @@ software package of the Lawrence Livermore National Laboratory is a good option.
 ./build  
 ./run-all  
 
-This will build and execute all numerical experiments.The last two steps will
+This will build and execute all numerical experiments. The last two steps will
 take some time... Alternatively, you can build and run only the experiments you
 are interested in. To do so, change into static/ and run
 
