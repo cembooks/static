@@ -20,9 +20,14 @@ https://cembooks.nl
 
 To run the code do the following:
 
-- Get [deal.II](https://dealii.org) and install it.
-- Install texlive and GNU parallel.
-- Change into the static/ and run:
+1) Get [deal.II](https://dealii.org) and install it.
+
+2) Install texlive and GNU parallel.
+
+3) Install a program for viewing vtk files. [Visit](https://visit.llnl.gov) 
+software package of the Lawrence Livermore National Laboratory is a good option.
+
+4) Change into the static/ and run:
 
 ./clean  
 ./setup  
@@ -47,7 +52,5 @@ After that change into mms/bin/Release and run:
 ./run-all  
 
 This will execute the mms experiment. The results of the simulations are in
-mms/bin/Release/Data directory. It makes sense to install a program for
-viewing vtk files. [Visit](https://visit.llnl.gov) software package of
-the Lawrence Livermore National Laboratory is a good option.
+mms/bin/Release/Data directory.
 
