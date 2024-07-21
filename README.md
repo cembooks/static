@@ -18,7 +18,7 @@ https://cembooks.nl
 
 <h2> Installation </h2>
 
-To run the code do the following:
+To run the code do the following.
 
 1) Get [deal.II](https://dealii.org) and install it.
 
