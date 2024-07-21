@@ -24,25 +24,25 @@ To run the code do the following:
 - Install texlive and GNU parallel.
 - Change into the static/ and run:
 
-./clean
-./setup
-./build
-./run-all
+./clean  
+./setup  
+./build  
+./run-all  
 
 This will build and execute all numerical experiments.The last two steps will
 take some time... Alternatively, you can build and run only the experiments you
 are interested in. To do so, change into static/ and run:
-./clean
-./setup
+./clean  
+./setup  
 Then change into the directory of the experiment you are interested in, say
 mms/. In this directory change into build/Release/ and run
 
-./clean
-./build
+./clean  
+./build  
 
 After that change into mms/bin/Release and run:
 
-./run-all
+./run-all  
 
 This will execute the mms experiment. The results of the simulations are in
 mms/bin/Release/Data directory. It makes sense to install a program for
