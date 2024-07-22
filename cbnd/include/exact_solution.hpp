@@ -23,13 +23,9 @@
 using namespace dealii;
 
 /**
- * \brief Describes exact solutions, \f$\Phi\f$, of the
- *	[Effect of curved boundaries](@ref page_cbnd)
- *	numerical experiment in
- *	[two](@ref cbnd_exact_solution_2D)
- *	and
- *	[three](@ref cbnd_exact_solution_3D)
- *	dimensions.
+ * \brief Describes exact solution, \f$\Phi\f$, of the
+ *	[Effect of curved boundaries (cbnd/)](@ref page_cbnd)
+ *	numerical experiment.
  *****************************************************************************/
 template<int dim>
 class ExactSolutionCBND_PHI : public Function<dim>, public SettingsCBND

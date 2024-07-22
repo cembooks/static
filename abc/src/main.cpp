@@ -23,7 +23,7 @@ using namespace Misc;
 
 /**
  * \brief An extended version of the convergence table used in
- * [Asymptotic boundary condition](@ref page_abc)
+ * [Asymptotic boundary condition (abc/)](@ref page_abc)
  * numerical experiment.
  *****************************************************************************/
 class MainOutputTableABC : public MainOutputTable
@@ -51,18 +51,12 @@ class MainOutputTableABC : public MainOutputTable
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
  * that implements the
- * [Asymptotic boundary condition](@ref page_abc)
+ * [Asymptotic boundary condition (abc/)](@ref page_abc)
  * numerical experiment.
- *
- * The purpose of this class is to make the main function to be similar to the
- * main function of the deal.II
- * [Step-6](https://dealii.org/developer/doxygen/deal.II/step_6.html)
- * tutorial.
  *****************************************************************************/
 class BatchABC : public SettingsABC
 {
 public:
-
 	void run()
 	{
 		if (nr_threads_max > 0)

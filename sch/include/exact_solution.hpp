@@ -26,13 +26,9 @@
 using namespace dealii;
 
 /**
- * \brief Describes exact solutions, \f$\Phi\f$, of the
- * [Surface charge](@ref page_sch)
- * numerical experiment in
- * [two](@ref sch_exact_solution_2D)
- * and
- * [three](@ref sch_exact_solution_3D)
- * dimensions.
+ * \brief Describes exact solution, \f$\Phi\f$, of the
+ * [Surface charge (sch/)](@ref page_sch)
+ * numerical experiment.
  *****************************************************************************/
 template<int dim>
 class ExactSolutionSCH_PHI : public Function<dim>, public SettingsSCH

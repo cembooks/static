@@ -26,8 +26,8 @@
 using namespace dealii;
 
 /**
- * \brief Describes exact solutions, \f$\Phi\f$, of the
- * [Surface charge](@ref page_sch)
+ * \brief Describes exact solution, \f$\Phi\f$, of the
+ * [Volume charge (rho/)](@ref page_rho)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
 template<int dim>

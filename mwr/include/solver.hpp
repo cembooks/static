@@ -32,7 +32,7 @@ using namespace StaticScalarSolver;
 
 /**
  * \brief Implements the
- * [Magnetic wire](@ref page_mwr)
+ * [Magnetic wire (mwr/)](@ref page_mwr)
  * numerical experiment.
  *****************************************************************************/
 class SolverMWR : public SettingsMWR, public Solver<2>

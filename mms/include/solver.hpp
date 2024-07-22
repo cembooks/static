@@ -24,7 +24,7 @@ using namespace StaticScalarSolver;
 
 /**
  * \brief Implements the solver of the
- * [Method of manufactured solutions](@ref page_mms)
+ * [Method of manufactured solutions (mms/)](@ref page_mms)
  * numerical experiment.
  *****************************************************************************/
 template<int dim>

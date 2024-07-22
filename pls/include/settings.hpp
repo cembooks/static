@@ -20,8 +20,8 @@ using namespace dealii;
 
 /**
  * \brief Global settings for the
- * [Planes of symmetry](@ref page_pls)
- * numerical experiment
+ * [Planes of symmetry (pls/)](@ref page_pls)
+ * numerical experiment.
  *****************************************************************************/
 class SettingsPLS : public Constants::Physics
 {
@@ -36,27 +36,23 @@ public:
 
 /**
  * \brief The permittivity of free space.
- *
- * This variable, ep_0, is used throughout the program,
- * not permittivity_fs. So one can scale the system of linear equation
- * differently by setting ep_0 = 1.0.
  *****************************************************************************/
 	const double ep_0 = permittivity_fs;
 
 /**
- * \brief The [scaling parameter](@ref mms_k_parameter).
+ * \brief The scaling parameter.
  *****************************************************************************/
 	const double k = pi;
 
 /**
- * \brief The [Dirichlet boundary condition](@ref mms_bcs) will be applied
- * to the boundaries marked by ID = 1.
+ * \brief The Dirichlet boundary condition will be applied to the boundaries
+ * with ID = 1.
  *****************************************************************************/
 	const types::boundary_id bid_dirichlet = 1;
 
 /**
- * \brief The [Robin boundary condition](@ref mms_bcs) will be applied
- * to the boundaries marked by ID = 2.
+ * \brief The Robin boundary condition will be applied to the boundaries
+ * with ID = 2.
  *****************************************************************************/
 	const types::boundary_id bid_robin = 2;
 
@@ -75,10 +71,10 @@ public:
 /**
  * \brief If set to true, the program will project the exact solution.
  *
- * The exact solution, i.e., \f$\Phi\f$, will be modeled on the same mesh
- * and by the same finite elements that are used to model the solution.
- * The projected exact solution will be saved in the vtk file next to the
- * solution. This option can be useful when debugging.
+ * The exact solution will be modeled on the same mesh and by the same finite
+ * elements that are used to model the solution. The projected exact solution
+ * will be saved in the vtk file next to the solution. This option can be
+ * useful when debugging.
  *****************************************************************************/
 	const bool project_exact_solution = false;
 

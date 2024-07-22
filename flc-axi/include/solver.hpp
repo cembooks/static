@@ -31,10 +31,10 @@
 using namespace StaticScalarSolver;
 
 /**
- * \brief Implements the
- * [Axisymmetric - floating conductor](@ref page_flc_axi)
+ * \brief Implements the solver of the 
+ * [Axisymmetric - floating conductor (flc-axi/)](@ref page_flc_axi)
  * numerical experiment.
- *********************************************************/
+ *****************************************************************************/
 template<bool is_cylinder>
 class SolverFLCAXI : public SettingsFLCAXI, public Solver<2>
 {
@@ -58,7 +58,7 @@ public:
  * flc-axi/gmsh/data/.
  * @param[in] fname - The name of the vtk file without extension to save
  * the data.
- ***************************************************************************/
+ *****************************************************************************/
 	SolverFLCAXI(
 	unsigned int p,
 	unsigned int mapping_degree,

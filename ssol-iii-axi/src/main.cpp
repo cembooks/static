@@ -28,11 +28,6 @@ using namespace Misc;
  * that implements the
  * [Axisymmetric - thick spherical coil with magnetic core (ssol-iii-axi/)](@ref page_ssol_iii_axi)
  * numerical experiment.
- *
- * The purpose of this class is to make the main function to be similar to the
- * main function of the deal.II
- * [Step-6](https://dealii.org/developer/doxygen/deal.II/step_6.html)
- * tutorial.
  *****************************************************************************/
 class BatchSSOLIIIAXI : public SettingsSSOLIIIAXI
 {

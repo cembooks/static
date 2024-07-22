@@ -33,8 +33,8 @@
 using namespace StaticScalarSolver;
 
 /**
- * \brief Implements the
- * [Interface between dielectrics](@ref page_int)
+ * \brief Implements the solver of the
+ * [Interface between dielectrics (int/)](@ref page_int)
  * numerical experiment.
  *****************************************************************************/
 template<int dim>

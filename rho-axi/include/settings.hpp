@@ -19,8 +19,8 @@ using namespace dealii;
 
 /**
  * \brief Global settings for the
- * [Axisymmetric - surface charge](@ref page_sch_axi)
- * numerical experiment
+ * [Axisymmetric - volume charge (rho-axi/)](@ref page_rho_axi)
+ * numerical experiment.
  *****************************************************************************/
 class SettingsRHOAXI : public Constants::Physics
 {
@@ -35,10 +35,6 @@ public:
 
 /**
  * \brief The permittivity of free space.
- *
- * This variable, ep_0, is used throughout the program,
- * not permittivity_fs. So one can scale the system of linear equation
- * differently by setting ep_0 = 1.0.
  *****************************************************************************/
 	const double ep_0 = permittivity_fs;
 
@@ -50,7 +46,7 @@ public:
 /**
  * \brief The radius of the tube in the two- dimensional version of the
  * problem or the radius of the sphere in the three- dimensional problem
- * on which the free- charge is located.
+ * in which the free- charge is located.
  *****************************************************************************/
 	double a = 0.5;
 
@@ -60,7 +56,8 @@ public:
 	double b = 1.0;
 
 /**
- * \brief The ID of the material inside the charged region, \f$\rho_f \ne 0.0\f$.
+ * \brief The ID of the material inside the charged region,
+ * \f$\rho_f \ne 0.0\f$.
  *****************************************************************************/
 	const types::material_id mid_1 = 1;
 
@@ -89,10 +86,10 @@ public:
 /**
  * \brief If set to true, the program will project the exact solution.
  *
- * The exact solution, i.e., \f$\Phi\f$, will be modeled on the same mesh
- * and by the same finite elements that are used to model the solution.
- * The projected exact solution will be saved in the vtk file next to the
- * solution. This option can be useful when debugging.
+ * The exact solution will be modeled on the same mesh and by the same finite
+ * elements that are used to model the solution. The projected exact solution
+ * will be saved in the vtk file next to the solution. This option can be
+ * useful when debugging.
  *****************************************************************************/
 	const bool project_exact_solution = false;
 

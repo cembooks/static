@@ -32,7 +32,7 @@ using namespace StaticScalarSolver;
 
 /**
  * \brief Implements the
- * [Surface charge](@ref page_sch)
+ * [Surface charge (sch/)](@ref page_sch)
  * numerical experiment.
  *****************************************************************************/
 template<int dim>

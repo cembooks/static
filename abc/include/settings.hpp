@@ -20,7 +20,7 @@ using namespace dealii;
 /**
  * \brief Global settings for the
  * [Asymptotic boundary conditions (abc/)](@ref page_abc)
- * numerical experiment
+ * numerical experiment.
  *****************************************************************************/
 class SettingsABC : public Constants::Physics
 {
@@ -35,28 +35,24 @@ public:
 
 /**
  * \brief The permittivity of free space.
- *
- * This variable, ep_0, is used throughout the program,
- * not permittivity_fs. So one can scale the system of linear equation
- * differently by setting ep_0 = 1.0.
  *****************************************************************************/
 	const double ep_0 = permittivity_fs;
 
 /**
- * \brief The [radius](@ref  abc_3D_problem) of the sphere. Used only in the
- * three- dimensional version of the experiment.
+ * \brief The radius of the sphere. Used only in the three- dimensional
+ * version of the experiment.
  *****************************************************************************/
 	const double a = 0.1;
 
 /**
- * \brief [Offset](@ref abc_2D_problem) of the conductors from the origin.
- * Used only in the two- dimensional version of the experiment.
+ * \brief The offset of the conductors from the origin. Used only in the
+ * two- dimensional version of the experiment.
  *****************************************************************************/
 	const double x0 = 0.1;
 
 /**
- * \brief The [radius](@ref abc_2D_problem) of each conductor. Used in the
- * two- dimensional version of the program.
+ * \brief The radius of each conductor. Used in the two- dimensional version
+ * of the program.
  *****************************************************************************/
 	const double R = 0.05;
 
@@ -116,12 +112,12 @@ public:
 
 #if BC_TYPE__ == 0
 	const types::boundary_id bid_infty = 0; // Neumann boundary condition on the
-																					// outer boundary.
+	                                        // outer boundary.
 #endif
 
 #if BC_TYPE__ == 1
 	const types::boundary_id bid_infty = 5; // Dirichlet boundary condition on the
-																					// outer boundary.
+	                                        // outer boundary.
 #endif
 
 #if BC_TYPE__ == 2
@@ -143,10 +139,10 @@ public:
 /**
  * \brief If set to true, the program will project the exact solution.
  *
- * The exact solution, i.e., \f$\Phi\f$, will be modeled on the same mesh
- * and by the same finite elements that are used to model the solution.
- * The projected exact solution will be saved in the vtk file next to the
- * solution. This option can be useful when debugging.
+ * The exact solution will be modeled on the same mesh and by the same finite
+ * elements that are used to model the solution. The projected exact solution
+ * will be saved in the vtk file next to the solution. This option can be
+ * useful when debugging.
  *****************************************************************************/
 	const bool project_exact_solution = false;
 

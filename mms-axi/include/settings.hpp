@@ -19,49 +19,46 @@ using namespace dealii;
 
 /**
  * \brief Global settings for the
- * [Method of manufactured solutions](@ref page_mms)
- * numerical experiment
- ****************************************************************************/
+ * [Axisymmetric - method of manufactured solutions (mms-axi/)](@ref page_mms_axi)
+ * numerical experiment.
+ *****************************************************************************/
 class SettingsMMSAXI : public Constants::Physics
 {
 public:
 	SettingsMMSAXI() {};
 
-	/**
-	 * \brief If greater than zero, limits the amount of threads used in the
-	 * simulations.
-	 *************************************************************************/
+/**
+ * \brief If greater than zero, limits the amount of threads used in the
+ * simulations.
+ *****************************************************************************/
 	const unsigned int nr_threads_max = 8;
 
 /**
  * \brief The permittivity of free space.
- *
- * This variable, ep_0, is used throughout the program. One can scale
- * the system of linear equation differently by setting ep_0 = 1.0.
  *****************************************************************************/
 	const double ep_0 = permittivity_fs;
 
-	/**
-	 * \brief The scaling [parameter](@ref mms_k_parameter).
-	 *************************************************************************/
+/**
+ * \brief The scaling parameter.
+ *****************************************************************************/
 	const double k = pi;
 
-	/**
-	 * \brief The [Dirichlet boundary condition](@ref mms_bcs) will be applied
-	 * to the boundaries marked by ID = 1.
-	 *************************************************************************/
+/**
+ * \brief The Dirichlet boundary condition will be applied to the boundaries
+ * with the ID = 1.
+ *****************************************************************************/
 	const types::boundary_id bid_dirichlet = 1;
 
-	/**
-	 * \brief The [Robin boundary condition](@ref mms_bcs) will be applied
-	 * to the boundaries marked by ID = 2.
-	 *************************************************************************/
+/**
+ * \brief The Robin boundary condition will be applied to the boundaries
+ * with the ID = 2.
+ *****************************************************************************/
 	const types::boundary_id bid_robin = 2;
 
-	/**
-	 * \brief Two values in double format are considered to be equal if the
-	 * absolute value of their difference is less than eps.
-	 *************************************************************************/
+/**
+ * \brief Two values in double format are considered to be equal if the
+ * absolute value of their difference is less than eps.
+ *****************************************************************************/
 	const double eps = 1e-12;
 
 /**
@@ -73,16 +70,10 @@ public:
 /**
  * \brief If set to true, the program will project the exact solution.
  *
- * The exact solutions, i.e., \f$\Phi_M\f$, \f$\vec{E}_M\f$, and
- * \f$\vec{D}_M\f$, see this
- * [page](@ref page_mms_axi),
- * will be modeled on the same mesh and by the same finite elements
- * that are used to model the solution (\f$\Phi_M\f$ - Lagrange,
- * \f$\vec{E}_M\f$ - Nedelec, and \f$\vec{D}_M\f$ - Raviart-Thomas).
- * The projected exact solution will be saved in the vtk file next to the
- * solution. This option can be useful when debugging. It only works if
- * the exact solutions are passed to the constructors of the corresponding
- * solver or projector objects.
+ * The exact solution will be modeled on the same mesh and by the same finite
+ * elements that are used to model the solution. The projected exact solution
+ * will be saved in the vtk file next to the solution. This option can be
+ * useful when debugging.
  *****************************************************************************/
 	const bool project_exact_solution = false;
 

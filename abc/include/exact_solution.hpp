@@ -23,8 +23,8 @@
 using namespace dealii;
 
 /**
- * \brief Describes exact solutions, \f$\Phi\f$, of the
- * [Asymptotic boundary condition](@ref page_abc)
+ * \brief Describes exact solution, \f$\Phi\f$, of the
+ * [Asymptotic boundary condition (abc/)](@ref page_abc)
  * numerical experiment.
  *****************************************************************************/
 template<int dim>

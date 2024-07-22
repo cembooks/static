@@ -20,7 +20,7 @@ using namespace dealii;
 /**
  * \brief Global settings for the
  * [Thick spherical coil (ssol-ii/)](@ref page_ssol_ii)
- * numerical experiment
+ * numerical experiment.
  *****************************************************************************/
 class SettingsSSOLII : public Constants::Physics
 {
@@ -65,7 +65,7 @@ public:
 	const types::material_id mid_1 = 1;
 
 /**
- * \brief The ID of the material outside the coil, i.e., Jf>0
+ * \brief The ID of the material inside the coil, i.e., Jf>0
  *****************************************************************************/
 	const types::material_id mid_2 = 2;
 
@@ -84,10 +84,10 @@ public:
 /**
  * \brief If set to true, the program will project the exact solution.
  *
- * The exact solutions will be modeled on the same mesh
- * and by the same finite elements that are used to model the solution.
- * The projected exact solution will be saved in the vtk file next to the
- * solution. This option can be useful when debugging.
+ * The exact solutions will be modeled on the same mesh and by the same finite
+ * elements that are used to model the solution. The projected exact solution
+ * will be saved in the vtk file next to the solution. This option can be
+ * useful when debugging.
  *****************************************************************************/
 	const bool project_exact_solution = false;
 

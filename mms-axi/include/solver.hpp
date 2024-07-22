@@ -34,9 +34,9 @@ using namespace StaticScalarSolver;
 
 /**
  * \brief Implements the
- * [Axisymmetric - method of manufactured solutions](@ref page_mms_axi)
+ * [Axisymmetric - method of manufactured solutions (mms-axi/)](@ref page_mms_axi)
  * numerical experiment.
- *********************************************************/
+ *****************************************************************************/
 template<int dim>
 class SolverMMSAXI : public SettingsMMSAXI, public Solver<dim>
 {
@@ -56,7 +56,7 @@ public:
  * mms-axi/gmsh/data/.
  * @param[in] fname - The name of the vtk file without extension to save
  * the data.
- ***************************************************************************/
+ *****************************************************************************/
 	SolverMMSAXI(
 	unsigned int p,
 	unsigned int r,

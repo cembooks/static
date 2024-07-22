@@ -32,7 +32,7 @@ using namespace StaticScalarSolver;
 
 /**
  * \brief Implements the
- * [Volume charge](@ref page_rho)
+ * [Volume charge (rho/)](@ref page_rho)
  * numerical experiment.
  *****************************************************************************/
 template<int dim>

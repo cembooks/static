@@ -32,7 +32,7 @@ using namespace StaticScalarSolver;
 
 /**
  * \brief Implements the
- * [Axisymmetric - thin spherical coil](@ref page_ssol_i_axi)
+ * [Axisymmetric - thin spherical coil (ssol-i-axi)](@ref page_ssol_i_axi)
  * numerical experiment.
  *****************************************************************************/
 class SolverSSOLIAXI : public SettingsSSOLIAXI, public Solver<2>

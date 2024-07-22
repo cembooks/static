@@ -41,6 +41,21 @@ public:
 
 	SolverMMSVTI_T() = delete;
 
+/**
+ * The constructor.
+ *
+ * @param[in] p - The degree of the Nedelec finite elements.
+ * @param[in] mapping_degree - The degree of the interpolating polynomials used
+ * for mapping. Setting it to 1 will do in the most of the cases. Note, that it
+ * makes sense to attach a meaningful manifold to the triangulation if this
+ * parameter is greater than 1.
+ * @param[in] r - The parameter that encodes the degree of mesh refinement.
+ * Must coincide with one of the values set in mms-vt-i/gmsh/build. This parameter
+ * is used to compose the name of the mesh file to be uploaded from
+ * mms-vt-i/gmsh/data/.
+ * @param[in] fname - The name of the vtk file without extension to save
+ * the data.
+ *****************************************************************************/
 	SolverMMSVTI_T(
 		unsigned int p,
 		unsigned int mapping_degree,
@@ -88,6 +103,27 @@ public:
 
 	SolverMMSVTI_A() = delete;
 
+/**
+ * The constructor.
+ *
+ * @param[in] p - The degree of the Nedelec finite elements.
+ * @param[in] mapping_degree - The degree of the interpolating polynomials used
+ * for mapping. Setting it to 1 will do in the most of the cases. Note, that it
+ * makes sense to attach a meaningful manifold to the triangulation if this
+ * parameter is greater than 1.
+ * @param[in] triangulation_T - The triangulation created at the 0-th stage of
+ * the simulation.
+ * @param[in] dof_handler_T - The dof handler created at the 0-th stage of the
+ * simulation.
+ * @param[in] solution_T - The degrees of freedom that describe the current
+ * vector potential computed at the 0-th stage of the simulation.
+ * @param[in] r - The parameter that encodes the degree of mesh refinement.
+ * Must coincide with one of the values set in mms-vt-i/gmsh/build. This parameter
+ * is used to compose the name of the mesh file to be uploaded from
+ * mms-vt-i/gmsh/data/.
+ * @param[in] fname - The name of the vtk file without extension to save
+ * the data.
+ *****************************************************************************/
 	SolverMMSVTI_A(
 		unsigned int p,
 		unsigned int mapping_degree,

@@ -31,10 +31,10 @@
 using namespace StaticScalarSolver;
 
 /**
- * \brief Implements the
- * [Asymptotic boundary condition](@ref page_abc)
+ * \brief Implements the solver of the
+ * [Asymptotic boundary condition (abc/)](@ref page_abc)
  * numerical experiment.
- *********************************************************/
+ *****************************************************************************/
 template<int dim>
 class SolverABC : public SettingsABC, public Solver<dim>
 {
@@ -60,7 +60,7 @@ public:
  * abc/gmsh/data/.
  * @param[in] fname - The name of the vtk file without extension to save
  * the data.
- ***************************************************************************/
+ *****************************************************************************/
 	SolverABC(
 	unsigned int m,
 	unsigned int p,

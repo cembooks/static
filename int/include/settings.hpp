@@ -19,8 +19,8 @@ using namespace dealii;
 
 /**
  * \brief Global settings for the
- * [Interface between dielectrics](@ref page_int)
- * numerical experiment
+ * [Interface between dielectrics (int/)](@ref page_int)
+ * numerical experiment.
  *****************************************************************************/
 class SettingsINT : public Constants::Physics
 {
@@ -35,10 +35,6 @@ public:
 
 /**
  * \brief The permittivity of free space.
- *
- * This variable, ep_0, is used throughout the program,
- * not permittivity_fs. So one can scale the system of linear equation
- * differently by setting ep_0 = 1.0.
  *****************************************************************************/
 	const double ep_0 = permittivity_fs;
 
@@ -53,7 +49,7 @@ public:
 	double b = 1.0;
 
 /**
- * \brief The radius of the boundary between dissimilar materials.
+ * \brief The radius of the interface between dissimilar materials.
  *****************************************************************************/
 	double d = 0.65;
 
@@ -103,12 +99,10 @@ public:
 /**
  * \brief If set to true, the program will project the exact solution.
  *
- * The exact solutions will be modeled on the same mesh and by the same
- * finite elements that are used to model the numerical solution.
- * The projected exact solution will  be saved in the vtk file next
- * to the solution. This option can be useful when debugging. It only
- * works if the exact solutions are passed to the constructors of the
- * corresponding solver or projector objects.
+ * The exact solution will be modeled on the same mesh and by the same finite
+ * elements that are used to model the solution. The projected exact solution
+ * will be saved in the vtk file next to the solution. This option can be
+ * useful when debugging.
  *****************************************************************************/
 	const bool project_exact_solution = false;
 

@@ -27,7 +27,7 @@ using namespace dealii;
 
 /**
  * \brief Describes exact solution, \f$ A' \f$, of the
- * [Axisymmetric - thin spherical coil](@ref page_ssol_i_axi)
+ * [Axisymmetric - thin spherical coil (ssol-i-axi)](@ref page_ssol_i_axi)
  * numerical experiment.
  *****************************************************************************/
 class ExactSolutionSSOLIAXI_A : public Function<2>, public SettingsSSOLIAXI
@@ -45,7 +45,7 @@ public:
 
 /**
  * \brief Describes exact solution, \f$\vec{B}'\f$, of the
- * [Axisymmetric - thin spherical coil](@ref page_ssol_i_axi)
+ * [Axisymmetric - thin spherical coil (ssol-i-axi)](@ref page_ssol_i_axi)
  * numerical experiment.
  *****************************************************************************/
 class ExactSolutionSSOLIAXI_B : public Function<2>, public SettingsSSOLIAXI
@@ -63,7 +63,7 @@ private:
 
 /**
  * \brief Describes exact solution, \f$\vec{H}'\f$, of the
- * [Axisymmetric - thin spherical coil](@ref page_ssol_i_axi)
+ * [Axisymmetric - thin spherical coil (ssol-i-axi)](@ref page_ssol_i_axi)
  * numerical experiment.
  *****************************************************************************/
 class ExactSolutionSSOLIAXI_H: public Function<2>, public SettingsSSOLIAXI

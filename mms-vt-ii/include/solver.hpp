@@ -41,6 +41,19 @@ public:
 
 	SolverMMSVTII_T() = delete;
 
+/**
+ * The constructor.
+ *
+ * @param[in] p - The degree of the interpolating polynomials of the Lagrange
+ * finite elements,
+ * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
+ * @param[in] r - The parameter that encodes the degree of mesh refinement.
+ * Must coincide with one of the values set in mms-vt-ii/gmsh/build. This parameter
+ * is used to compose the name of the mesh file to be uploaded from
+ * mms-vt-ii/gmsh/data/.
+ * @param[in] fname - The name of the vtk file without extension to save
+ * the data.
+ *****************************************************************************/
 	SolverMMSVTII_T(
 		unsigned int p,
 		unsigned int r,
@@ -87,7 +100,23 @@ class SolverMMSVTII_A : public SettingsMMSVTII, public Solver2<2,2>
 public:
 
 	SolverMMSVTII_A() = delete;
-
+/**
+* The constructor.
+*
+* @param[in] p - The degree of the Nedelec finite elements.
+* @param[in] triangulation_T - The triangulation created at the 0-th stage of
+* the simulation.
+* @param[in] dof_handler_T - The dof handler created at the 0-th stage of the
+* simulation.
+* @param[in] solution_T - The degrees of freedom that describe the current
+* vector potential computed at the 0-th stage of the simulation.
+* @param[in] r - The parameter that encodes the degree of mesh refinement.
+* Must coincide with one of the values set in mms-vt-ii/gmsh/build. This parameter
+* is used to compose the name of the mesh file to be uploaded from
+* mms-vt-ii/gmsh/data/.
+* @param[in] fname - The name of the vtk file without extension to save
+* the data.
+*****************************************************************************/
 	SolverMMSVTII_A(
 		unsigned int p,
 		const Triangulation<2> & triangulation_T,

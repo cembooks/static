@@ -26,8 +26,8 @@
 using namespace dealii;
 
 /**
- * \brief Describes exact solutions, \f$\Phi\f$, of the
- * [Planes of symmetry](@ref page_pls)
+ * \brief Describes exact solution, \f$\Phi\f$, of the
+ * [Planes of symmetry (pls/)](@ref page_pls)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
 template<int dim>

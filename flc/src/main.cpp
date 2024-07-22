@@ -24,21 +24,12 @@ using namespace Misc;
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
  * that implements the
- * [Floating conductor](@ref page_flc)
+ * [Floating conductor (flc/)](@ref page_flc)
  * numerical experiment.
- *
- * The purpose of this class is to make the main function to be similar to the
- * main function of the deal.II
- * [Step-6](https://dealii.org/developer/doxygen/deal.II/step_6.html)
- * tutorial.
  *****************************************************************************/
 class BatchFLC : public SettingsFLC
 {
 public:
-
-/**
- * \brief Executes the experiment.
- *****************************************************************************/
 	void run()
 	{
 		if (nr_threads_max > 0)

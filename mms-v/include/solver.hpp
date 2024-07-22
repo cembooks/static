@@ -36,6 +36,17 @@ public:
 
 	SolverMMSV() = delete;
 
+/**
+ * The constructor.
+ *
+ * @param[in] p - The degree of the Nedelec finite elements.
+ * @param[in] r - The parameter that encodes the degree of mesh refinement.
+ * Must coincide with one of the values set in mms-v/gmsh/build. This parameter
+ * is used to compose the name of the mesh file to be uploaded from
+ * mms-v/gmsh/data/.
+ * @param[in] fname - The name of the vtk file without extension to save
+ * the data.
+ *****************************************************************************/
 	SolverMMSV(
 	unsigned int p,
 	unsigned int r,

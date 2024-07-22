@@ -166,7 +166,7 @@ public:
 	ExactSolutionSSOLIII_Jf();
 
 	virtual void vector_value_list(const std::vector<Point<3>> & r,
-		std::vector<Vector<double>>	 &values) const override final;
+		std::vector<Vector<double>> &values) const override final;
 };
 
 /**
@@ -181,7 +181,7 @@ public:
 	ExactSolutionSSOLIII_B();
 
 	virtual void vector_value_list(const std::vector<Point<3>> & r,
-		std::vector<Vector<double>>	 &values) const override final;
+		std::vector<Vector<double>> &values) const override final;
 };
 
 #endif

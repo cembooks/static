@@ -32,7 +32,7 @@ using namespace StaticScalarSolver;
 
 /**
  * \brief Implements the solver of the
- * [Effect of curved boundaries](@ref page_cbnd)
+ * [Effect of curved boundaries (cbnd/)](@ref page_cbnd)
  * numerical experiment.
  *****************************************************************************/
 template<int dim>

@@ -9,6 +9,9 @@ set spell spelllang=en_us
 "Set fold method
 set foldmethod=syntax
 
+" disable folding
+set nofoldenable 
+
 " To prevent Vim pretending it is Vi
 set nocompatible
 
@@ -76,7 +79,7 @@ set ruler
 " The following commands set the spaces and tab characters visible
 " set list
 set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
-set nolist
+set list
 
 " Mapping function keys
 map #5 :TagbarToggle <CR>

@@ -26,7 +26,7 @@
 using namespace dealii;
 
 /**
- * \brief Describes exact solutions, \f$\Theta\f$, of the
+ * \brief Describes exact solution, \f$\Theta\f$, of the
  * [Magnetostatic shield - 2 (sld-ii/)](@ref page_sld_ii)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
@@ -49,7 +49,7 @@ private:
 };
 
 /**
- * \brief Describes exact solutions, \f$\vec{H}\f$, of the
+ * \brief Describes exact solution, \f$\vec{H}\f$, of the
  * [Magnetostatic shield - 2 (sld-ii/)](@ref page_sld_ii)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
@@ -69,7 +69,7 @@ private:
 };
 
 /**
- * \brief Describes exact solutions, \f$\vec{B}\f$, of the
+ * \brief Describes exact solution, \f$\vec{B}\f$, of the
  * [Magnetostatic shield - 2 (sld-ii/)](@ref page_sld_ii)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/

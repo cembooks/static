@@ -38,7 +38,7 @@ using namespace StaticScalarSolver;
  * [Magnetostatic shield - 1 (sld-i/)](@ref page_sld_i)
  * numerical experiment. Applied to the outer (the only) boundary of the problem
  * domain.
- ******************************************************************************/
+ *****************************************************************************/
 template<int dim>
 class DirichletSLDI : public SettingsSLDI, public Function<dim>
 {
@@ -79,7 +79,7 @@ public:
  * sld-i/gmsh/data/.
  * @param[in] fname - The name of the vtk file without extension to save
  * the data.
- ***************************************************************************/
+ *****************************************************************************/
 	SolverSLDI(
 	unsigned int p,
 	unsigned int mapping_degree,

@@ -20,17 +20,17 @@ using namespace dealii;
 /**
  * \brief Global settings for the
  * [Thin spherical coil (ssol-i/)](@ref page_ssol_i)
- * numerical experiment
+ * numerical experiment.
  *****************************************************************************/
 class SettingsSSOLI : public Constants::Physics
 {
 public:
 	SettingsSSOLI() {};
 
-	/**
-	 * \brief If greater than zero, limits the amount of threads used in the
-	 * simulations.
-	 *************************************************************************/
+/**
+ * \brief If greater than zero, limits the amount of threads used in the
+ * simulations.
+ *****************************************************************************/
 	const unsigned int nr_threads_max = 8;
 
 /**
@@ -51,7 +51,7 @@ public:
 
 /**
  * \brief Two values in double format are considered to be equal if the
- * absolute value of their difference is less than **eps**.
+ * absolute value of their difference is less than eps.
  *****************************************************************************/
 	const double eps = 1e-12;
 
@@ -59,15 +59,15 @@ public:
  * \brief If set to true, the program will print the time tables on the
  * screen.
  *****************************************************************************/
-	const bool print_time_tables = false; // true;
+	const bool print_time_tables = false;
 
 /**
  * \brief If set to true, the program will project the exact solution.
  *
- * The exact solutions will be modeled on the same mesh
- * and by the same finite elements that are used to model the solution.
- * The projected exact solution will be saved in the vtk file next to the
- * solution. This option can be useful when debugging.
+ * The exact solutions will be modeled on the same mesh and by the same finite
+ * elements that are used to model the solution. The projected exact solution
+ * will be saved in the vtk file next to the solution. This option can be
+ * useful when debugging.
  *****************************************************************************/
 	const bool project_exact_solution = false;
 

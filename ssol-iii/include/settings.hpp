@@ -20,7 +20,7 @@ using namespace dealii;
 /**
  * \brief Global settings for the
  * [Thick spherical coil with magnetic core (ssol-iii/)](@ref page_ssol_iii)
- * numerical experiment
+ * numerical experiment.
  *****************************************************************************/
 class SettingsSSOLIII : public Constants::Physics
 {
@@ -118,10 +118,10 @@ public:
 /**
  * \brief If set to true, the program will project the exact solution.
  *
- * The exact solutions will be modeled on the same mesh
- * and by the same finite elements that are used to model the solution.
- * The projected exact solution will be saved in the vtk file next to the
- * solution. This option can be useful when debugging.
+ * The exact solutions will be modeled on the same mesh and by the same finite
+ * elements that are used to model the solution. The projected exact solution
+ * will be saved in the vtk file next to the solution. This option can be
+ * useful when debugging.
  *****************************************************************************/
 	const bool project_exact_solution = true;
 

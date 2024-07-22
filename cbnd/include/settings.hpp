@@ -19,8 +19,8 @@ using namespace dealii;
 
 /**
  * \brief Global settings for the
- * [Effect of curved boundaries](@ref page_cbnd)
- * numerical experiment
+ * [Effect of curved boundaries (cbnd/)](@ref page_cbnd)
+ * numerical experiment.
  *****************************************************************************/
 class SettingsCBND : public Constants::Physics
 {
@@ -35,10 +35,6 @@ class SettingsCBND : public Constants::Physics
 
 /**
  * \brief The permittivity of free space.
- *
- * This variable, ep_0, is used throughout the program,
- * not permittivity_fs. So one can scale the system of linear equation
- * differently by setting ep_0 = 1.0.
  *****************************************************************************/
 	const double ep_0 = permittivity_fs;
 
@@ -79,10 +75,10 @@ class SettingsCBND : public Constants::Physics
 /**
  * \brief If set to true, the program will project the exact solution.
  *
- * The exact solution, i.e., \f$\Phi\f$, will be modeled on the same mesh
- * and by the same finite elements that are used to model the solution.
- * The projected exact solution will be saved in the vtk file next to the
- * solution. This option can be useful when debugging.
+ * The exact solution will be modeled on the same mesh and by the same finite
+ * elements that are used to model the solution. The projected exact solution
+ * will be saved in the vtk file next to the solution. This option can be
+ * useful when debugging.
  *****************************************************************************/
 	const bool project_exact_solution = false;
 

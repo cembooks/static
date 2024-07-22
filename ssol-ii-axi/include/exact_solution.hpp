@@ -115,7 +115,7 @@ private:
 };
 
 /**
- * \brief Describes exact solutions, \f$\vec{H}'\f$, of the
+ * \brief Describes exact solution, \f$\vec{H}'\f$, of the
  * [Axisymmetric - thick spherical coil (ssol-ii-axi)](@ref page_ssol_ii_axi)
  * numerical experiment.
  *****************************************************************************/

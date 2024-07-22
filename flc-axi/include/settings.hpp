@@ -19,8 +19,8 @@ using namespace dealii;
 
 /**
  * \brief Global settings for the
- * [Axisymmetric - floating conductor](@ref page_flc_axi)
- * numerical experiment
+ * [Axisymmetric - floating conductor (flc-axi/)](@ref page_flc_axi)
+ * numerical experiment.
  *****************************************************************************/
 class SettingsFLCAXI : public Constants::Physics
 {
@@ -35,10 +35,6 @@ public:
 
 /**
  * \brief The permittivity of free space.
- *
- * This variable, ep_0, is used throughout the program,
- * not permittivity_fs. So one can scale the system of linear equation
- * differently by setting ep_0 = 1.0.
  *****************************************************************************/
 	const double ep_0 = permittivity_fs;
 
@@ -105,8 +101,8 @@ public:
 	const double ep_3 = 1e9*ep_0;
 
 /**
- * \brief If greater than zero, limits the amount of threads used in the
- * simulations.
+ * \brief Two values in double format are considered to be equal if the
+ * absolute value of their difference is less than eps.
  *****************************************************************************/
 	const double eps = 1e-12;
 
@@ -119,10 +115,10 @@ public:
 /**
  * \brief If set to true, the program will project the exact solution.
  *
- * The exact solution, i.e., \f$\Phi\f$, will be modeled on the same mesh
- * and by the same finite elements that are used to model the solution.
- * The projected exact solution will be saved in the vtk file next to the
- * solution. This option can be useful when debugging.
+ * The exact solution will be modeled on the same mesh and by the same finite
+ * elements that are used to model the solution. The projected exact solution
+ * will be saved in the vtk file next to the solution. This option can be
+ * useful when debugging.
  *****************************************************************************/
 	const bool project_exact_solution = false;
 

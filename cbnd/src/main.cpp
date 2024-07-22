@@ -30,7 +30,6 @@ using namespace Misc;
 class BatchCBND : public SettingsCBND
 {
 public:
-
 	void run()
 	{
 		if (nr_threads_max > 0)

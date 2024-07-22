@@ -19,8 +19,8 @@ using namespace dealii;
 
 /**
  * \brief Global settings for the
- * [Method of manufactured solutions](@ref page_mms)
- * numerical experiment
+ * [Method of manufactured solutions (mms/)](@ref page_mms)
+ * numerical experiment.
  *****************************************************************************/
 class SettingsMMS : public Constants::Physics
 {
@@ -35,30 +35,26 @@ public:
 
 /**
  * \brief The permittivity of free space.
- *
- * This variable, ep_0, is used throughout the program. One can scale
- * the system of linear equation differently by setting ep_0 = 1.0.
  *****************************************************************************/
 	const double ep_0 = permittivity_fs;
 
 /**
- * \brief The scaling [parameter](@ref mms_k_parameter).
+ * \brief The scaling parameter.
  *****************************************************************************/
 	const double k = pi;
 
 /**
- * \brief The [Dirichlet boundary condition](@ref mms_bcs) will be applied
- * to the boundaries marked by ID = 1. The boundary IDs are set in the
- * geo files that are located in the gmsh directory.
+ * \brief The Dirichlet boundary condition will be applied to the boundaries
+ * with ID = 1. The boundary IDs are set in the geo files that are located in
+ * the mms/gmsh directory.
  *****************************************************************************/
 	const types::boundary_id bid_dirichlet = 1;
 
 /**
- * \brief The [Robin boundary condition](@ref mms_bcs) will be applied
- * to the boundaries marked by even boundary IDs. This constant is not used in
- * the code. The code applies the Robin boundary condition on all boundaries
- * with even IDs. The boundary IDs are set in the geo files that are located in
- * the gmsh directory.
+ * \brief The Robin boundary condition will be applied to the boundaries with
+ * even boundary IDs. This constant is not used in the code. The code applies
+ * the Robin boundary condition on all boundaries with even IDs. The boundary
+ * IDs are set in the geo files that are located in the mms/gmsh directory.
  *****************************************************************************/
 	const types::boundary_id bid_robin = 2;
 
@@ -77,17 +73,10 @@ public:
 /**
  * \brief If set to true, the program will project the exact solution.
  *
- * The exact solutions, i.e., \f$\Phi_M\f$, \f$\vec{E}_M\f$, and
- * \f$\vec{D}_M\f$, see this
- * [page](@ref page_mms),
- * will be modeled on the same mesh and by the same finite elements
- * that are used to model the solution
- * (\f$\Phi_M\f$ - Lagrange,  \f$\vec{E}_M\f$ - Nedelec, and
- * \f$\vec{D}_M\f$ - Raviart-Thomas).
- * The projected exact solution will  be saved in the vtk file next
- * to the solution. This option can be useful when debugging. It only
- * works if the exact solutions are passed to the constructors of the
- * corresponding solver or projector objects.
+ * The exact solution will be modeled on the same mesh and by the same finite
+ * elements that are used to model the solution. The projected exact solution
+ * will be saved in the vtk file next to the solution. This option can be
+ * useful when debugging.
  *****************************************************************************/
 	const bool project_exact_solution = false;
 

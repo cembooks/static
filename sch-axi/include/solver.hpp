@@ -32,7 +32,7 @@ using namespace StaticScalarSolver;
 
 /**
  * \brief Implements the
- * [Axisymmetric - surface charge](@ref page_sch_axi)
+ * [Axisymmetric - surface charge (sch-axi/)](@ref page_sch_axi)
  * numerical experiment.
  *****************************************************************************/
 template<bool is_cylinder>

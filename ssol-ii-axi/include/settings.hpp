@@ -20,7 +20,7 @@ using namespace dealii;
 /**
  * \brief Global settings for the
  * [Axisymmetric - thick spherical coil (ssol-ii-axi)](@ref page_ssol_ii_axi)
- * numerical experiment
+ * numerical experiment.
  *****************************************************************************/
 class SettingsSSOLIIAXI : public Constants::Physics
 {
@@ -35,10 +35,6 @@ public:
 
 /**
  * \brief The permeability of free space.
- *
- * This variable, mu_0, is used throughout the program,
- * not permeability_fs. So one can scale the system of linear equation
- * differently by setting mu_0 = 1.0.
  *****************************************************************************/
 	const double mu_0 = permeability_fs;
 
@@ -74,7 +70,7 @@ public:
 	const types::material_id mid_1 = 1;
 
 /**
- * \brief The ID of the material inside the coil, J_f is  nonzero in this
+ * \brief The ID of the material inside the coil, J_f is nonzero in this
  * region.
  *****************************************************************************/
 	const types::material_id mid_2 = 2;

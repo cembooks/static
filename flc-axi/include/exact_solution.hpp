@@ -23,8 +23,8 @@
 using namespace dealii;
 
 /**
- * \brief Describes exact solutions, \f$\Phi\f$, of the
- * [Axisymmetric - floating conductor](@ref page_flc_axi)
+ * \brief Describes the exact solution, \f$\Phi\f$, of the
+ * [Axisymmetric - floating conductor (flc-axi/)](@ref page_flc_axi)
  * numerical experiment.
  *****************************************************************************/
 template<bool is_cylinder>

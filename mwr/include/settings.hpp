@@ -19,8 +19,8 @@ using namespace dealii;
 
 /**
  * \brief Global settings for the
- * [Magnetic wire](@ref page_mwr)
- * numerical experiment
+ * [Magnetic wire (mwr/)](@ref page_mwr)
+ * numerical experiment.
  *****************************************************************************/
 class SettingsMWR : public Constants::Physics
 {
@@ -35,10 +35,6 @@ public:
 
 /**
  * \brief The permeability of free space.
- *
- * This variable, mu_0, is used throughout the program,
- * not permeability_fs. So one can scale the system of linear equation
- * differently by setting mu_0 = 1.0.
  *****************************************************************************/
 	const double mu_0 = permeability_fs;
 

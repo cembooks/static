@@ -31,7 +31,7 @@ using namespace StaticScalarSolver;
 
 /**
  * \brief Implements the
- * [Planes of symmetry](@ref page_pls)
+ * [Planes of symmetry (pls/)](@ref page_pls)
  * numerical experiment.
  *****************************************************************************/
 template<int dim>

@@ -40,6 +40,23 @@ public:
 
 	SolverCVPII() = delete;
 
+/**
+ * The constructor.
+ *
+ * @param[in] p - The degree of the interpolating polynomials of the Lagrange
+ * finite elements,
+ * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
+ * @param[in] mapping_degree - The degree of the interpolating polynomials used
+ * for mapping. Setting it to 1 will do in the most of the cases. Note, that it
+ * makes sense to attach a meaningful manifold to the triangulation if this
+ * parameter is greater than 1.
+ * @param[in] r - The parameter that encodes the degree of mesh refinement.
+ * Must coincide with one of the values set in cvp-ii/gmsh/build. This parameter
+ * is used to compose the name of the mesh file to be uploaded from
+ * cvp-ii/gmsh/data/.
+ * @param[in] fname - The name of the vtk file without extension to save
+ * the data.
+ *****************************************************************************/
 	SolverCVPII(
 	unsigned int p,
 	unsigned int mapping_degree,

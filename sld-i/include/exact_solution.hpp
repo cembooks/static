@@ -26,7 +26,7 @@
 using namespace dealii;
 
 /**
- * \brief Describes exact solutions, \f$\Psi\f$, of the
+ * \brief Describes exact solution, \f$\Psi\f$, of the
  * [Magnetostatic shield - 1 (sld-i/)](@ref page_sld_i)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
@@ -49,7 +49,7 @@ private:
 };
 
 /**
- * \brief Describes exact solutions, \f$\vec{H}\f$, of the
+ * \brief Describes exact solution, \f$\vec{H}\f$, of the
  * [Magnetostatic shield - 1 (sld-i/)](@ref page_sld_i)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
@@ -69,7 +69,7 @@ private:
 };
 
 /**
- * \brief Describes exact solutions, \f$\vec{B}\f$, of the
+ * \brief Describes exact solution, \f$\vec{B}\f$, of the
  * [Magnetostatic shield - 1 (sld-i/)](@ref page_sld_i)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/

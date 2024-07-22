@@ -26,21 +26,12 @@ using namespace Misc;
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
  * that implements the
- * [Axisymmetric - floating conductor](@ref page_flc_axi)
+ * [Axisymmetric - floating conductor (flc-axi/)](@ref page_flc_axi)
  * numerical experiment.
- *
- * The purpose of this class is to make the main function to be similar to the
- * main function of the deal.II
- * [Step-6](https://dealii.org/developer/doxygen/deal.II/step_6.html)
- * tutorial.
  *****************************************************************************/
 class BatchFLCAXI : public SettingsFLCAXI
 {
 public:
-
-/**
- * \brief Executes the experiment.
- *****************************************************************************/
 	void run()
 	{
 		if (nr_threads_max > 0)

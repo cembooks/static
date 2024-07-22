@@ -28,19 +28,10 @@ using namespace Misc;
  * that implements the
  * [Axisymmetric - interface between dielectrics (int-axi/)](@ref page_int_axi)
  * numerical experiment.
- *
- * The purpose of this class is to make the main function to be similar to the
- * main function of the deal.II
- * [Step-6](https://dealii.org/developer/doxygen/deal.II/step_6.html)
- * tutorial.
  *****************************************************************************/
 class BatchINTAXI : public SettingsINTAXI
 {
 public:
-
-/**
- * \brief Executes the experiment.
- *****************************************************************************/
 	void run()
 	{
 		if (nr_threads_max > 0)

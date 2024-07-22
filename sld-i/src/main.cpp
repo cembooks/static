@@ -28,11 +28,6 @@ using namespace Misc;
  * that implements the
  * [Magnetostatic shield - 1 (sld-i/)](@ref page_sld_i)
  * numerical experiment.
- *
- * The purpose of this class is to make the main function to be similar to the
- * main function of the deal.II
- * [Step-6](https://dealii.org/developer/doxygen/deal.II/step_6.html)
- * tutorial.
  *****************************************************************************/
 class BatchSLDI : public SettingsSLDI
 {

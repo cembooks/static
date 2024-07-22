@@ -20,7 +20,7 @@ using namespace dealii;
 /**
  * \brief Global settings for the
  * [Method of manufactured solutions, vector potential (mms-v/)](@ref page_mms_v)
- * numerical experiment
+ * numerical experiment.
  *****************************************************************************/
 class SettingsMMSV : public Constants::Physics
 {
@@ -34,30 +34,30 @@ public:
 	const unsigned int nr_threads_max = 8;
 
 /**
- * \brief The permittivity of free space.
+ * \brief The permeability of free space.
  *****************************************************************************/
 	const double mu_0 = permeability_fs;
 
 /**
- * \brief The scaling [parameter](@ref mms_k_parameter).
+ * \brief The scaling parameter.
  *****************************************************************************/
 	const double k = pi;
 
 /**
- * \brief The [Dirichlet boundary condition](@ref mms_bcs) will be applied
- * to the boundaries marked by ID = 1.
+ * \brief The Dirichlet boundary condition will be applied to the boundaries
+ * with ID = 1.
  *****************************************************************************/
 	const types::boundary_id bid_dirichlet = 1;
 
 /**
- * \brief The [Robin boundary condition](@ref mms_bcs) will be applied
- * to the boundaries marked by ID = 2.
+ * \brief The Robin boundary condition will be applied to the boundaries
+ * with ID = 2.
  *****************************************************************************/
 	const types::boundary_id bid_robin = 2;
 
 /**
  * \brief Two values in double format are considered to be equal if the
- * absolute value of their difference is less than **eps**.
+ * absolute value of their difference is less than eps.
  *****************************************************************************/
 	const double eps = 1e-12;
 

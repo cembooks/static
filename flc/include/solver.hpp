@@ -31,10 +31,10 @@
 using namespace StaticScalarSolver;
 
 /**
- * \brief Implements the
- * [Floating conductor](@ref page_flc)
+ * \brief Implements the solver of the
+ * [Floating conductor (flc/)](@ref page_flc)
  * numerical experiment.
- *********************************************************/
+ *****************************************************************************/
 template<int dim>
 class SolverFLC : public SettingsFLC, public Solver<dim>
 {

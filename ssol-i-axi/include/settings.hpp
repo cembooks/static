@@ -19,8 +19,8 @@ using namespace dealii;
 
 /**
  * \brief Global settings for the
- * [Axisymmetric - thin spherical coil](@ref page_ssol_i_axi)
- * numerical experiment
+ * [Axisymmetric - thin spherical coil (ssol-i-axi)](@ref page_ssol_i_axi)
+ * numerical experiment.
  *****************************************************************************/
 class SettingsSSOLIAXI : public Constants::Physics
 {
@@ -35,10 +35,6 @@ public:
 
 /**
  * \brief The permeability of free space.
- *
- * This variable, mu_0, is used throughout the program,
- * not permeability_fs. So one can scale the system of linear equation
- * differently by setting mu_0 = 1.0.
  *****************************************************************************/
 	const double mu_0 = permeability_fs;
 
@@ -87,10 +83,10 @@ public:
 /**
  * \brief If set to true, the program will project the exact solution.
  *
- * The exact solutions will be modeled on the same mesh
- * and by the same finite elements that are used to model the solution.
- * The projected exact solution will be saved in the vtk file next to the
- * solution. This option can be useful when debugging.
+ * The exact solutions will be modeled on the same mesh and by the same finite
+ * elements that are used to model the solution. The projected exact solution
+ * will be saved in the vtk file next to the solution. This option can be
+ * useful when debugging.
  *****************************************************************************/
 	const bool project_exact_solution = false;
 

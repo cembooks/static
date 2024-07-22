@@ -20,7 +20,7 @@ using namespace dealii;
 /**
  * \brief Global settings for the
  * [Method of manufactured solutions, vector potential (mms-vt-i/)](@ref page_mms_vt_i)
- * numerical experiment
+ * numerical experiment.
  *****************************************************************************/
 class SettingsMMSVTI : public Constants::Physics
 {
@@ -34,24 +34,24 @@ public:
 	const unsigned int nr_threads_max = 8;
 
 /**
- * \brief The permittivity of free space.
+ * \brief The permeability of free space.
  *****************************************************************************/
 	const double mu_0 = permeability_fs;
 
 /**
- * \brief The scaling [parameter](@ref mms_k_parameter).
+ * \brief The scaling parameter.
  *****************************************************************************/
 	const double k = 1.0*pi;
 
 /**
- * \brief The [Dirichlet boundary condition](@ref mms_bcs) will be applied
- * to the boundaries marked by ID = 1.
+ * \brief The Dirichlet boundary condition will be applied to the boundaries
+ * with ID = 1.
  *****************************************************************************/
 	const types::boundary_id bid_dirichlet = 1;
 
 /**
- * \brief The [Robin boundary condition](@ref mms_bcs) will be applied
- * to the boundaries marked by ID = 2.
+ * \brief The Robin boundary condition will be applied to the boundaries
+ * with ID = 2.
  *****************************************************************************/
 	const types::boundary_id bid_robin = 2;
 

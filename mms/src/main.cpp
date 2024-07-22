@@ -26,16 +26,12 @@ using namespace Misc;
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
  * that implements the
- * [Method of manufactured solutions](@ref page_mms)
+ * [Method of manufactured solutions (mms/)](@ref page_mms)
  * numerical experiment.
  *****************************************************************************/
 class BatchMMS : public SettingsMMS
 {
 public:
-
-/**
- * \brief Executes the experiment.
- *****************************************************************************/
 	void run()
 	{
 		if (nr_threads_max > 0)

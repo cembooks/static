@@ -159,7 +159,7 @@ inline Tensor<1, 3> magnetic_field_core(double x, double y, double z,
 }
 
 /**
- * \brief Describes exact solutions, \f$\vec{B}\f$, of the
+ * \brief Describes exact solution, \f$\vec{B}\f$, of the
  * [Axisymmetric - thick spherical coil with magnetic core (ssol-iii-axi/)](@ref page_ssol_iii_axi)
  * numerical experiment.
  *****************************************************************************/
@@ -177,7 +177,7 @@ private:
 };
 
 /**
- * \brief Describes exact solutions, \f$\vec{H}\f$, of the
+ * \brief Describes exact solution, \f$\vec{H}\f$, of the
  * [Axisymmetric - thick spherical coil with magnetic core (ssol-iii-axi/)](@ref page_ssol_iii_axi)
  * numerical experiment.
  *****************************************************************************/

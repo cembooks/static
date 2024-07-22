@@ -19,13 +19,9 @@
 using namespace dealii;
 
 /**
- * \brief Describes exact solutions, \f$\Phi\f$, of the
- * [Floating conductor](@ref page_flc)
- * numerical experiment in
- * [two](@ref flc_exact_solution_2D)
- * and
- * [three](@ref flc_exact_solution_3D)
- * dimensions.
+ * \brief Describes exact solution, \f$\Phi\f$, of the
+ * [Floating conductor (flc/)](@ref page_flc)
+ * numerical experiment.
  *****************************************************************************/
 template<int dim>
 class ExactSolutionFLC_PHI : public Function<dim>, public SettingsFLC

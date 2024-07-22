@@ -24,21 +24,12 @@ using namespace Misc;
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
  * that implements the
- * [Axisymmetric - surface charge](@ref page_sch_axi)
+ * [Axisymmetric - surface charge (sch-axi/)](@ref page_sch_axi)
  * numerical experiment.
- *
- * The purpose of this class is to make the main function to be similar to the
- * main function of the deal.II
- * [Step-6](https://dealii.org/developer/doxygen/deal.II/step_6.html)
- * tutorial.
  *****************************************************************************/
 class BatchSCHAXI : public SettingsSCHAXI
 {
 public:
-
-/**
- * The only function of this class.
- *****************************************************************************/
 	void run()
 	{
 		if (nr_threads_max > 0)

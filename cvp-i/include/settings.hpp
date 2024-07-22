@@ -20,7 +20,7 @@ using namespace dealii;
 /**
  * \brief Global settings for the
  * [Current vector potential (cvp-i/)](@ref page_cvp_i)
- * numerical experiment
+ * numerical experiment.
  *****************************************************************************/
 class SettingsCVPI : public Constants::Physics
 {
@@ -49,8 +49,8 @@ public:
 	const double b = 1.0;
 
 /**
- * \brief The [Dirichlet boundary condition](@ref mms_bcs) will be applied
- * to the boundaries marked by ID = 1.
+ * \brief The Dirichlet boundary condition will be applied to the boundaries
+ * with ID = 1.
  *****************************************************************************/
 	const types::boundary_id bid_dirichlet = 1;
 
@@ -60,13 +60,13 @@ public:
 	const types::material_id mid_1 = 1;
 
 /**
- * \brief The ID of the material outside the coil, i.e., Jf>0
+ * \brief The ID of the material inside the coil, i.e., Jf>0
  *****************************************************************************/
 	const types::material_id mid_2 = 2;
 
 /**
  * \brief Two values in double format are considered to be equal if the
- * absolute value of their difference is less than **eps**.
+ * absolute value of their difference is less than eps.
  *****************************************************************************/
 	const double eps = 1e-12;
 

@@ -32,9 +32,9 @@ using namespace StaticScalarSolver;
 
 /**
  * \brief Implements the
- * [Axisymmetric - volume charge](@ref page_rho_axi)
+ * [Axisymmetric - volume charge (rho-axi/)](@ref page_rho_axi)
  * numerical experiment.
- *********************************************************/
+ *****************************************************************************/
 template<bool is_cylinder>
 class SolverRHOAXI : public SettingsRHOAXI, public Solver<2>
 {

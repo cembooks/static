@@ -20,7 +20,7 @@ using namespace dealii;
 /**
  * \brief Global settings for the
  * [Magnetostatic shield - 2 (sld-ii/)](@ref page_sld_ii)
- * numerical experiment
+ * numerical experiment.
  *****************************************************************************/
 class SettingsSLDII : public Constants::Physics
 {
@@ -35,10 +35,6 @@ public:
 
 /**
  * \brief The permeability of free space.
- *
- * This variable, mu_0, is used throughout the program,
- * not permeability_fs. So one can scale the system of linear equation
- * differently by setting mu_0 = 1.0.
  *****************************************************************************/
 	const double mu_0 = permeability_fs;
 
@@ -53,8 +49,8 @@ public:
 	const double b = 0.4;
 
 /**
- * \brief The half- side length of the square (cube) in which the error norms are
- * computed.
+ * \brief The half- side length of the square (cube) in which the error norms
+ * are computed.
  *****************************************************************************/
 	const double d_2 = 0.8;
 
@@ -128,16 +124,16 @@ public:
 	const double mu_3 = mur_3*mu_0;
 
 /**
- * \brief If greater than zero, limits the amount of threads used in the
- * simulations.
- *****************************************************************************/
-	const double eps = 1e-12;
-
-/**
  * \brief The magnitude of the uniform auxiliary field H at the infinity,
  * i.e., in absence of the magnetic shield.
  *****************************************************************************/
 	const double H_0 = 1.0;
+
+/**
+ * \brief Two values in double format are considered to be equal if the
+ * absolute value of their difference is less than eps.
+ *****************************************************************************/
+	const double eps = 1e-12;
 
 /**
  * \brief If set to true, the program will print the time tables on the
@@ -150,8 +146,8 @@ public:
  *
  * The exact solutions will be modeled on the same mesh and by the same finite
  * elements that are used to model the solution. The projected exact solution
- * will be saved in the vtk file next to the solution. This option can be useful
- * when debugging.
+ * will be saved in the vtk file next to the solution. This option can be
+ * useful when debugging.
  *****************************************************************************/
 	const bool project_exact_solution = true;
 
