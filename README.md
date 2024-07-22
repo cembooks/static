@@ -21,7 +21,7 @@ To run the code do the following.
 
 1) Get [deal.II](https://dealii.org) and install it.
 
-2) Install texlive and GNU parallel.
+2) Install gnuplot, texlive, and GNU parallel.
 
 3) Install a program for viewing vtk files. [Visit](https://visit.llnl.gov) 
 software package of the Lawrence Livermore National Laboratory is a good option.
