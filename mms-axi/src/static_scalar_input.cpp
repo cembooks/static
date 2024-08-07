@@ -72,9 +72,9 @@ void PdeRhs<2>::value_list(
 	{
 		*v = ep_0 * k * (
 			( 2.0*pow(p[1],2) + (1.0 / p[0]) ) * sin( k*p[0] )
-	 	+ k*(p[0]*pow(p[1],2) + 1.0) * cos( k*p[0] )
+		+ k*(p[0]*pow(p[1],2) + 1.0) * cos( k*p[0] )
 		+ (2.0*p[0]*p[1])*sin( k*p[1])
- 		+ k*(p[0]*pow(p[1],2) + 1.0)*cos(k*p[1])
+		+ k*(p[0]*pow(p[1],2) + 1.0)*cos(k*p[1])
 		);
 		v++;
 	}
@@ -97,9 +97,9 @@ void PdeRhs<3>::value_list(
 
 		*v = ep_0 * k * (
 				(1.0/r)*(2.0*r*pow(p[2],2.0) + 1.0) * sin( k*r )
-	 		+ k*(r*pow(p[2],2.0) + 1.0) * cos( k*r )
+			+ k*(r*pow(p[2],2.0) + 1.0) * cos( k*r )
 			+ (2.0*r*p[2])*sin( k*p[2])
- 			+ k*(r*pow(p[2],2.0) + 1.0)*cos(k*p[2])
+			+ k*(r*pow(p[2],2.0) + 1.0)*cos(k*p[2])
 			);
 		v++;
 	}

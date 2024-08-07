@@ -182,8 +182,8 @@ void RobinRhs<3>::value_list(
 		(*v)[0] = Q[0];
 		(*v)[1] = Q[1];
 		(*v)[2] = Q[2];
-		 v++;
-		 nn++;
+		v++;
+		nn++;
 	}
 }
 
@@ -202,7 +202,7 @@ void RobinRhs<2>::value_list(
 
 	double mu;
 	double gamma;
-  double T;
+	double T;
 	Tensor<1,2> A;
 	Tensor<1,2> Q;
 

@@ -43,7 +43,7 @@ Tensor<1, 2> ExactSolutionCVPII_T::gradient(const Point<2> & r,
 ExactSolutionCVPII_Jf::ExactSolutionCVPII_Jf() : Function<2>(2) {}
 
 void ExactSolutionCVPII_Jf::vector_value_list(const std::vector<Point<2>> & r,
-		std::vector<Vector<double>>	 &values) const
+	std::vector<Vector<double>>	 &values) const
 {
 	Assert(values.size() == r.size(), ExcDimensionMismatch(values.size(), r.size()));
 
@@ -53,7 +53,7 @@ void ExactSolutionCVPII_Jf::vector_value_list(const std::vector<Point<2>> & r,
 		if ((p.norm() > SettingsCVPII::a1) &&
 				(p.norm() < SettingsCVPII::a2))
 		{
-		  (*v)[0] =-p[1];
+			(*v)[0] =-p[1];
 			(*v)[1] = p[0];
 		}
 		else

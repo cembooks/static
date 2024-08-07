@@ -44,7 +44,7 @@ Point(17) = { b2, 0, 0 };
 Point(18) = { d2, 0, 0 };
 
 Point(19) = { 0, d3, 0 };
-Point(20) = { d3/Sqrt(2), d3/Sqrt(2), 0  };
+Point(20) = { d3/Sqrt(2), d3/Sqrt(2), 0 };
 Point(21) = { d3, 0, 0 };
 
 Line(1) = {1, 2};

@@ -42,7 +42,7 @@ public:
 
 	virtual Tensor<1, dim>
 		gradient(const Point<dim> & r,
-				const unsigned int component = 0) const override final;
+			const unsigned int component = 0) const override final;
 
 private:
 	double OMEGA, alpha_1, beta_1, gamma_1, delta_1;
@@ -101,7 +101,7 @@ void ExactSolutionSLDI_H<dim>::vector_value_list(const std::vector<Point<dim>> &
 		grad = psi.gradient(r.at(i));
 
 		for (unsigned int j = 0; j < dim; j++)
-				values.at(i)[j] = - grad[j];
+			values.at(i)[j] = - grad[j];
 	}
 }
 
@@ -133,7 +133,7 @@ void ExactSolutionSLDI_B<dim>::vector_value_list(const std::vector<Point<dim>> &
 		grad = psi.gradient(r.at(i));
 
 		for (unsigned int j = 0; j < dim; j++)
-				values.at(i)[j] = - mu * grad[j];
+			values.at(i)[j] = - mu * grad[j];
 	}
 }
 

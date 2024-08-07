@@ -32,7 +32,7 @@
 using namespace StaticVectorSolver;
 
 /**
- * \brief Solves for \f$\vec{A}\f$ in the
+ * \brief Solves for the magnetic vector potential, \f$\vec{A}\f$, in the
  * [Thin spherical coil (ssol-i/)](@ref page_ssol_i)
  * numerical experiment.
  *****************************************************************************/

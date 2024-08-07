@@ -47,27 +47,7 @@ void SolverMMSVTI_T::make_mesh()
 		std::get<0>(mesh_description),
 		std::get<1>(mesh_description),
 		std::get<2>(mesh_description));
-/*
-#if DOMAIN__ == 1
-	for (auto cell : Solver1<3,0>::triangulation.active_cell_iterators())
-	{
-		for (unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; f++)
-		{
-			double dif_norm_a = 0.0;
 
-			for (unsigned int v = 0; v < GeometryInfo<3>::vertices_per_face; v++ )
-			{
-				dif_norm_a  += std::abs(cell->face(f)->vertex(v).norm() - a);
-			}
-
-			if ( dif_norm_a < eps )
-				cell->face(f)->set_all_manifold_ids(1);
-		}
-	}
-
-	Solver1<3,0>::triangulation.set_manifold(1,sphere);
-#endif
-*/
 	GridOut gridout;
 	GridOutFlags::Msh msh_flags(true, true);
 	gridout.set_flags(msh_flags);

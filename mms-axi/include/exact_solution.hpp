@@ -26,7 +26,7 @@
 using namespace dealii;
 
 /**
- * \brief Describes exact solution, \f$\Phi\f$, of the
+ * \brief Describes the exact solution, \f$\Phi\f$, of the
  * [Axisymmetric - method of manufactured solutions (mms-axi/)](@ref page_mms_axi)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
@@ -42,11 +42,11 @@ public:
 
 	virtual Tensor<1, dim>
 		gradient(const Point<dim> & p,
-				const unsigned int component = 0) const override final;
+			const unsigned int component = 0) const override final;
 };
 
 /**
- * \brief Describes exact solution, \f$\vec{E}\f$, of the
+ * \brief Describes the exact solution, \f$\vec{E}\f$, of the
  * [Axisymmetric - method of manufactured solutions (mms-axi/)](@ref page_mms_axi)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
@@ -62,7 +62,7 @@ public:
 };
 
 /**
- * \brief Describes exact solution, \f$\vec{D}\f$, of the
+ * \brief Describes the exact solution, \f$\vec{D}\f$, of the
  * [Axisymmetric - method of manufactured solutions (mms-axi/)](@ref page_mms_axi)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/

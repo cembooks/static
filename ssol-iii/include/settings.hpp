@@ -123,7 +123,7 @@ public:
  * will be saved in the vtk file next to the solution. This option can be
  * useful when debugging.
  *****************************************************************************/
-	const bool project_exact_solution = true;
+	const bool project_exact_solution = false;
 
 /**
  * \brief If set to true, saves the residual at each iteration of the

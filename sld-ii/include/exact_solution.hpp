@@ -101,7 +101,7 @@ void ExactSolutionSLDII_H<dim>::vector_value_list(const std::vector<Point<dim>> 
 		grad = theta.gradient(r.at(i));
 
 		for (unsigned int j = 0; j < dim; j++)
-				values.at(i)[j] = - grad[j];
+			values.at(i)[j] = - grad[j];
 	}
 }
 
@@ -133,7 +133,7 @@ void ExactSolutionSLDII_B<dim>::vector_value_list(const std::vector<Point<dim>> 
 		grad = theta.gradient(r.at(i));
 
 		for (unsigned int j = 0; j < dim; j++)
-				values.at(i)[j] = - mu * grad[j];
+			values.at(i)[j] = - mu * grad[j];
 	}
 }
 

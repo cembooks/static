@@ -49,13 +49,13 @@ public:
 	const double b = 0.4;
 
 /**
- * \brief The half- side length of the square in which the error norms are
- * computed.
+ * \brief The half- side length of the square (cube) in which the error norms 
+ * are computed.
  *****************************************************************************/
 	const double d_2 = 0.8;
 
 /**
- * \brief The half- side length of the square that represents the outer
+ * \brief The half- side length of the square (cube) that represents the outer
  * boundary.
  *****************************************************************************/
 	const double d_3 = 2.0;

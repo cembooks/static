@@ -32,7 +32,7 @@ void TheCoefficient<2>::value_list(
 		ExcDimensionMismatch(r.size(), values.size()))
 
 	for (unsigned int i = 0; i < values.size(); i++)
-			values[i] = 1.0/(mu_0*r.at(i)[0]);
+		values[i] = 1.0/(mu_0*r.at(i)[0]);
 }
 
 template<>
@@ -120,8 +120,8 @@ void FreeSurfaceCharge<2>::value_list(
 	Assert(r.size() == values.size(),
 		ExcDimensionMismatch(r.size(), values.size()))
 
-		for (unsigned int i = 0; i < values.size(); i++)
-			values[i] = 0.0;
+	for (unsigned int i = 0; i < values.size(); i++)
+		values[i] = 0.0;
 }
 
 template<>

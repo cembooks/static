@@ -78,7 +78,7 @@ public:
  * \brief If set to true, the program will print the time tables on the
  * screen.
  *****************************************************************************/
-	const bool print_time_tables = false; // true;
+	const bool print_time_tables = false;
 
 /**
  * \brief If set to true, the program will project the exact solution.

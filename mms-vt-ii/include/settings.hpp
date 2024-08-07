@@ -31,7 +31,7 @@ public:
  * \brief If greater than zero, limits the amount of threads used in the
  * simulations.
  *****************************************************************************/
-	const unsigned int nr_threads_max = 1;
+	const unsigned int nr_threads_max = 8;
 
 /**
  * \brief The permeability of free space.

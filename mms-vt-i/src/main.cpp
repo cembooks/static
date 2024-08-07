@@ -41,7 +41,6 @@ public:
 		if (nr_threads_max > 0)
 			MultithreadInfo::set_thread_limit(nr_threads_max);
 
-
 #if DOMAIN__ == 0
 		const unsigned int mapping_degree = 1;
 		const std::string dir = "Data/cube/";
@@ -118,7 +117,7 @@ public:
 					stage0.get_tria(),
 					stage0.get_dof_handler(),
 					stage0.get_solution(),
-				  r,
+					r,
 					dir + "solution_A_p" + std::to_string(p) +
 					"_r" + std::to_string(r));
 

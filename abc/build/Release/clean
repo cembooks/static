@@ -15,7 +15,7 @@ rm -rf ../../bin/Release/gpi-l2
 rm -rf ../../bin/Release/the_*
 rm -rf ../../bin/Release/*.csv
 rm -rf ../../bin/Release/*.log
-rm -rf ../../bin/Release/*.gpi
+rm -rf ../../bin/Release/the_list_*
 
 dirs=(
 ppc-neumann #0

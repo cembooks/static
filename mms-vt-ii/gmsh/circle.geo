@@ -1,3 +1,14 @@
+/******************************************************************************
+* Copyright (C) Siarhei Uzunbajakau, 2023.
+*
+* This program is free software. You can use, modify, and redistribute it under
+* the terms of the GNU Lesser General Public License as published by the Free
+* Software Foundation, either version 3 or (at your option) any later version.
+* This program is distributed without any warranty.
+*
+* Refer to COPYING.LESSER for more details.
+******************************************************************************/
+
 r = 5; //@1
 m = 1;
 
@@ -75,10 +86,10 @@ s = news; Plane Surface(s) = {ll};
 Physical Surface(100) = { 1, 2, 3, 4, 75, 77, 79, 81, Q1[0], Q1[1], Q1[2], Q1[3],
 Q2[0], Q2[1], Q2[2], Q2[3], Q2[4], Q2[5], Q2[6],Q2[7]};
 
-Physical Line(1) = {11, 12, 20, 30, 39, 49, 59, 69};
+//Physical Line(1) = {11, 12, 20, 30, 39, 49, 59, 69};
 
-//Physical Line(1) = {11, 12, 20, 30};
-//Physical Line(2) = {39, 49, 59, 69};
+Physical Line(1) = {11, 12, 20, 30};
+Physical Line(2) = {39, 49, 59, 69};
 
 Recombine Surface "*";
 

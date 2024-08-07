@@ -1,0 +1,31 @@
+set datafile separator ","
+
+set xrange [0.9:5]
+set yrange [1E-7:0.1]
+
+set logscale x
+set logscale y
+
+set lmargin 20
+set bmargin 5
+
+set ytics format "10^{%L}"
+set xtics (2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+set grid
+set grid lw 1 lc rgb "black"
+
+set key font ",16"
+set key outside
+
+set xtics font ",16"
+set ytics font ",16"
+
+set title font ",16"
+
+set dashtype 1 '.'
+set dashtype 2 '-'
+set dashtype 3 '_'
+
+set pointsize 3
+

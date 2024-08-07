@@ -31,7 +31,7 @@ public:
  * \brief If greater than zero, limits the amount of threads used in the
  * simulations.
  *****************************************************************************/
-	const unsigned int nr_threads_max = 4;
+	const unsigned int nr_threads_max = 8;
 
 /**
  * \brief The permittivity of free space.
@@ -64,22 +64,22 @@ public:
 	const types::boundary_id bid_out = 3;
 
 /**
- * \brief The material ID of the inner dielectric tube.
+ * \brief The material ID of the inner dielectric tube (shell).
  *****************************************************************************/
 	const types::material_id mid_1 = 1;
 
 /**
- * \brief The material ID of the outer dielectric tube.
+ * \brief The material ID of the outer dielectric tube (shell).
  *****************************************************************************/
 	const types::material_id mid_2 = 2;
 
 /**
- * \brief Permittivity of the inner dielectric tube.
+ * \brief Permittivity of the inner dielectric tube (shell).
  *****************************************************************************/
 	double ep_1 = 32.0*ep_0;
 
 /**
- * \brief Permittivity of the outer dielectric tube.
+ * \brief Permittivity of the outer dielectric tube (shell).
  *****************************************************************************/
 	double ep_2 = 4.0* ep_0;
 

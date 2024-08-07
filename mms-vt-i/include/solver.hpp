@@ -19,7 +19,6 @@
 #include <deal.II/lac/precondition.h>
 #include <deal.II/base/function.h>
 #include <deal.II/base/tensor_function.h>
-//#include <deal.II/grid/manifold_lib.h>
 
 #include <string>
 
@@ -82,8 +81,6 @@ private:
 
 	const std::string fname;
 	const unsigned int r;
-
-//	SphericalManifold<3> sphere;
 
 	DirichletBC_T dirichlet_bc;
 

@@ -124,7 +124,7 @@ template<>
 double StaticVectorSolver::Weight<3>::value(const Point<3> & r,
 	const unsigned int component) const
 {
-		return 1.0;
+	return 1.0;
 }
 
 #pragma GCC diagnostic pop

@@ -226,7 +226,7 @@ void FreeSurfaceCharge<3>::value_list(
 		ExcDimensionMismatch(r.size(), values.size()))
 
 	for (unsigned int i = 0; i < values.size(); i++)
-			values[i] = 0.0;
+		values[i] = 0.0;
 }
 
 template<>

@@ -257,7 +257,7 @@ double Weight<2>::value(const Point<2> & r,
 {
 	if (
 			( ( std::abs(r[0]) - d_2 ) < eps ) &&
-		 	( ( std::abs(r[1]) - d_2 ) < eps )
+			( ( std::abs(r[1]) - d_2 ) < eps )
 		 )
 	{
 		return 1.0;
@@ -272,9 +272,9 @@ double Weight<3>::value(const Point<3> & r,
 {
 	if (
 			( ( std::abs(r[0]) - d_2 ) < eps ) &&
-		 	( ( std::abs(r[1]) - d_2 ) < eps ) &&
+			( ( std::abs(r[1]) - d_2 ) < eps ) &&
 			( ( std::abs(r[2]) - d_2 ) < eps )
-			)
+		 )
 	{
 		return 1.0;
 	}

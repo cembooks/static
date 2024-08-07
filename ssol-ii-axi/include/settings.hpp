@@ -76,14 +76,14 @@ public:
 	const types::material_id mid_2 = 2;
 
 /**
- * \brief The ID of the curved section of the  boundary of the problem domain.
+ * \brief The ID of the curved section of the boundary of the problem domain.
  * The boundary ID is set in the geo files that are located in the
  * ssol-ii-axi/gmsh directory. Is not used in this configuration.
  *****************************************************************************/
 	const types::boundary_id bid_infty = 4;
 
 /**
- * \brief The ID of the straight section of the  boundary of the problem domain.
+ * \brief The ID of the straight section of the boundary of the problem domain.
  * The boundary ID is set in the geo files that are located in the
  * ssol-ii-axi/gmsh directory.
  *****************************************************************************/

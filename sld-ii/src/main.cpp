@@ -152,8 +152,6 @@ public:
 			table_B.save(dir + "table_B_p" + std::to_string(p));
 		}
 	}
-
-
 };
 
 int main()

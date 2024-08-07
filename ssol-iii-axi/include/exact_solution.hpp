@@ -26,7 +26,7 @@
 using namespace dealii;
 
 inline Tensor<1, 3> volume_free_current_density(double x, double y, double z,
-		double J_0, double a, double b)
+	double J_0, double a, double b)
 {
 	Tensor<1, 3> J;
 	double r;
@@ -50,7 +50,7 @@ inline Tensor<1, 3> volume_free_current_density(double x, double y, double z,
 }
 
 inline Tensor<1, 3> magnetic_field_coil(double x, double y, double z,
-		double J_0, double mu_0,  double a, double b)
+	double J_0, double mu_0, double a, double b)
 {
 	double cos_theta;
 	double sin_theta;
@@ -59,7 +59,7 @@ inline Tensor<1, 3> magnetic_field_coil(double x, double y, double z,
 	double sin_phi;
 
 	Tensor<1,3> r_hat;
-  Tensor<1,3> theta_hat;
+	Tensor<1,3> theta_hat;
 
 	Tensor<1,3> F1;
 	Tensor<1,3> F2;
@@ -103,7 +103,7 @@ inline Tensor<1, 3> magnetic_field_coil(double x, double y, double z,
 }
 
 inline Tensor<1, 3> magnetic_field_core(double x, double y, double z,
-		double H_0, double mur, double mu0,  double a, double b)
+	double H_0, double mur, double mu0, double a, double b)
 {
 	double a3 = std::pow(a,3);
 	double b3 = std::pow(b,3);

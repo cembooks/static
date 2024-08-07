@@ -136,10 +136,10 @@ Tensor<1,3> ExactSolutionSLDI_PSI<3>::gradient(const Point<3> &r,
 		return grad_phi;
 	}
 
-		grad_phi[0] = gamma_1*xz;
-		grad_phi[1] = gamma_1*yz;
-		grad_phi[2] = beta_1+gamma_1/r3+gamma_1*zz;
-		return grad_phi;
+	grad_phi[0] = gamma_1*xz;
+	grad_phi[1] = gamma_1*yz;
+	grad_phi[2] = beta_1+gamma_1/r3+gamma_1*zz;
+	return grad_phi;
 }
 
 #pragma GCC diagnostic pop

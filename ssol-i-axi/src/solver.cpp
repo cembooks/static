@@ -35,8 +35,8 @@ void SolverSSOLIAXI::mark_materials()
 	{
 		for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; f++)
 		{
-  		if ( std::abs(cell->center().norm()) < a )
-	  	{
+			if ( std::abs(cell->center().norm()) < a )
+			{
 				if ( (abs(cell->face(f)->vertex(0).norm() - a) < eps) &&
 						(abs(cell->face(f)->vertex(1).norm() - a) < eps))
 				{

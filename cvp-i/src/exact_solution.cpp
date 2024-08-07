@@ -19,7 +19,7 @@ using namespace dealii;
 ExactSolutionCVPI_Jf::ExactSolutionCVPI_Jf() : Function<3>(3) {}
 
 void ExactSolutionCVPI_Jf::vector_value_list(const std::vector<Point<3>> & r,
-		std::vector<Vector<double>>	 &values) const
+	std::vector<Vector<double>>	 &values) const
 {
 	Assert(values.size() == r.size(), ExcDimensionMismatch(values.size(), r.size()));
 
@@ -27,7 +27,7 @@ void ExactSolutionCVPI_Jf::vector_value_list(const std::vector<Point<3>> & r,
 	for (auto p: r)
 	{
 		if ((p.norm() > SettingsCVPI::a1) &&
-				(p.norm() < SettingsCVPI::a2))
+			  (p.norm() < SettingsCVPI::a2))
 		{
 			(*v)[0] =-p[1];
 			(*v)[1] = p[0];
@@ -46,7 +46,7 @@ void ExactSolutionCVPI_Jf::vector_value_list(const std::vector<Point<3>> & r,
 DirichletBC_CVPI::DirichletBC_CVPI() : Function<3>(3) {}
 
 void DirichletBC_CVPI::vector_value_list(const std::vector<Point<3>> & r,
-		std::vector<Vector<double>>	 &values) const
+	std::vector<Vector<double>>	 &values) const
 {
 	Assert(values.size() == r.size(), ExcDimensionMismatch(values.size(), r.size()));
 

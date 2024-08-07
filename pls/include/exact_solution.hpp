@@ -26,7 +26,7 @@
 using namespace dealii;
 
 /**
- * \brief Describes exact solution, \f$\Phi\f$, of the
+ * \brief Describes the exact solution, \f$\Phi\f$, of the
  * [Planes of symmetry (pls/)](@ref page_pls)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
@@ -42,7 +42,7 @@ public:
 
 	virtual Tensor<1, dim>
 		gradient(const Point<dim> & r,
-				const unsigned int component = 0) const override final;
+			const unsigned int component = 0) const override final;
 };
 
 #endif

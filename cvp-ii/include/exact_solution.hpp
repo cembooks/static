@@ -37,7 +37,7 @@ public:
 
 	virtual Tensor<1, 2>
 		gradient(const Point<2> & r,
-				const unsigned int component = 0) const override final;
+			const unsigned int component = 0) const override final;
 };
 
 /**

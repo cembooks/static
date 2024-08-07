@@ -45,7 +45,6 @@ public:
 
 		std::cout << "----------------------------------------\n"
 			<< "Program: sld-i\n"
-			<< "Version: 1.0\n"
 			<< "Dimension = " << DIMENSION__ << "\n"
 			<< "Writing to: " << dir << "\n";
 

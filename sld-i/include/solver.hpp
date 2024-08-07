@@ -52,8 +52,7 @@ public:
 #pragma GCC diagnostic pop
 
 /**
- * \brief Implements the solver that solves for the total magnetic potential in
- * the
+ * \brief Implements the solver that solves for \f$\Psi\f$ in the
  * [Magnetostatic shield - 1 (sld-i/)](@ref page_sld_i)
  * numerical experiment.
  *****************************************************************************/
@@ -138,7 +137,7 @@ void SolverSLDI<dim>::make_mesh()
 	std::ifstream ifs(fname_mesh_in);
 	gridin.read_msh(ifs);
 
- 	std::tuple< std::vector< Point<dim>>, std::vector< CellData<dim> >, SubCellData> mesh_description;
+	std::tuple< std::vector< Point<dim>>, std::vector< CellData<dim> >, SubCellData> mesh_description;
 
 	mesh_description = GridTools::get_coarse_mesh_description(tria_tmp);
 

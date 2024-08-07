@@ -22,10 +22,6 @@ void SolverSSOLIIIAXI::make_mesh()
 
 void SolverSSOLIIIAXI::fill_dirichlet_stack()
 {
-//		Solver<2>::dirichlet_stack =
-//		{{bid_infty, & exact_solution},
-//		 {bid_axi, & dirichlet_function}};
-
 		Solver<2>::dirichlet_stack =
 		{{bid_axi, & dirichlet_function}};
 }

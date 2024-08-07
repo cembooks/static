@@ -16,7 +16,6 @@
 
 using namespace dealii;
 
-
 double ExactSolutionMMSVTII_T::value(const Point<2> & r,
 	const unsigned int component) const
 {
@@ -36,8 +35,6 @@ Tensor<1, 2> ExactSolutionMMSVTII_T::gradient(const Point<2> & r,
 	return grad_Tm;
 }
 
-
-
 void ExactSolutionMMSVTII_Jf::vector_value_list(const std::vector<Point<2>> & r,
 		std::vector<Vector<double>>	 &values) const
 {
@@ -55,8 +52,8 @@ void ExactSolutionMMSVTII_Jf::vector_value_list(const std::vector<Point<2>> & r,
 }
 
 void ExactSolutionMMSVTII_B::value_list(const std::vector<Point<2>> & r,
-		std::vector<double>	 &values,
-		const unsigned int component) const
+	std::vector<double>	 &values,
+	const unsigned int component) const
 {
 	Assert(values.size() == r.size(), ExcDimensionMismatch(values.size(), r.size()));
 
@@ -65,8 +62,8 @@ void ExactSolutionMMSVTII_B::value_list(const std::vector<Point<2>> & r,
 }
 
 void DirichletBC_T::value_list(const std::vector<Point<2>> & r,
-		std::vector<double>	 &values,
-		const unsigned int component) const
+	std::vector<double>	 &values,
+	const unsigned int component) const
 {
 	Assert(values.size() == r.size(), ExcDimensionMismatch(values.size(), r.size()));
 
@@ -75,7 +72,7 @@ void DirichletBC_T::value_list(const std::vector<Point<2>> & r,
 }
 
 void DirichletBC_A::vector_value_list(const std::vector<Point<2>> & r,
-		std::vector<Vector<double>>	 &values) const
+	std::vector<Vector<double>>	 &values) const
 {
 	Assert(values.size() == r.size(), ExcDimensionMismatch(values.size(), r.size()));
 

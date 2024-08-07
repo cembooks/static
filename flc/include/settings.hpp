@@ -68,18 +68,18 @@ public:
 	const types::boundary_id bid_out = 3;
 
 /**
- * \brief The material ID of the inner dielectric tube.
+ * \brief The material ID of the inner dielectric tube (shell).
  *****************************************************************************/
 	const types::material_id mid_1 = 1;
 
 /**
- * \brief The material ID of the outer dielectric tube.
+ * \brief The material ID of the outer dielectric tube (shell).
  *****************************************************************************/
 	const types::material_id mid_2 = 2;
 
 /**
- * \brief The material ID of the middle dielectric tube that represents the
- * floating conductor.
+ * \brief The material ID of the middle dielectric tube (shell) that represents
+ * the floating conductor.
  *****************************************************************************/
 	const types::material_id mid_3 = 3;
 

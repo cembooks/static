@@ -53,7 +53,7 @@ void ExactSolutionMWR_H::vector_value_list(const std::vector<Point<2>> & r,
 	Assert(values.size() == r.size(), ExcDimensionMismatch(values.size(), r.size()));
 
 	Tensor<1, 2> grad_A;
- 	double coef;
+	double coef;
 
 	for (unsigned int i = 0; i < r.size(); i++)
 	{

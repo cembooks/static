@@ -34,15 +34,15 @@ inline double robin_gamma(double x, double y, double mu_0)
 inline Tensor<1, 2> volume_free_current_density(double x, double y, double mu_0, double k)
 {
 	Tensor<1, 2> J;
-  const double mu = permeability(x, y, mu_0);
+	const double mu = permeability(x, y, mu_0);
 
-	J[0] = (1/mu)*(
-		(mu_0/mu)*(-2*y*(cos(k*x)+cos(k*y)))
+	J[0] = (1.0/mu)*(
+		(mu_0/mu)*(-2.0*y*(cos(k*x)+cos(k*y)))
 		-k*sin(k*y)
 		);
 	J[1] =
-	-(1/mu)*(
-		(mu_0/mu)*(-2*x*(cos(k*x)+cos(k*y)))
+	-(1.0/mu)*(
+		(mu_0/mu)*(-2.0*x*(cos(k*x)+cos(k*y)))
 		-k*sin(k*x)
 		);
 
@@ -53,8 +53,8 @@ inline Tensor<1, 2> vector_potential(double x, double y, double k)
 {
 	Tensor<1, 2> A;
 
-		A[0] =-sin(k*y)/k;
-		A[1] = sin(k*x)/k;
+	A[0] =-sin(k*y)/k;
+	A[1] = sin(k*x)/k;
 
 	return A;
 }
@@ -67,7 +67,7 @@ inline double magnetic_field(double x, double y, double k)
 inline double current_vector_potential(double x, double y, double mu_0, double k)
 {
 	double T;
-  const double mu = permeability(x, y, mu_0);
+	const double mu = permeability(x, y, mu_0);
 	const double B = magnetic_field(x, y, k);
 
 	T = B/mu;
@@ -91,7 +91,7 @@ public:
 
 	virtual Tensor<1, 2>
 		gradient(const Point<2> & r,
-				const unsigned int component = 0) const override final;
+			const unsigned int component = 0) const override final;
 };
 
 /**
@@ -106,7 +106,7 @@ public:
 	ExactSolutionMMSVTII_Jf() : Function<2>(2) {}
 
 	virtual void vector_value_list(const std::vector<Point<2>> & r,
-		std::vector<Vector<double>>	 &values) const override final;
+		std::vector<Vector<double>> &values) const override final;
 };
 
 /**
@@ -137,7 +137,7 @@ public:
 	DirichletBC_T() {};
 
 	virtual void value_list(const std::vector<Point<2>> & r,
-		std::vector<double>	 &values,
+		std::vector<double> &values,
 		const unsigned int component) const override final;
 };
 
@@ -153,7 +153,7 @@ public:
 	DirichletBC_A(): Function<2>(2) {}
 
 	virtual void vector_value_list(const std::vector<Point<2>> & r,
-		std::vector<Vector<double>>	 &values) const override final;
+		std::vector<Vector<double>> &values) const override final;
 };
 
 #endif

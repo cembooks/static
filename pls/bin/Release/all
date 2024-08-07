@@ -2,6 +2,6 @@
 
 ./run-all
 
-./combine_data_1 -d sch -f square -lb 12 -la 4 -p 1 -s table_PHI -a PHI
-./combine_data_1 -d sch -f cube -lb 12 -la 4 -p 1 -s table_PHI -a PHI
+./combine_data_1 -d pls -f square -lb 12 -la 4 -p 1 -s table_PHI -a PHI
+./combine_data_1 -d pls -f cube -lb 12 -la 4 -p 1 -s table_PHI -a PHI
 

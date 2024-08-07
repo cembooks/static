@@ -250,7 +250,7 @@ void RobinRhs<3>::value_list(
 		*v = epsilon * (*nn * grad_phi) + gamma * phi;
 		v++;
 		nn++;
-		}
+	}
 }
 
 template<>

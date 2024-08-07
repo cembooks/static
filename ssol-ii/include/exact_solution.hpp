@@ -99,7 +99,7 @@ inline Tensor<1, 3> magnetic_field(double x, double y, double z,
 }
 
 /**
- * \brief Describes exact solution, \f$\vec{J}_f\f$, of the
+ * \brief Describes the exact solution, \f$\vec{J}_f\f$, of the
  * [Thick spherical coil (ssol-ii/)](@ref page_ssol_ii)
  * numerical experiment.
  *****************************************************************************/
@@ -114,7 +114,7 @@ public:
 };
 
 /**
- * \brief Describes exact solution, \f$\vec{B}\f$, of the
+ * \brief Describes the exact solution, \f$\vec{B}\f$, of the
  * [Thick spherical coil (ssol-ii/)](@ref page_ssol_ii)
  * numerical experiment.
  *****************************************************************************/

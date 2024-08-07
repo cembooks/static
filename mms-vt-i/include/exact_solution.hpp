@@ -34,7 +34,7 @@ inline double robin_gamma(double x, double y, double mu_0)
 inline Tensor<1, 3> volume_free_current_density(double x, double y, double mu_0, double k)
 {
 	Tensor<1, 3> J;
-  const double mu = permeability(x, y, mu_0);
+	const double mu = permeability(x, y, mu_0);
 
 	J[0] = (1/mu)*(
 		(mu_0/mu)*(-2*y*(cos(k*x)+cos(k*y)))
@@ -53,7 +53,7 @@ inline Tensor<1, 3> volume_free_current_density(double x, double y, double mu_0,
 inline Tensor<1, 3> current_vector_potential(double x, double y, double mu_0, double k)
 {
 	Tensor<1, 3> T;
-  const double mu = permeability(x, y, mu_0);
+	const double mu = permeability(x, y, mu_0);
 
 	T[0] = 0.0;
 	T[1] = 0.0;

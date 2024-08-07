@@ -40,7 +40,7 @@ public:
 		const unsigned int component = 0) const override final;
 
 	virtual Tensor<1, 2> gradient(const Point<2> & p,
-				const unsigned int component = 0) const override final;
+		const unsigned int component = 0) const override final;
 };
 
 /**

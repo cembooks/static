@@ -45,7 +45,7 @@ public:
 /**
  * The constructor.
 
-  * @param[in] p - The degree of the interpolating polynomials of the Lagrange
+ * @param[in] p - The degree of the interpolating polynomials of the Lagrange
  * finite elements,
  * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
  * @param[in] mapping_degree - The degree of the interpolating polynomials used

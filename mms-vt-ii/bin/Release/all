@@ -2,11 +2,11 @@
 
 ./run-all
 
-./combine_data_1 -d mms-vt-i -f square -lb 12 -la 4 -p 0 -s main_table_T -a T
-./combine_data_1 -d mms-vt-i -f square -lb 12 -la 4 -p 0 -s main_table_J -a J
-./combine_data_1 -d mms-vt-i -f square -lb 12 -la 4 -p 0 -s main_table_B -a B
+./combine_data_1 -d mms-vt-ii -f square -lb 12 -la 4 -p 0 -s main_table_T -a T
+./combine_data_1 -d mms-vt-ii -f square -lb 12 -la 4 -p 0 -s main_table_J -a J
+./combine_data_1 -d mms-vt-ii -f square -lb 12 -la 4 -p 0 -s main_table_B -a B
 
-./combine_data_1 -d mms-vt-i -f circle -lb 12 -la 4 -p 0 -s main_table_T -a T
-./combine_data_1 -d mms-vt-i -f circle -lb 12 -la 4 -p 0 -s main_table_J -a J
-./combine_data_1 -d mms-vt-i -f circle -lb 12 -la 4 -p 0 -s main_table_B -a B
+./combine_data_1 -d mms-vt-ii -f circle -lb 12 -la 4 -p 0 -s main_table_T -a T
+./combine_data_1 -d mms-vt-ii -f circle -lb 12 -la 4 -p 0 -s main_table_J -a J
+./combine_data_1 -d mms-vt-ii -f circle -lb 12 -la 4 -p 0 -s main_table_B -a B
 

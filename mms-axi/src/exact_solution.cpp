@@ -45,7 +45,7 @@ double ExactSolutionMMSAXI_PHI<3>::value(const Point<3> & p,
 	return (
 		cos( k*r )
 	+ cos( k*p[2] )
-			   );
+	       );
 }
 
 template<>

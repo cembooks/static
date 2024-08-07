@@ -26,7 +26,7 @@
 using namespace dealii;
 
 inline Tensor<1, 3> magnetic_field(double x, double y, double z,
-		double K_0, double mu_0,  double a, double b)
+	double K_0, double mu_0, double a, double b)
 {
 	double cos_theta;
 	double sin_theta;
@@ -93,7 +93,7 @@ public:
 		const unsigned int component = 0) const override final;
 
 	virtual Tensor<1, 2> gradient(const Point<2> & p,
-				const unsigned int component = 0) const override final;
+		const unsigned int component = 0) const override final;
 };
 
 /**

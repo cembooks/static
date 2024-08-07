@@ -46,7 +46,7 @@ void ExactSolutionSSOLIIIAXI_H::vector_value_list(const std::vector<Point<2>> & 
 	for (unsigned int i = 0; i < r.size(); i++)
 	{
 		if ( ( r.at(i).norm() > a1) &&
-				 ( r.at(i).norm() < b1) )
+		     ( r.at(i).norm() < b1) )
 		{
 			coef = mu;
 		}else

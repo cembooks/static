@@ -22,7 +22,7 @@ void SolverSSOLIIAXI::make_mesh()
 
 void SolverSSOLIIAXI::fill_dirichlet_stack()
 {
-		Solver<2>::dirichlet_stack =
+	Solver<2>::dirichlet_stack =
 		{{bid_axi, & dirichlet_function}};
 }
 

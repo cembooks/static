@@ -237,8 +237,8 @@ double Weight<2>::value(const Point<2> & r,
 	const unsigned int component) const
 {
 	if (
-			( std::abs(r[0]) < d_2 ) &&
-			( std::abs(r[1]) < d_2 )
+		( std::abs(r[0]) < d_2 ) &&
+		( std::abs(r[1]) < d_2 )
 		 )
 		return 1.0;
 
@@ -250,9 +250,9 @@ double Weight<3>::value(const Point<3> & r,
 	const unsigned int component) const
 {
 	if (
-			( std::abs(r[0]) < d_2 ) &&
-		 	( std::abs(r[1]) < d_2 ) &&
-			( std::abs(r[2]) < d_2 )
+		( std::abs(r[0]) < d_2 ) &&
+		( std::abs(r[1]) < d_2 ) &&
+		( std::abs(r[2]) < d_2 )
 		 )
 		return 1.0;
 

@@ -23,7 +23,6 @@ r_in3 = x0 / Sqrt(3);
 r_out3 = Rmid / Sqrt(3);
 r_inf3 = Rinfty / Sqrt(3);
 
-// First, we construct the top segment of the shell --------------------------
 Point(1) = {0,0,0};
 
 Point(2) = { r_in3, r_in3, r_in3};
@@ -64,12 +63,11 @@ Curve Loop(5) = {7, 16, 26, 36};
 Surface(5) = {5};
 
 Surface Loop(1) = {1, 8, 18, 28, 3, 4};
-Volume(1) = {1}; // The top segment of the shell
+Volume(1) = {1}; 
 
 Surface Loop(2) = {2, 13, 23, 33, 4, 5};
-Volume(2) = {2}; // The top segment of the shell
+Volume(2) = {2};
 
-// Next, we replicate the top segment five times by rotation -----------------
 V2 = Rotate { {0,1,0}, {0,0,0},  Pi/2} { Duplicata{ Volume{1, 2};} };
 V3 = Rotate { {0,1,0}, {0,0,0},  Pi/2} { Duplicata{ Volume{V2[0], V2[1]};} };
 V4 = Rotate { {0,1,0}, {0,0,0},  Pi/2} { Duplicata{ Volume{V3[0], V3[1]};} };
@@ -77,7 +75,6 @@ V4 = Rotate { {0,1,0}, {0,0,0},  Pi/2} { Duplicata{ Volume{V3[0], V3[1]};} };
 V5 = Rotate { {1,0,0}, {0,0,0},  Pi/2} { Duplicata{ Volume{1, 2};} };
 V6 = Rotate { {1,0,0}, {0,0,0}, -Pi/2} { Duplicata{ Volume{1, 2};} };
 
-// Assign an index to a volume ----------------------------------------------
 Physical Volume(101) = {37};
 Physical Volume(102) = {269};
 Physical Volume(103) = {153};
@@ -92,13 +89,9 @@ Physical Volume(110) = {242};
 Physical Volume(111) = {2};
 Physical Volume(112) = {126};
 
-// Assign boundary IDs ------------------------------------------------------
 Physical Surface(1) = {3, 232, 116, 290, 174, 58};
 Physical Surface(2) = {5, 268, 152, 326, 94, 210};
 
-//Delete Embedded "*";
-
-// Finally, we mesh the results ----------------------------------------------
 Transfinite Surface "*";
 Transfinite Volume "*";
 Recombine Surface "*";
@@ -107,6 +100,4 @@ Recombine Volume "*";
 Transfinite Line "*" = 3*r;
 
 Transfinite Line {-3, -4, 17, 27, -71, 83, 141, -129} = (2*m+1)*r Using Progression 0.92;
-
-//Mesh 3;
 

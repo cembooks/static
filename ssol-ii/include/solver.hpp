@@ -30,7 +30,7 @@
 using namespace StaticVectorSolver;
 
 /**
- * \brief Solves for \f$\vec{T}\f$ in the
+ * \brief Solves for the current vector potential, \f$\vec{T}\f$, in the
  * [Thick spherical coil (ssol-ii/)](@ref page_ssol_ii)
  * numerical experiment.
  *****************************************************************************/
@@ -88,7 +88,7 @@ private:
 };
 
 /**
- * \brief Solves for \f$\vec{A}\f$ in the
+ * \brief Solves for the magnetic vector potential, \f$\vec{A}\f$, in the
  * [Thick spherical coil (ssol-ii/)](@ref page_ssol_ii)
  * numerical experiment.
  *****************************************************************************/

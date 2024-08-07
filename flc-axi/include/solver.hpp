@@ -126,9 +126,9 @@ private:
 template<bool is_cylinder>
 void SolverFLCAXI<is_cylinder>::fill_dirichlet_stack()
 {
-		Solver<2>::dirichlet_stack =
-			{{bid_in, & dirichlet_function_in},
-			 {bid_out, & dirichlet_function_out}};
+	Solver<2>::dirichlet_stack =
+		{{bid_in, & dirichlet_function_in},
+		 {bid_out, & dirichlet_function_out}};
 }
 
 template<bool is_cylinder>

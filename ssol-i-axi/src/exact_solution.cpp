@@ -61,7 +61,7 @@ void ExactSolutionSSOLIAXI_B::vector_value_list(const std::vector<Point<2>> & r,
 	double sin_phi;
 
 	Tensor<1,3> r_hat;
-  Tensor<1,3> theta_hat;
+	Tensor<1,3> theta_hat;
 
 	Tensor<1,3> B;
 
@@ -90,7 +90,7 @@ void ExactSolutionSSOLIAXI_B::vector_value_list(const std::vector<Point<2>> & r,
 		}
 		else
 		{
-      B = B_0*(pow(a,4)/pow(p.norm(),3))*(cos_theta*r_hat + 0.5*sin_theta*theta_hat);
+			B = B_0*(pow(a,4)/pow(p.norm(),3))*(cos_theta*r_hat + 0.5*sin_theta*theta_hat);
 		}
 
 		(*v)[0] = pp[0]*B[1];
