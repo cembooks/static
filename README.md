@@ -19,9 +19,36 @@ https://cembooks.nl.
 
 To run the code do the following.
 
-1) Get [deal.II](https://dealii.org) and install it.
+1) Get [deal.II](https://dealii.org) and install it. The best is to build the
+latest version of deal.II from the source by following the
+installation instructions available at [www.dealii.org](https://dealii.org).
+No optional interfaces to other software packages are needed. The default 
+configuration will do.
 
-2) Install gnuplot, texlive, and GNU parallel.
+Set an environment variable by adding the following 
+line to /etc/environment file: 
+
+export DEAL_II_DIR=/path/to/dealii 
+
+where /path/to/dealii is the directory in which the dealii is installed. Reboot.
+Check if the variable exists by typing the following into CLI:
+
+printenv | grep DEAL 
+
+Check if the version of deal.ii in the CMakeLists.txt is correct. To do so change 
+into static/ directory and type the following:
+
+find . -name "CMakeLists.txt" -exec grep "find_package(deal.II" {} +
+
+If the version is not correct, change it. For example, to change the version 
+from 9.3.2 to 9.5.2 type the following into CLI:
+
+find . -name "CMakeLists.txt" -exec sed -i 's/deal.II 9.3.2/deal.II 9.5.2/g' {} +
+
+2) Install gmsh, gnuplot, texlive, and GNU parallel. This can be done as the 
+following:
+
+sudo apt-get install gmsh gnuplot texlive parallel
 
 3) Install a program for viewing vtk files. [Visit](https://visit.llnl.gov) 
 software package of the Lawrence Livermore National Laboratory is a good option.
@@ -52,4 +79,3 @@ After that change into mms/bin/Release/ and run
 
 This will execute the mms experiment. The results of the simulations are in
 mms/bin/Release/Data/ directory.
-
