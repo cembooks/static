@@ -35,8 +35,8 @@ Check if the variable exists by typing the following into CLI:
 
 printenv | grep DEAL 
 
-Check if the version of deal.ii in the CMakeLists.txt is correct. To do so change 
-into static/ directory and type the following:
+Check if the version of deal.ii in the CMakeLists.txt files is correct. To do so,
+change into static/ directory and type the following:
 
 find . -name "CMakeLists.txt" -exec grep "find_package(deal.II" {} +
 
