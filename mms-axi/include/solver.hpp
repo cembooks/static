@@ -80,16 +80,12 @@ public:
 		fname(fname)
 	{
 #if DIMENSION__ == 2
-		fname_mesh_in = "../../gmsh/data/cylinder_2d_r"
+		fname_mesh = "../../gmsh/data/cylinder_2d_r"
 			+ std::to_string(r) + ".msh";
-		fname_mesh_out = "../../gmsh/data/cylinder_2d_r"
-			+ std::to_string(r) + "_p" + std::to_string(p) + "_reordered.msh";
 #endif
 #if DIMENSION__ == 3
-		fname_mesh_in = "../../gmsh/data/cylinder_3d_r"
+		fname_mesh = "../../gmsh/data/cylinder_3d_r"
 			+ std::to_string(r) + ".msh";
-		fname_mesh_out = "../../gmsh/data/cylinder_3d_r"
-			+ std::to_string(r) + "_p" + std::to_string(p) + "_reordered.msh";
 #endif
 
 		TimerOutput::OutputFrequency tf =
@@ -111,8 +107,7 @@ private:
 	const std::string fname;
 	const ExactSolutionMMSAXI_PHI<dim> exact_solution;
 
-	std::string fname_mesh_in;
-	std::string fname_mesh_out;
+	std::string fname_mesh;
 
 	virtual void make_mesh() override final;
 	virtual void fill_dirichlet_stack() override final;
@@ -125,37 +120,14 @@ void SolverMMSAXI<dim>::fill_dirichlet_stack()
 	Solver<dim>::dirichlet_stack = {{bid_dirichlet, & exact_solution}};
 }
 
-template <int dim >
+template <int dim>
 void SolverMMSAXI<dim>::make_mesh()
 {
 	GridIn<dim> gridin;
-	Triangulation<dim> tria_tmp;
-
-	gridin.attach_triangulation(tria_tmp);
-	std::ifstream ifs(fname_mesh_in);
+	gridin.attach_triangulation(Solver<dim>::triangulation);
+	
+	std::ifstream ifs(fname_mesh);
 	gridin.read_msh(ifs);
-
-	std::tuple< std::vector< Point<dim>>, std::vector< CellData<dim> >, SubCellData> mesh_description;
-
-	mesh_description = GridTools::get_coarse_mesh_description(tria_tmp);
-
-	GridTools::invert_all_negative_measure_cells(
-		std::get<0>(mesh_description),
-		std::get<1>(mesh_description));
-
-	GridTools::consistently_order_cells(std::get<1>(mesh_description));
-
-	Solver<dim>::triangulation.create_triangulation(
-		std::get<0>(mesh_description),
-		std::get<1>(mesh_description),
-		std::get<2>(mesh_description));
-
-	GridOut gridout;
-	GridOutFlags::Msh msh_flags(true, true);
-	gridout.set_flags(msh_flags);
-
-	std::ofstream ofs(fname_mesh_out);
-	gridout.write_msh(Solver<dim>::triangulation, ofs);
 }
 
 template<int dim>

@@ -1193,16 +1193,13 @@ void compute_Linfty_error_norm(
 		VectorTools::Linfty_norm);
 }
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 template<int dim, int stage>
 void Solver<dim, stage>::compute_error_norms()
 {
 	if (exact_solution)
 	{
-		Threads::Thread<void> thread_l2 = Threads::new_thread(
-			&compute_L2_error_norm<dim,stage>,
+		Threads::Task<void> task_l2 = Threads::new_task(
+			&compute_L2_error_norm<dim, stage>,
 			dof_handler,
 			triangulation,
 			solution,
@@ -1211,8 +1208,8 @@ void Solver<dim, stage>::compute_error_norms()
 			L2_norm,
 			mapping_degree);
 
-		Threads::Thread<void> thread_h1 = Threads::new_thread(
-			&compute_H1_error_norm<dim,stage>,
+		Threads::Task<void> task_h1 = Threads::new_task(
+			&compute_H1_error_norm<dim, stage>,
 			dof_handler,
 			triangulation,
 			solution,
@@ -1221,8 +1218,8 @@ void Solver<dim, stage>::compute_error_norms()
 			H1_norm,
 			mapping_degree);
 
-		Threads::Thread<void> thread_linfty = Threads::new_thread(
-			&compute_Linfty_error_norm<dim,stage>,
+		Threads::Task<void> task_linfty = Threads::new_task(
+			&compute_Linfty_error_norm<dim, stage>,
 			dof_handler,
 			triangulation,
 			solution,
@@ -1230,14 +1227,8 @@ void Solver<dim, stage>::compute_error_norms()
 			Linfty_per_cell,
 			Linfty_norm,
 			mapping_degree);
-
-		thread_l2.join();
-		thread_h1.join();
-		thread_linfty.join();
 	}
 }
-
-#pragma GCC diagnostic pop
 
 template<int dim, int stage>
 void Solver<dim, stage>::project_exact_solution_fcn()

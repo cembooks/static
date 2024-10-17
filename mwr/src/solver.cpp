@@ -15,8 +15,10 @@ void SolverMWR::make_mesh()
 {
 	GridIn<2> gridin;
 	gridin.attach_triangulation(triangulation);
+
 	std::ifstream ifs("../../gmsh/data/circle_r" + std::to_string(r) + ".msh");
 	gridin.read_msh(ifs);
+	
 	mark_materials();
 }
 
@@ -24,7 +26,6 @@ void SolverMWR::fill_dirichlet_stack()
 {
 	Solver<2>::dirichlet_stack =
 		{{bid, & dirichlet_function}};
-
 }
 
 void SolverMWR::mark_materials()

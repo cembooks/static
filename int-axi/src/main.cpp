@@ -39,8 +39,6 @@ public:
 
 		std::string dir = (CYLINDER__ == 1) ? "Data/cylinder-axi/" : "Data/sphere-axi/";
 		std::string fname;
-		std::string fname_mesh_in;
-		std::string fname_mesh_out;
 
 		unsigned int mapping_degree = (CYLINDER__ == 1) ? 1 : 2;
 

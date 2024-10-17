@@ -83,16 +83,12 @@ public:
 	{
 		if (DIMENSION__ == 2)
 		{
-			fname_mesh_in = "../../gmsh/data/ring_r"
+			fname_mesh = "../../gmsh/data/ring_r"
 				+ std::to_string(r) + ".msh";
-			fname_mesh_out = "../../gmsh/data/ring_r"
-				+ std::to_string(r) + "_p" + std::to_string(p) + "_reordered.msh";
 		}else
 		{
-			fname_mesh_in = "../../gmsh/data/shell_r"
+			fname_mesh = "../../gmsh/data/shell_r"
 				+ std::to_string(r) + ".msh";
-			fname_mesh_out = "../../gmsh/data/shell_r"
-				+ std::to_string(r) + "_p" + std::to_string(p) + "_reordered.msh";
 		}
 
 		TimerOutput::OutputFrequency tf =
@@ -112,8 +108,7 @@ public:
 private:
 	const unsigned int r;
 	const std::string fname;
-	std::string fname_mesh_in;
-	std::string fname_mesh_out;
+	std::string fname_mesh;
 
 	const	ExactSolutionINT_PHI<dim> exact_solution;
 	const dealii::Functions::ZeroFunction<dim> dirichlet_function_out;
@@ -154,28 +149,10 @@ template <int dim >
 void SolverINT<dim>::make_mesh()
 {
 	GridIn<dim> gridin;
-	Triangulation<dim> tria_tmp;
-
-	gridin.attach_triangulation(tria_tmp);
-	std::ifstream ifs(fname_mesh_in);
+	gridin.attach_triangulation(Solver<dim>::triangulation);
+	
+	std::ifstream ifs(fname_mesh);
 	gridin.read_msh(ifs);
-
-	std::tuple< std::vector< Point<dim>>, std::vector< CellData<dim> >, SubCellData> mesh_description;
-
-	mesh_description = GridTools::get_coarse_mesh_description(tria_tmp);
-
-	GridTools::invert_all_negative_measure_cells(
-		std::get<0>(mesh_description),
-		std::get<1>(mesh_description));
-
-	GridTools::consistently_order_cells(std::get<1>(mesh_description));
-
-	Solver<dim>::triangulation.create_triangulation(
-		std::get<0>(mesh_description),
-		std::get<1>(mesh_description),
-		std::get<2>(mesh_description));
-
-	Point<dim> origin;
 
 	for (auto cell : Solver<dim>::triangulation.active_cell_iterators())
 	{
@@ -200,13 +177,6 @@ void SolverINT<dim>::make_mesh()
 			}
 		}
 	}
-
-	GridOut gridout;
-	GridOutFlags::Msh msh_flags(true, true);
-	gridout.set_flags(msh_flags);
-
-	std::ofstream ofs(fname_mesh_out);
-	gridout.write_msh(Solver<dim>::triangulation, ofs);
 
 	Solver<dim>::triangulation.set_all_manifold_ids(0);
 	Solver<dim>::triangulation.set_manifold(0,sphere);

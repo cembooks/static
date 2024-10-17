@@ -15,7 +15,7 @@ template <>
 void SolverABC<2>::make_mesh()
 {
 	GridIn<2> gridin;
-		gridin.attach_triangulation(Solver<2>::triangulation);
+	gridin.attach_triangulation(Solver<2>::triangulation);
 
 	std::ifstream ifs("../../gmsh/data/ppc_m"
 		+ std::to_string(m) + "_r"
@@ -54,7 +54,7 @@ template <>
 void SolverABC<3>::make_mesh()
 {
 	GridIn<3> gridin;
-		gridin.attach_triangulation(Solver<3>::triangulation);
+	gridin.attach_triangulation(Solver<3>::triangulation);
 
 	std::ifstream ifs("../../gmsh/data/shell_m"
 		+ std::to_string(m) + "_r"

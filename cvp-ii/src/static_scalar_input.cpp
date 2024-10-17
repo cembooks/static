@@ -27,7 +27,7 @@ void StaticScalarSolver::TheCoefficient<2>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < values.size(); i++)
 		values[i] = 1.0;
@@ -41,7 +41,7 @@ void StaticScalarSolver::PdeRhs<2>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < values.size(); i++)
 		values[i] =  0.0;
@@ -55,7 +55,7 @@ void StaticScalarSolver::PdeRhsCvp<2>::value_list(
 	std::vector<Tensor<1, 2>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: r)
@@ -85,7 +85,7 @@ void StaticScalarSolver::Gamma<2>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < values.size(); i++)
 		values[i] = 0.0;
@@ -102,7 +102,7 @@ void StaticScalarSolver::RobinRhs<2>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < values.size(); i++)
 		values[i] = 0.0;
@@ -118,7 +118,7 @@ void StaticScalarSolver::FreeSurfaceCharge<2>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0; i < values.size(); i++)
 		values[i] = 0.0;

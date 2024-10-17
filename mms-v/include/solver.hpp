@@ -67,31 +67,23 @@ public:
 		{
 			if (HYPERCUBE__ == 1)
 			{
-				fname_mesh_in = "../../gmsh/data/square_r"
+				fname_mesh = "../../gmsh/data/square_r"
 					+ std::to_string(r) + ".msh";
-				fname_mesh_out = "../../gmsh/data/square_r"
-					+ std::to_string(r) + "_p" + std::to_string(p) + "_reordered.msh";
 			}else
 			{
-				fname_mesh_in = "../../gmsh/data/circle_r"
+				fname_mesh = "../../gmsh/data/circle_r"
 					+ std::to_string(r) + ".msh";
-				fname_mesh_out = "../../gmsh/data/circle_r"
-					+ std::to_string(r) + "_p" + std::to_string(p) + "_reordered.msh";
 			}
 		}else
 		{
 			if (HYPERCUBE__ == 1)
 			{
-				fname_mesh_in = "../../gmsh/data/cube_r"
+				fname_mesh = "../../gmsh/data/cube_r"
 					+ std::to_string(r) + ".msh";
-				fname_mesh_out = "../../gmsh/data/cube_r"
-					+ std::to_string(r) + "_p" + std::to_string(p) + "_reordered.msh";
 			}else
 			{
-				fname_mesh_in = "../../gmsh/data/sphere_r"
+				fname_mesh = "../../gmsh/data/sphere_r"
 					+ std::to_string(r) + ".msh";
-				fname_mesh_out = "../../gmsh/data/sphere_r"
-					+ std::to_string(r) + "_p" + std::to_string(p) + "_reordered.msh";
 			}
 		}
 
@@ -104,8 +96,7 @@ private:
 
 	const unsigned int r;
 	const std::string fname;
-	std::string fname_mesh_in;
-	std::string fname_mesh_out;
+	std::string fname_mesh;
 
 	const ExactSolutionMMSV_A<dim> exact_solution;
 
@@ -165,33 +156,10 @@ template <int dim >
 void SolverMMSV<dim>::make_mesh()
 {
 	GridIn<dim> gridin;
-	Triangulation<dim> tria_tmp;
-
-	gridin.attach_triangulation(tria_tmp);
-	std::ifstream ifs(fname_mesh_in);
+	gridin.attach_triangulation(Solver1<dim>::triangulation);
+	
+	std::ifstream ifs(fname_mesh);
 	gridin.read_msh(ifs);
-
-	std::tuple< std::vector< Point<dim>>, std::vector< CellData<dim> >, SubCellData> mesh_description;
-
-	mesh_description = GridTools::get_coarse_mesh_description(tria_tmp);
-
-	GridTools::invert_all_negative_measure_cells(
-		std::get<0>(mesh_description),
-		std::get<1>(mesh_description));
-
-	GridTools::consistently_order_cells(std::get<1>(mesh_description));
-
-	Solver1<dim>::triangulation.create_triangulation(
-		std::get<0>(mesh_description),
-		std::get<1>(mesh_description),
-		std::get<2>(mesh_description));
-
-	GridOut gridout;
-	GridOutFlags::Msh msh_flags(true, true);
-	gridout.set_flags(msh_flags);
-
-	std::ofstream ofs(fname_mesh_out);
-	gridout.write_msh(Solver1<dim>::triangulation, ofs);
 }
 #endif
 

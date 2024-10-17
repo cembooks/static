@@ -31,7 +31,7 @@ void TheCoefficient<3>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: r)
@@ -49,7 +49,7 @@ void TheCoefficient<2>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: r)
@@ -67,7 +67,7 @@ void PdeRhs<3>::value_list(
 	std::vector<Tensor<1,3>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: r)
@@ -87,7 +87,7 @@ void PdeRhs<2>::value_list(
 	std::vector<Tensor<1,2>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: r)
@@ -109,7 +109,7 @@ void Gamma<3>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: r)
@@ -131,7 +131,7 @@ void Gamma<2>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: r)
@@ -153,7 +153,7 @@ void RobinRhs<3>::value_list(
 	std::vector<Tensor<1,3>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	double mu;
 	double gamma;
@@ -198,7 +198,7 @@ void RobinRhs<2>::value_list(
 	std::vector<Tensor<1,2>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	double mu;
 	double gamma;
@@ -238,7 +238,7 @@ void FreeSurfaceCurrent<3>::value_list(
 	std::vector<Tensor<1,3>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: r)
@@ -260,7 +260,7 @@ void FreeSurfaceCurrent<2>::value_list(
 	std::vector<Tensor<1,2>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: r)

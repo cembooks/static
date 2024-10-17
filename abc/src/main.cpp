@@ -62,8 +62,8 @@ public:
 		if (nr_threads_max > 0)
 			MultithreadInfo::set_thread_limit(nr_threads_max);
 
-		Assert( DIMENSION__ > 1 , ExcInternalError())
-		Assert( DIMENSION__ < 4 , ExcInternalError())
+		Assert( DIMENSION__ > 1 , ExcInternalError());
+		Assert( DIMENSION__ < 4 , ExcInternalError());
 
 		const std::vector<std::string> bc_string =
 		{"neumann", // 0

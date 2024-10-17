@@ -21,11 +21,11 @@ template<>
 ExactSolutionABC_PHI<2>::ExactSolutionABC_PHI():
 	Function<2>()
 {
-	Assert(R < x0, ExcInternalError())
-	Assert(R > 0,  ExcInternalError())
-	Assert(x0 > 0, ExcInternalError())
-	Assert(a > 0, ExcInternalError())
-	Assert(a < 1.5*(R+x0), ExcInternalError())
+	Assert(R < x0, ExcInternalError());
+	Assert(R > 0,  ExcInternalError());
+	Assert(x0 > 0, ExcInternalError());
+	Assert(a > 0, ExcInternalError());
+	Assert(a < 1.5*(R+x0), ExcInternalError());
 
 	d = sqrt(pow(x0,2)-pow(R,2));
 	lambda = 1.0/log(x0/R+sqrt(pow(x0/R,2)-1));
@@ -61,11 +61,11 @@ template<>
 ExactSolutionABC_PHI<3>::ExactSolutionABC_PHI():
 	Function<3>()
 {
-	Assert(R < x0, ExcInternalError())
-	Assert(R > 0,  ExcInternalError())
-	Assert(x0 > 0, ExcInternalError())
-	Assert(a > 0, ExcInternalError())
-	Assert(a < 1.5*(R+x0), ExcInternalError())
+	Assert(R < x0, ExcInternalError());
+	Assert(R > 0,  ExcInternalError());
+	Assert(x0 > 0, ExcInternalError());
+	Assert(a > 0, ExcInternalError());
+	Assert(a < 1.5*(R+x0), ExcInternalError());
 }
 
 template<>

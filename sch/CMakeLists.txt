@@ -34,7 +34,7 @@ set(SOURCE_FILES
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-find_package(deal.II 9.3.2 QUIET
+find_package(deal.II 9.6.0 QUIET
 	HINTS ${deal.II_DIR} ${DEAL_II_DIR} ../ ../../ $ENV{DEAL_II_DIR}
 	)
 if(NOT ${deal.II_FOUND})

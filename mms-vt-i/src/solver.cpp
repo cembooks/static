@@ -23,41 +23,14 @@ using namespace StaticVectorSolver;
 void SolverMMSVTI_T::make_mesh()
 {
 	GridIn<3> gridin;
-	Triangulation<3> tria_tmp;
 
-	gridin.attach_triangulation(tria_tmp);
+	gridin.attach_triangulation(Solver1<3,0>::triangulation);
 #if DOMAIN__ == 0
 	std::ifstream ifs("../../gmsh/data/cube_r" + std::to_string(r) + ".msh");
 #elif DOMAIN__ == 1
 	std::ifstream ifs("../../gmsh/data/sphere_r" + std::to_string(r) + ".msh");
 #endif
 	gridin.read_msh(ifs);
-
-	std::tuple< std::vector< Point<3>>, std::vector< CellData<3> >, SubCellData> mesh_description;
-
-	mesh_description = GridTools::get_coarse_mesh_description(tria_tmp);
-
-	GridTools::invert_all_negative_measure_cells(
-		std::get<0>(mesh_description),
-		std::get<1>(mesh_description));
-
-	GridTools::consistently_order_cells(std::get<1>(mesh_description));
-
-	Solver1<3,0>::triangulation.create_triangulation(
-		std::get<0>(mesh_description),
-		std::get<1>(mesh_description),
-		std::get<2>(mesh_description));
-
-	GridOut gridout;
-	GridOutFlags::Msh msh_flags(true, true);
-	gridout.set_flags(msh_flags);
-
-#if DOMAIN__ == 0
-	std::ofstream ofs("../../gmsh/data/cube_r" + std::to_string(r) + "_reordered.msh");
-#elif DOMAIN__ == 1
-	std::ofstream ofs("../../gmsh/data/sphere_r" + std::to_string(r) + "_reordered.msh");
-#endif
-	gridout.write_msh(Solver1<3,0>::triangulation, ofs);
 }
 
 void SolverMMSVTI_T::fill_dirichlet_stack()

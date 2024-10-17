@@ -32,7 +32,7 @@ void StaticVectorSolver::TheCoefficient<3, 0>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < values.size(); i++)
 		values[i] = 1.0;
@@ -46,7 +46,7 @@ void StaticVectorSolver::PdeRhs<3, 0>::value_list(
 	std::vector<Tensor<1,3>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	if ( (mid == mid_1) || (mid == mid_2) )
 		for (unsigned int i = 0 ; i < values.size(); i++)
@@ -76,10 +76,10 @@ void StaticVectorSolver::Gamma<3, 0>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	Assert(r.size() == n.size(),
-		ExcDimensionMismatch(r.size(), n.size()))
+		ExcDimensionMismatch(r.size(), n.size()));
 
 	for (unsigned int i = 0 ; i < values.size(); i++)
 		values[i] = 1.0 / r.at(i).norm();
@@ -96,10 +96,10 @@ void StaticVectorSolver::RobinRhs<3, 0>::value_list(
 	std::vector<Tensor<1,3>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	Assert(r.size() == n.size(),
-		ExcDimensionMismatch(r.size(), n.size()))
+		ExcDimensionMismatch(r.size(), n.size()));
 
 	Tensor<1,3> Jf;
 
@@ -121,10 +121,10 @@ void StaticVectorSolver::FreeSurfaceCurrent<3, 0>::value_list(
 	std::vector<Tensor<1,3>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	Assert(r.size() == n.size(),
-		ExcDimensionMismatch(r.size(), n.size()))
+		ExcDimensionMismatch(r.size(), n.size()));
 
 	for (unsigned int i = 0 ; i < values.size(); i++)
 	{
@@ -164,7 +164,7 @@ void StaticVectorSolver::TheCoefficient<3, 2>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	if ( (mid == mid_1) || (mid == mid_3) )
 		for (unsigned int i = 0 ; i < values.size(); i++)
@@ -183,7 +183,7 @@ void StaticVectorSolver::PdeRhs<3, 2>::value_list(
 	std::vector<Tensor<1,3>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < values.size(); i++)
 	{
@@ -204,10 +204,10 @@ void StaticVectorSolver::Gamma<3, 2>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	Assert(r.size() == n.size(),
-		ExcDimensionMismatch(r.size(), n.size()))
+		ExcDimensionMismatch(r.size(), n.size()));
 
 	for (unsigned int i = 0 ; i < values.size(); i++)
 		values[i] = 1.0 / (mu_0 * r.at(i).norm());
@@ -224,10 +224,10 @@ void StaticVectorSolver::RobinRhs<3, 2>::value_list(
 	std::vector<Tensor<1,3>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	Assert(r.size() == n.size(),
-		ExcDimensionMismatch(r.size(), n.size()))
+		ExcDimensionMismatch(r.size(), n.size()));
 
 	for (unsigned int i = 0; i < r.size(); i++)
 	{
@@ -245,10 +245,10 @@ void StaticVectorSolver::FreeSurfaceCurrent<3, 2>::value_list(
 	std::vector<Tensor<1,3>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	Assert(r.size() == n.size(),
-		ExcDimensionMismatch(r.size(), n.size()))
+		ExcDimensionMismatch(r.size(), n.size()));
 
 	for (unsigned int i = 0 ; i < values.size(); i++)
 	{

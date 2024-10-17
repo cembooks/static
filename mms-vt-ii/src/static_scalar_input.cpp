@@ -32,7 +32,7 @@ void StaticScalarSolver::TheCoefficient<2,0>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < values.size(); i++)
 		values[i] = 1.0;
@@ -46,7 +46,7 @@ void StaticScalarSolver::TheCoefficient<2,1>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < values.size(); i++)
 		values[i] = 1.0;
@@ -60,7 +60,7 @@ void StaticScalarSolver::PdeRhs<2,0>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < values.size(); i++)
 		values[i] = 0.0;
@@ -74,7 +74,7 @@ void StaticScalarSolver::PdeRhsCvp<2,0>::value_list(
 	std::vector<Tensor<1, 2>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	Tensor<1,2> Jf;
 
@@ -98,10 +98,10 @@ void StaticScalarSolver::Gamma<2,0>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	Assert(r.size() == n.size(),
-		ExcDimensionMismatch(r.size(), n.size()))
+		ExcDimensionMismatch(r.size(), n.size()));
 
 	for (unsigned int i = 0 ; i < values.size(); i++)
 		values[i] = 0;
@@ -119,7 +119,7 @@ void StaticScalarSolver::RobinRhs<2,0>::value_list(
 {
 
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	Tensor<1,2> Jf;
 
@@ -141,7 +141,7 @@ void StaticScalarSolver::FreeSurfaceCharge<2,0>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0; i < values.size(); i++)
 		values[i] = 0.0;

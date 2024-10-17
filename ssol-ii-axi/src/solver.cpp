@@ -15,8 +15,10 @@ void SolverSSOLIIAXI::make_mesh()
 {
 	GridIn<2> gridin;
 	gridin.attach_triangulation(triangulation);
+
 	std::ifstream ifs("../../gmsh/data/circle_r" + std::to_string(r) + ".msh");
 	gridin.read_msh(ifs);
+
 	mark_materials();
 }
 

@@ -127,31 +127,15 @@ template <int dim >
 void SolverSLDI<dim>::make_mesh()
 {
 	GridIn<dim> gridin;
-	Triangulation<dim> tria_tmp;
-	gridin.attach_triangulation(tria_tmp);
+	gridin.attach_triangulation(Solver<dim>::triangulation);
 
-	std::string fname_mesh_in = (dim == 2) ?
+	std::string fname_mesh = (dim == 2) ?
 		"../../gmsh/data/square_r"+std::to_string(r)+".msh" :
 		"../../gmsh/data/cube_r"+std::to_string(r)+".msh";
 
-	std::ifstream ifs(fname_mesh_in);
+	std::ifstream ifs(fname_mesh);
 	gridin.read_msh(ifs);
-
-	std::tuple< std::vector< Point<dim>>, std::vector< CellData<dim> >, SubCellData> mesh_description;
-
-	mesh_description = GridTools::get_coarse_mesh_description(tria_tmp);
-
-	GridTools::invert_all_negative_measure_cells(
-		std::get<0>(mesh_description),
-		std::get<1>(mesh_description));
-
-	GridTools::consistently_order_cells(std::get<1>(mesh_description));
-
-	Solver<dim>::triangulation.create_triangulation(
-		std::get<0>(mesh_description),
-		std::get<1>(mesh_description),
-		std::get<2>(mesh_description));
-
+	
 	Solver<dim>::triangulation.reset_all_manifolds();
 
 	double cell_r;
@@ -185,17 +169,6 @@ void SolverSLDI<dim>::make_mesh()
 	}
 
 	Solver<dim>::triangulation.set_manifold(1,sphere);
-
-	GridOut gridout;
-	GridOutFlags::Msh msh_flags(true, true);
-	gridout.set_flags(msh_flags);
-
-	std::string fname_mesh_out = (dim == 2) ?
-		"../../gmsh/data/square_reordered_r"+std::to_string(r)+".msh" :
-		"../../gmsh/data/cube_reordered_r."+std::to_string(r)+".msh";
-
-	std::ofstream ofs(fname_mesh_out);
-	gridout.write_msh(Solver<dim>::triangulation, ofs);
 }
 
 template<int dim>

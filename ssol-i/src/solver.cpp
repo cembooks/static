@@ -21,34 +21,12 @@
 void SolverSSOLI::make_mesh()
 {
 	GridIn<3> gridin;
-	Triangulation<3> tria_tmp;
 
-	gridin.attach_triangulation(tria_tmp);
+	gridin.attach_triangulation(Solver1<3>::triangulation);
 	std::ifstream ifs("../../gmsh/data/sphere_r" + std::to_string(r) + ".msh");
 	gridin.read_msh(ifs);
-
-	std::tuple< std::vector< Point<3>>, std::vector< CellData<3> >, SubCellData> mesh_description;
-
-	mesh_description = GridTools::get_coarse_mesh_description(tria_tmp);
-
-	GridTools::invert_all_negative_measure_cells(
-		std::get<0>(mesh_description),
-		std::get<1>(mesh_description));
-
-	GridTools::consistently_order_cells(std::get<1>(mesh_description));
-
-	Solver1<3>::triangulation.create_triangulation(
-		std::get<0>(mesh_description),
-		std::get<1>(mesh_description),
-		std::get<2>(mesh_description));
-
+	
 	mark_materials();
-
-	GridOut gridout;
-	GridOutFlags::Msh msh_flags(true, true);
-	gridout.set_flags(msh_flags);
-	std::ofstream ofs("../../gmsh/data/sphere_r" + std::to_string(r) + "_reordered.msh");
-	gridout.write_msh(Solver1<3>::triangulation, ofs);
 }
 
 void SolverSSOLI::fill_dirichlet_stack()

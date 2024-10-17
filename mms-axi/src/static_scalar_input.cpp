@@ -28,7 +28,7 @@ void TheCoefficient<2>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: r)
@@ -46,7 +46,7 @@ void TheCoefficient<3>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(rr.size() == values.size(),
-		ExcDimensionMismatch(rr.size(), values.size()))
+		ExcDimensionMismatch(rr.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: rr)
@@ -65,7 +65,7 @@ void PdeRhs<2>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: r)
@@ -88,7 +88,7 @@ void PdeRhs<3>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(rr.size() == values.size(),
-		ExcDimensionMismatch(rr.size(), values.size()))
+		ExcDimensionMismatch(rr.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: rr)
@@ -113,7 +113,7 @@ void PdeRhsCvp<2>::value_list(
 	std::vector<Tensor<1, 2>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0; i < values.size(); i++)
 	{
@@ -130,7 +130,7 @@ void PdeRhsCvp<3>::value_list(
 	std::vector<Tensor<1, 3>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0; i < values.size(); i++)
 	{
@@ -151,7 +151,7 @@ void  Gamma<2>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: r)
@@ -172,7 +172,7 @@ void Gamma<3>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: r)
@@ -196,7 +196,7 @@ void RobinRhs<2>::value_list(
 {
 
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	double epsilon;
 	double gamma;
@@ -233,7 +233,7 @@ void RobinRhs<3>::value_list(
 {
 
 	Assert(rr.size() == values.size(),
-		ExcDimensionMismatch(rr.size(), values.size()))
+		ExcDimensionMismatch(rr.size(), values.size()));
 
 	double epsilon;
 	double gamma;
@@ -274,7 +274,7 @@ void FreeSurfaceCharge<2>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0; i < values.size(); i++)
 		values[i] = 0.0;
@@ -290,7 +290,7 @@ void FreeSurfaceCharge<3>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0; i < values.size(); i++)
 		values[i] = 0.0;

@@ -31,7 +31,7 @@ void TheCoefficient<3>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: r)
@@ -49,7 +49,7 @@ void TheCoefficient<2>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	auto v = values.begin();
 	for (auto p: r)
@@ -67,7 +67,7 @@ void PdeRhs<3>::value_list(
 	std::vector<Tensor<1,3>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < r.size(); i++)
 	{
@@ -85,7 +85,7 @@ void PdeRhs<2>::value_list(
 	std::vector<Tensor<1,2>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < r.size(); i++)
 	{
@@ -105,7 +105,7 @@ void Gamma<3>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < r.size(); i++)
 		values[i] = 1.0 / (mu_0 * r.at(i).norm());
@@ -122,7 +122,7 @@ void Gamma<2>::value_list(
 	std::vector<double> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < r.size(); i++)
 		values[i] = 0.0;
@@ -139,7 +139,7 @@ void RobinRhs<3>::value_list(
 	std::vector<Tensor<1,3>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < r.size(); i++)
 	{
@@ -160,7 +160,7 @@ void RobinRhs<2>::value_list(
 	std::vector<Tensor<1,2>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < r.size(); i++)
 	{
@@ -179,7 +179,7 @@ void FreeSurfaceCurrent<3>::value_list(
 	std::vector<Tensor<1,3>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	if ( (cuid == 1) && (fuid == 1) )
 	{
@@ -211,7 +211,7 @@ void FreeSurfaceCurrent<2>::value_list(
 	std::vector<Tensor<1,2>> & values) const
 {
 	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()))
+		ExcDimensionMismatch(r.size(), values.size()));
 
 	for (unsigned int i = 0 ; i < r.size(); i++)
 	{

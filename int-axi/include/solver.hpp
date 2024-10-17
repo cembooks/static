@@ -83,12 +83,10 @@ public:
 	{
 		if (CYLINDER__ == 1)
 		{
-			fname_mesh_in = "../../gmsh/data/cylinder_r" + std::to_string(r) + ".msh";
-			fname_mesh_out = "../../gmsh/data/cylinder_r" + std::to_string(r) + "_reordered.msh";
+			fname_mesh = "../../gmsh/data/cylinder_r" + std::to_string(r) + ".msh";
 		}else
 		{
-			fname_mesh_in = "../../gmsh/data/sphere_r" + std::to_string(r) + ".msh";
-			fname_mesh_out = "../../gmsh/data/sphere_r" + std::to_string(r) + "_reordered.msh";
+			fname_mesh = "../../gmsh/data/sphere_r" + std::to_string(r) + ".msh";
 		}
 
 		TimerOutput::OutputFrequency tf =
@@ -108,8 +106,7 @@ public:
 private:
 	const unsigned int r;
 	const std::string fname;
-	std::string fname_mesh_in;
-	std::string fname_mesh_out;
+	std::string fname_mesh;
 
 	const	ExactSolutionINTAXI_PHI<is_cylinder> exact_solution;
 	const dealii::Functions::ZeroFunction<2> dirichlet_function_out;
@@ -214,33 +211,10 @@ template <bool is_cylinder>
 void SolverINTAXI<is_cylinder>::make_mesh()
 {
 	GridIn<2> gridin;
-	Triangulation<2> tria_tmp;
-
-	gridin.attach_triangulation(tria_tmp);
-	std::ifstream ifs(fname_mesh_in);
+	gridin.attach_triangulation(Solver<2>::triangulation);
+	
+	std::ifstream ifs(fname_mesh);
 	gridin.read_msh(ifs);
-
-	std::tuple< std::vector< Point<2>>, std::vector< CellData<2> >, SubCellData> mesh_description;
-
-	mesh_description = GridTools::get_coarse_mesh_description(tria_tmp);
-
-	GridTools::invert_all_negative_measure_cells(
-		std::get<0>(mesh_description),
-		std::get<1>(mesh_description));
-
-	GridTools::consistently_order_cells(std::get<1>(mesh_description));
-
-	Solver<2>::triangulation.create_triangulation(
-		std::get<0>(mesh_description),
-		std::get<1>(mesh_description),
-		std::get<2>(mesh_description));
-
-	GridOut gridout;
-	GridOutFlags::Msh msh_flags(true, true);
-	gridout.set_flags(msh_flags);
-
-	std::ofstream ofs(fname_mesh_out);
-	gridout.write_msh(Solver<2>::triangulation, ofs);
 
 	if (is_cylinder)
 	{
