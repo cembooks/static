@@ -8,7 +8,7 @@ exit__()
 	exit -1
 }
 
-list_dirs=`ls -I backup -I shared -I doc -I clean -I build -I setup -I run-all -I README.md`
+list_dirs=`ls -I backup -I shared -I doc -I clean -I build -I setup -I run-all -I README.md -I cpp-format -I vim-copy -I .vimrc`
 
 lock=1
 

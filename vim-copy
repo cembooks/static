@@ -10,21 +10,12 @@ exit__()
 
 list_dirs=`ls -I backup -I shared -I doc -I clean -I build -I setup -I run-all -I README.md -I cpp-format -I vim-copy -I .vimrc`
 
-lock=1
+shared_include=`ls shared/include`
+shared_src=`ls shared/src`
 
 for local_dir  in ${list_dirs[@]}
 do
-
-	if [ ${local_dir} == abc ]; then
-		lock=0
-	fi
-
-	if [ ${lock} == 0 ]; then
-		echo "${local_dir}..."
-		cd ${local_dir}/bin/Release
-		./run-all
-		cd ../../../
-	fi
-
+	echo Setting up ${local_dir} ...
+	cp .vimrc ${local_dir}/.
 done
 

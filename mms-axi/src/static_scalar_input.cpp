@@ -1,18 +1,18 @@
 /******************************************************************************
-* Copyright (C) Siarhei Uzunbajakau, 2023.
-*
-* This program is free software. You can use, modify, and redistribute it under
-* the terms of the GNU Lesser General Public License as published by the Free
-* Software Foundation, either version 3 or (at your option) any later version.
-* This program is distributed without any warranty.
-*
-* Refer to COPYING.LESSER for more details.
-******************************************************************************/
+ * Copyright (C) Siarhei Uzunbajakau, 2023.
+ *
+ * This program is free software. You can use, modify, and redistribute it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 or (at your option) any later version.
+ * This program is distributed without any warranty.
+ *
+ * Refer to COPYING.LESSER for more details.
+ ******************************************************************************/
 
 #define BOOST_ALLOW_DEPRECATED_HEADERS
 
-#include <math.h>
 #include "static_scalar_input.hpp"
+#include <math.h>
 
 using namespace StaticScalarSolver;
 using namespace std;
@@ -21,294 +21,281 @@ using namespace std;
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
 template<>
-void TheCoefficient<2>::value_list(
-	const std::vector<Point<2>> & r,
-	types::material_id mid,
-	unsigned int cuid,
-	std::vector<double> & values) const
+void
+TheCoefficient<2>::value_list(const std::vector<Point<2>>& r,
+                              types::material_id mid,
+                              unsigned int cuid,
+                              std::vector<double>& values) const
 {
-	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()));
+  Assert(r.size() == values.size(),
+         ExcDimensionMismatch(r.size(), values.size()));
 
-	auto v = values.begin();
-	for (auto p: r)
-	{
-		* v = ep_0 * ( p[0] * pow(p[1],2) + 1.0 );
-		v++;
-	}
+  auto v = values.begin();
+  for (auto p : r) {
+    *v = ep_0 * (p[0] * pow(p[1], 2) + 1.0);
+    v++;
+  }
 }
 
 template<>
-void TheCoefficient<3>::value_list(
-	const std::vector<Point<3>> & rr,
-	types::material_id mid,
-	unsigned int cuid,
-	std::vector<double> & values) const
+void
+TheCoefficient<3>::value_list(const std::vector<Point<3>>& rr,
+                              types::material_id mid,
+                              unsigned int cuid,
+                              std::vector<double>& values) const
 {
-	Assert(rr.size() == values.size(),
-		ExcDimensionMismatch(rr.size(), values.size()));
+  Assert(rr.size() == values.size(),
+         ExcDimensionMismatch(rr.size(), values.size()));
 
-	auto v = values.begin();
-	for (auto p: rr)
-	{
-		double r = sqrt( pow(p[0],2.0) + pow(p[1],2.0) );
-		*v = ep_0 * ( r*pow(p[2],2.0) + 1.0 );
-		v++;
-	}
+  auto v = values.begin();
+  for (auto p : rr) {
+    double r = sqrt(pow(p[0], 2.0) + pow(p[1], 2.0));
+    *v = ep_0 * (r * pow(p[2], 2.0) + 1.0);
+    v++;
+  }
 }
 
 template<>
-void PdeRhs<2>::value_list(
-	const std::vector<Point<2>> & r,
-	types::material_id mid,
-	unsigned int cuid,
-	std::vector<double> & values) const
+void
+PdeRhs<2>::value_list(const std::vector<Point<2>>& r,
+                      types::material_id mid,
+                      unsigned int cuid,
+                      std::vector<double>& values) const
 {
-	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()));
+  Assert(r.size() == values.size(),
+         ExcDimensionMismatch(r.size(), values.size()));
 
-	auto v = values.begin();
-	for (auto p: r)
-	{
-		*v = ep_0 * k * (
-			( 2.0*pow(p[1],2) + (1.0 / p[0]) ) * sin( k*p[0] )
-		+ k*(p[0]*pow(p[1],2) + 1.0) * cos( k*p[0] )
-		+ (2.0*p[0]*p[1])*sin( k*p[1])
-		+ k*(p[0]*pow(p[1],2) + 1.0)*cos(k*p[1])
-		);
-		v++;
-	}
+  auto v = values.begin();
+  for (auto p : r) {
+    *v = ep_0 * k *
+         ((2.0 * pow(p[1], 2) + (1.0 / p[0])) * sin(k * p[0]) +
+          k * (p[0] * pow(p[1], 2) + 1.0) * cos(k * p[0]) +
+          (2.0 * p[0] * p[1]) * sin(k * p[1]) +
+          k * (p[0] * pow(p[1], 2) + 1.0) * cos(k * p[1]));
+    v++;
+  }
 }
 
 template<>
-void PdeRhs<3>::value_list(
-	const std::vector<Point<3>> &rr,
-	types::material_id mid,
-	unsigned int cuid,
-	std::vector<double> & values) const
+void
+PdeRhs<3>::value_list(const std::vector<Point<3>>& rr,
+                      types::material_id mid,
+                      unsigned int cuid,
+                      std::vector<double>& values) const
 {
-	Assert(rr.size() == values.size(),
-		ExcDimensionMismatch(rr.size(), values.size()));
+  Assert(rr.size() == values.size(),
+         ExcDimensionMismatch(rr.size(), values.size()));
 
-	auto v = values.begin();
-	for (auto p: rr)
-	{
-		double r = sqrt( pow(p[0],2) + pow(p[1],2) );
+  auto v = values.begin();
+  for (auto p : rr) {
+    double r = sqrt(pow(p[0], 2) + pow(p[1], 2));
 
-		*v = ep_0 * k * (
-				(1.0/r)*(2.0*r*pow(p[2],2.0) + 1.0) * sin( k*r )
-			+ k*(r*pow(p[2],2.0) + 1.0) * cos( k*r )
-			+ (2.0*r*p[2])*sin( k*p[2])
-			+ k*(r*pow(p[2],2.0) + 1.0)*cos(k*p[2])
-			);
-		v++;
-	}
+    *v = ep_0 * k *
+         ((1.0 / r) * (2.0 * r * pow(p[2], 2.0) + 1.0) * sin(k * r) +
+          k * (r * pow(p[2], 2.0) + 1.0) * cos(k * r) +
+          (2.0 * r * p[2]) * sin(k * p[2]) +
+          k * (r * pow(p[2], 2.0) + 1.0) * cos(k * p[2]));
+    v++;
+  }
 }
 
 template<>
-void PdeRhsCvp<2>::value_list(
-	const std::vector<Point<2>> &r,
-	types::material_id mid,
-	unsigned int cuid,
-	std::vector<Tensor<1, 2>> & values) const
+void
+PdeRhsCvp<2>::value_list(const std::vector<Point<2>>& r,
+                         types::material_id mid,
+                         unsigned int cuid,
+                         std::vector<Tensor<1, 2>>& values) const
 {
-	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()));
+  Assert(r.size() == values.size(),
+         ExcDimensionMismatch(r.size(), values.size()));
 
-	for (unsigned int i = 0; i < values.size(); i++)
-	{
-		values.at(i)[0] = 0.0;
-		values.at(i)[1] = 0.0;
-	}
+  for (unsigned int i = 0; i < values.size(); i++) {
+    values.at(i)[0] = 0.0;
+    values.at(i)[1] = 0.0;
+  }
 }
 
 template<>
-void PdeRhsCvp<3>::value_list(
-	const std::vector<Point<3>> &r,
-	types::material_id mid,
-	unsigned int cuid,
-	std::vector<Tensor<1, 3>> & values) const
+void
+PdeRhsCvp<3>::value_list(const std::vector<Point<3>>& r,
+                         types::material_id mid,
+                         unsigned int cuid,
+                         std::vector<Tensor<1, 3>>& values) const
 {
-	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()));
+  Assert(r.size() == values.size(),
+         ExcDimensionMismatch(r.size(), values.size()));
 
-	for (unsigned int i = 0; i < values.size(); i++)
-	{
-		values.at(i)[0] = 0.0;
-		values.at(i)[1] = 0.0;
-		values.at(i)[2] = 0.0;
-	}
+  for (unsigned int i = 0; i < values.size(); i++) {
+    values.at(i)[0] = 0.0;
+    values.at(i)[1] = 0.0;
+    values.at(i)[2] = 0.0;
+  }
 }
 
 template<>
-void  Gamma<2>::value_list(
-	const std::vector<Point<2>> &r,
-	const std::vector<Tensor<1, 2>> & n,
-	types::boundary_id bid,
-	types::material_id mid,
-	unsigned int cuid,
-	unsigned int fuid,
-	std::vector<double> & values) const
+void
+Gamma<2>::value_list(const std::vector<Point<2>>& r,
+                     const std::vector<Tensor<1, 2>>& n,
+                     types::boundary_id bid,
+                     types::material_id mid,
+                     unsigned int cuid,
+                     unsigned int fuid,
+                     std::vector<double>& values) const
 {
-	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()));
+  Assert(r.size() == values.size(),
+         ExcDimensionMismatch(r.size(), values.size()));
 
-	auto v = values.begin();
-	for (auto p: r)
-	{
-	* v = ep_0 * ( sqrt( pow(p[0],2) + pow(p[1],2) ) + 2.0 );
-		v++;
-	}
+  auto v = values.begin();
+  for (auto p : r) {
+    *v = ep_0 * (sqrt(pow(p[0], 2) + pow(p[1], 2)) + 2.0);
+    v++;
+  }
 }
 
 template<>
-void Gamma<3>::value_list(
-	const std::vector<Point<3>> &r,
-	const std::vector<Tensor<1, 3>> & n,
-	types::boundary_id bid,
-	types::material_id mid,
-	unsigned int cuid,
-	unsigned int fuid,
-	std::vector<double> & values) const
+void
+Gamma<3>::value_list(const std::vector<Point<3>>& r,
+                     const std::vector<Tensor<1, 3>>& n,
+                     types::boundary_id bid,
+                     types::material_id mid,
+                     unsigned int cuid,
+                     unsigned int fuid,
+                     std::vector<double>& values) const
 {
-	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()));
+  Assert(r.size() == values.size(),
+         ExcDimensionMismatch(r.size(), values.size()));
 
-	auto v = values.begin();
-	for (auto p: r)
-	{
-		double r = sqrt( pow(p[0],2) + pow(p[1],2) );
+  auto v = values.begin();
+  for (auto p : r) {
+    double r = sqrt(pow(p[0], 2) + pow(p[1], 2));
 
-	* v = ep_0 * ( sqrt( pow(r,2) + pow(p[2],2) ) + 2.0 );
-		v++;
-	}
+    *v = ep_0 * (sqrt(pow(r, 2) + pow(p[2], 2)) + 2.0);
+    v++;
+  }
 }
 
 template<>
-void RobinRhs<2>::value_list(
-	const std::vector<Point<2>> &r,
-	const std::vector<Tensor<1, 2>> & n,
-	types::boundary_id bid,
-	types::material_id mid,
-	unsigned int cuid,
-	unsigned int fuid,
-	std::vector<double> & values) const
+void
+RobinRhs<2>::value_list(const std::vector<Point<2>>& r,
+                        const std::vector<Tensor<1, 2>>& n,
+                        types::boundary_id bid,
+                        types::material_id mid,
+                        unsigned int cuid,
+                        unsigned int fuid,
+                        std::vector<double>& values) const
 {
 
-	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()));
+  Assert(r.size() == values.size(),
+         ExcDimensionMismatch(r.size(), values.size()));
 
-	double epsilon;
-	double gamma;
-	double phi;
-	Tensor<1,2> grad_phi;
+  double epsilon;
+  double gamma;
+  double phi;
+  Tensor<1, 2> grad_phi;
 
-	auto v = values.begin();
-	auto nn = n.begin();
-	for (auto p: r)
-	{
-		epsilon = ep_0 * ( p[0] * pow(p[1],2) + 1.0 );
-		phi = cos(k*p[0]) + cos(k*p[1]);
+  auto v = values.begin();
+  auto nn = n.begin();
+  for (auto p : r) {
+    epsilon = ep_0 * (p[0] * pow(p[1], 2) + 1.0);
+    phi = cos(k * p[0]) + cos(k * p[1]);
 
-		grad_phi[0] = - k * sin( k*p[0] );
-		grad_phi[1] = - k * sin( k*p[0] );
+    grad_phi[0] = -k * sin(k * p[0]);
+    grad_phi[1] = -k * sin(k * p[0]);
 
-		gamma = ep_0 * ( sqrt( pow(p[0],2) + pow(p[1],2) ) + 2.0 );
+    gamma = ep_0 * (sqrt(pow(p[0], 2) + pow(p[1], 2)) + 2.0);
 
-	  *v = epsilon * (*nn * grad_phi) + gamma * phi;
-		 v++;
-		 nn++;
-	}
+    *v = epsilon * (*nn * grad_phi) + gamma * phi;
+    v++;
+    nn++;
+  }
 }
 
 template<>
-void RobinRhs<3>::value_list(
-	const std::vector<Point<3>> & rr,
-	const std::vector<Tensor<1, 3>> & n,
-	types::boundary_id bid,
-	types::material_id mid,
-	unsigned int cuid,
-	unsigned int fuid,
-	std::vector<double> & values) const
+void
+RobinRhs<3>::value_list(const std::vector<Point<3>>& rr,
+                        const std::vector<Tensor<1, 3>>& n,
+                        types::boundary_id bid,
+                        types::material_id mid,
+                        unsigned int cuid,
+                        unsigned int fuid,
+                        std::vector<double>& values) const
 {
 
-	Assert(rr.size() == values.size(),
-		ExcDimensionMismatch(rr.size(), values.size()));
+  Assert(rr.size() == values.size(),
+         ExcDimensionMismatch(rr.size(), values.size()));
 
-	double epsilon;
-	double gamma;
-	double phi;
-	Tensor<1,3> grad_phi;
+  double epsilon;
+  double gamma;
+  double phi;
+  Tensor<1, 3> grad_phi;
 
-	auto v = values.begin();
-	auto nn = n.begin();
-	for (auto p: rr)
-	{
-		double r = sqrt( pow(p[0],2) + pow(p[1],2) );
-		double cos_phi = p[0] / sqrt( pow(p[0],2) + pow(p[1],2) );
-		double sin_phi = p[1] / sqrt( pow(p[0],2) + pow(p[1],2) );
+  auto v = values.begin();
+  auto nn = n.begin();
+  for (auto p : rr) {
+    double r = sqrt(pow(p[0], 2) + pow(p[1], 2));
+    double cos_phi = p[0] / sqrt(pow(p[0], 2) + pow(p[1], 2));
+    double sin_phi = p[1] / sqrt(pow(p[0], 2) + pow(p[1], 2));
 
-		epsilon =  ep_0 * ( r*pow(p[2],2.0) + 1.0 );
+    epsilon = ep_0 * (r * pow(p[2], 2.0) + 1.0);
 
-		phi = cos( k*r ) + cos( k*p[2] );
+    phi = cos(k * r) + cos(k * p[2]);
 
-		grad_phi[0] = - k * cos_phi * sin( k*r );
-		grad_phi[1] = - k * sin_phi * sin( k*r );
-		grad_phi[2] = - k * sin( k*p[2] );
+    grad_phi[0] = -k * cos_phi * sin(k * r);
+    grad_phi[1] = -k * sin_phi * sin(k * r);
+    grad_phi[2] = -k * sin(k * p[2]);
 
-		gamma = ep_0 * ( sqrt( pow(r,2) + pow(p[2],2) ) + 2.0 );
+    gamma = ep_0 * (sqrt(pow(r, 2) + pow(p[2], 2)) + 2.0);
 
-		*v = epsilon * (*nn * grad_phi) + gamma * phi;
-		 v++;
-		 nn++;
-		}
+    *v = epsilon * (*nn * grad_phi) + gamma * phi;
+    v++;
+    nn++;
+  }
 }
 
 template<>
-void FreeSurfaceCharge<2>::value_list(
-	const std::vector<Point<2>> &r,
-	const std::vector<Tensor<1,2>> & n,
-	types::material_id mid,
-	unsigned int cuid,
-	unsigned int fuid,
-	std::vector<double> & values) const
+void
+FreeSurfaceCharge<2>::value_list(const std::vector<Point<2>>& r,
+                                 const std::vector<Tensor<1, 2>>& n,
+                                 types::material_id mid,
+                                 unsigned int cuid,
+                                 unsigned int fuid,
+                                 std::vector<double>& values) const
 {
-	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()));
+  Assert(r.size() == values.size(),
+         ExcDimensionMismatch(r.size(), values.size()));
 
-	for (unsigned int i = 0; i < values.size(); i++)
-		values[i] = 0.0;
+  for (unsigned int i = 0; i < values.size(); i++)
+    values[i] = 0.0;
 }
 
 template<>
-void FreeSurfaceCharge<3>::value_list(
-	const std::vector<Point<3>> &r,
-	const std::vector<Tensor<1,3>> & n,
-	types::material_id mid,
-	unsigned int cuid,
-	unsigned int fuid,
-	std::vector<double> & values) const
+void
+FreeSurfaceCharge<3>::value_list(const std::vector<Point<3>>& r,
+                                 const std::vector<Tensor<1, 3>>& n,
+                                 types::material_id mid,
+                                 unsigned int cuid,
+                                 unsigned int fuid,
+                                 std::vector<double>& values) const
 {
-	Assert(r.size() == values.size(),
-		ExcDimensionMismatch(r.size(), values.size()));
+  Assert(r.size() == values.size(),
+         ExcDimensionMismatch(r.size(), values.size()));
 
-	for (unsigned int i = 0; i < values.size(); i++)
-		values[i] = 0.0;
+  for (unsigned int i = 0; i < values.size(); i++)
+    values[i] = 0.0;
 }
 
 template<>
-double Weight<2>::value(const Point<2> & r,
-	const unsigned int component) const
+double
+Weight<2>::value(const Point<2>& r, const unsigned int component) const
 {
-	return 1.0;
+  return 1.0;
 }
 
 template<>
-double Weight<3>::value(const Point<3> & r,
-	const unsigned int component) const
+double
+Weight<3>::value(const Point<3>& r, const unsigned int component) const
 {
-	return 1.0;
+  return 1.0;
 }
 
 #pragma GCC diagnostic pop
-

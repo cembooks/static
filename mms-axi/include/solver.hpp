@@ -1,13 +1,13 @@
 /******************************************************************************
-* Copyright (C) Siarhei Uzunbajakau, 2023.
-*
-* This program is free software. You can use, modify, and redistribute it under
-* the terms of the GNU Lesser General Public License as published by the Free
-* Software Foundation, either version 3 or (at your option) any later version.
-* This program is distributed without any warranty.
-*
-* Refer to COPYING.LESSER for more details.
-******************************************************************************/
+ * Copyright (C) Siarhei Uzunbajakau, 2023.
+ *
+ * This program is free software. You can use, modify, and redistribute it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 or (at your option) any later version.
+ * This program is distributed without any warranty.
+ *
+ * Refer to COPYING.LESSER for more details.
+ ******************************************************************************/
 
 #ifndef SolverMMSAXI_H__
 #define SolverMMSAXI_H__
@@ -19,154 +19,146 @@
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/grid_tools.h>
-#include <deal.II/grid/grid_generator.h>
 
 #include <deal.II/numerics/fe_field_function.h>
 
-#include "static_scalar_solver.hpp"
 #include "exact_solution.hpp"
 #include "settings.hpp"
+#include "static_scalar_solver.hpp"
 
-#define TMR(__name) \
-	TimerOutput::Scope timer_section(timer, __name)
+#define TMR(__name) TimerOutput::Scope timer_section(timer, __name)
 
 using namespace StaticScalarSolver;
 
 /**
  * \brief Implements the
- * [Axisymmetric - method of manufactured solutions (mms-axi/)](@ref page_mms_axi)
- * numerical experiment.
+ * [Axisymmetric - method of manufactured solutions (mms-axi/)](@ref
+ *page_mms_axi) numerical experiment.
  *****************************************************************************/
 template<int dim>
-class SolverMMSAXI : public SettingsMMSAXI, public Solver<dim>
+class SolverMMSAXI
+  : public SettingsMMSAXI
+  , public Solver<dim>
 {
 public:
+  SolverMMSAXI() = delete;
 
-	SolverMMSAXI() = delete;
-
-/**
- * The constructor.
- *
- * @param[in] p - The degree of the interpolating polynomials of the Lagrange
- * finite elements,
- * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
- * @param[in] r - The parameter that encodes the degree of mesh refinement.
- * Must coincide with one of the values set in mms-axi/gmsh/build. This parameter
- * is used to compose the name of the mesh file to be uploaded from
- * mms-axi/gmsh/data/.
- * @param[in] fname - The name of the vtk file without extension to save
- * the data.
- *****************************************************************************/
-	SolverMMSAXI(
-	unsigned int p,
-	unsigned int r,
-	std::string fname):
-		Solver<dim>(
-		p,
-		1,
-		1,
-		fname,
-		& exact_solution,
+  /**
+   * The constructor.
+   *
+   * @param[in] p - The degree of the interpolating polynomials of the Lagrange
+   * finite elements,
+   * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
+   * @param[in] r - The parameter that encodes the degree of mesh refinement.
+   * Must coincide with one of the values set in mms-axi/gmsh/build. This
+   *parameter is used to compose the name of the mesh file to be uploaded from
+   * mms-axi/gmsh/data/.
+   * @param[in] fname - The name of the vtk file without extension to save
+   * the data.
+   *****************************************************************************/
+  SolverMMSAXI(unsigned int p, unsigned int r, std::string fname)
+    : Solver<dim>(p,
+                  1,
+                  1,
+                  fname,
+                  &exact_solution,
 #if DIMENSION__ == 2
-		true,
+                  true,
 #endif
 #if DIMENSION__ == 3
-		false,
+                  false,
 #endif
-		false,
-		print_time_tables,
-		project_exact_solution),
-		r(r),
-		fname(fname)
-	{
+                  false,
+                  print_time_tables,
+                  project_exact_solution)
+    , r(r)
+    , fname(fname)
+  {
 #if DIMENSION__ == 2
-		fname_mesh = "../../gmsh/data/cylinder_2d_r"
-			+ std::to_string(r) + ".msh";
+    fname_mesh = "../../gmsh/data/cylinder_2d_r" + std::to_string(r) + ".msh";
 #endif
 #if DIMENSION__ == 3
-		fname_mesh = "../../gmsh/data/cylinder_3d_r"
-			+ std::to_string(r) + ".msh";
+    fname_mesh = "../../gmsh/data/cylinder_3d_r" + std::to_string(r) + ".msh";
 #endif
 
-		TimerOutput::OutputFrequency tf =
-			(print_time_tables) ? TimerOutput::summary : TimerOutput::never;
+    TimerOutput::OutputFrequency tf =
+      (print_time_tables) ? TimerOutput::summary : TimerOutput::never;
 
-		TimerOutput timer(
-			std::cout,
-			tf,
-			TimerOutput::cpu_and_wall_times_grouped);
+    TimerOutput timer(std::cout, tf, TimerOutput::cpu_and_wall_times_grouped);
 
-		{TMR("Solver run"); Solver<dim>::run();}
-	}
+    {
+      TMR("Solver run");
+      Solver<dim>::run();
+    }
+  }
 
-	~SolverMMSAXI() = default;
+  ~SolverMMSAXI() = default;
 
 private:
+  const unsigned int r;
+  const std::string fname;
+  const ExactSolutionMMSAXI_PHI<dim> exact_solution;
 
-	const unsigned int r;
-	const std::string fname;
-	const ExactSolutionMMSAXI_PHI<dim> exact_solution;
+  std::string fname_mesh;
 
-	std::string fname_mesh;
-
-	virtual void make_mesh() override final;
-	virtual void fill_dirichlet_stack() override final;
-	virtual void solve() override final;
+  virtual void make_mesh() override final;
+  virtual void fill_dirichlet_stack() override final;
+  virtual void solve() override final;
 };
 
 template<int dim>
-void SolverMMSAXI<dim>::fill_dirichlet_stack()
+void
+SolverMMSAXI<dim>::fill_dirichlet_stack()
 {
-	Solver<dim>::dirichlet_stack = {{bid_dirichlet, & exact_solution}};
-}
-
-template <int dim>
-void SolverMMSAXI<dim>::make_mesh()
-{
-	GridIn<dim> gridin;
-	gridin.attach_triangulation(Solver<dim>::triangulation);
-	
-	std::ifstream ifs(fname_mesh);
-	gridin.read_msh(ifs);
+  Solver<dim>::dirichlet_stack = { { bid_dirichlet, &exact_solution } };
 }
 
 template<int dim>
-void SolverMMSAXI<dim>::solve()
+void
+SolverMMSAXI<dim>::make_mesh()
 {
-	ReductionControl control(Solver<dim>::system_rhs.size(), 0.0, 1e-8, false, false);
+  GridIn<dim> gridin;
+  gridin.attach_triangulation(Solver<dim>::triangulation);
 
-	if (log_cg_convergence)
-		control.enable_history_data();
+  std::ifstream ifs(fname_mesh);
+  gridin.read_msh(ifs);
+}
 
-	GrowingVectorMemory<Vector<double>> memory;
-	SolverCG<Vector<double>> cg(control, memory);
+template<int dim>
+void
+SolverMMSAXI<dim>::solve()
+{
+  ReductionControl control(
+    Solver<dim>::system_rhs.size(), 0.0, 1e-8, false, false);
 
-	PreconditionJacobi<SparseMatrix<double>> preconditioner;
-	preconditioner.initialize(Solver<dim>::system_matrix, 1.0);
+  if (log_cg_convergence)
+    control.enable_history_data();
 
-	cg.solve(
-		Solver<dim>::system_matrix,
-		Solver<dim>::solution,
-		Solver<dim>::system_rhs,
-		preconditioner);
+  GrowingVectorMemory<Vector<double>> memory;
+  SolverCG<Vector<double>> cg(control, memory);
 
-	Solver<dim>::constraints.distribute(Solver<dim>::solution);
+  PreconditionJacobi<SparseMatrix<double>> preconditioner;
+  preconditioner.initialize(Solver<dim>::system_matrix, 1.0);
 
-	if (log_cg_convergence)
-	{
-		const std::vector<double> history_data = control.get_history_data();
+  cg.solve(Solver<dim>::system_matrix,
+           Solver<dim>::solution,
+           Solver<dim>::system_rhs,
+           preconditioner);
 
-		std::ofstream ofs(fname + "_cg_convergence.csv");
+  Solver<dim>::constraints.distribute(Solver<dim>::solution);
 
-		unsigned int i = 1;
-		for (auto item : history_data)
-		{
-			ofs << i << ", " << item  << "\n";
-			i++;
-		}
-		ofs.close();
-	}
+  if (log_cg_convergence) {
+    const std::vector<double> history_data = control.get_history_data();
+
+    std::ofstream ofs(fname + "_cg_convergence.csv");
+
+    unsigned int i = 1;
+    for (auto item : history_data) {
+      ofs << i << ", " << item << "\n";
+      i++;
+    }
+    ofs.close();
+  }
 }
 
 #endif
-

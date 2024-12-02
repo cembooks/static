@@ -1,21 +1,20 @@
 /******************************************************************************
-* Copyright (C) Siarhei Uzunbajakau, 2023.
-*
-* This program is free software. You can use, modify, and redistribute it under
-* the terms of the GNU Lesser General Public License as published by the Free
-* Software Foundation, either version 3 or (at your option) any later version.
-* This program is distributed without any warranty.
-*
-* Refer to COPYING.LESSER for more details.
-******************************************************************************/
+ * Copyright (C) Siarhei Uzunbajakau, 2023.
+ *
+ * This program is free software. You can use, modify, and redistribute it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 or (at your option) any later version.
+ * This program is distributed without any warranty.
+ *
+ * Refer to COPYING.LESSER for more details.
+ ******************************************************************************/
 
 #ifndef ProjectAzToHxy_H__
 #define ProjectAzToHxy_H__
 
 #include "project_Hgrad_to_Hcurl.hpp"
 
-namespace StaticScalarSolver
-{
+namespace StaticScalarSolver {
 /**
  * \brief Computes the two-dimensional auxiliary field \f$\vec{H}\f$
  * from magnetic vector potential, \f$A\f$, i.e.,
@@ -47,12 +46,11 @@ namespace StaticScalarSolver
  * yielded \f$A\f$ is still in the computer memory such that the triangulation,
  * the degrees of freedom, and the handler of the degrees of freedom are
  * accessible while \f$\vec{H}\f$ is computed. An object of
- * the StaticScalarSolver::ProjectAzToHxy class template reuses the triangulation by
- * creating an additional dof handler associated with the
+ * the StaticScalarSolver::ProjectAzToHxy class template reuses the
+ *triangulation by creating an additional dof handler associated with the
  * [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
- * finite elements. That is, \f$\vec{H}\f$ and \f$A\f$ share the same triangulation
- * but are modeled by different finite elements:
- * \f$\vec{H}\f$ - by
+ * finite elements. That is, \f$\vec{H}\f$ and \f$A\f$ share the same
+ *triangulation but are modeled by different finite elements: \f$\vec{H}\f$ - by
  * [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
  * and \f$A\f$ - by
  * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
@@ -70,8 +68,8 @@ namespace StaticScalarSolver
  * @endcode
  *
  * The output data are saved into a vtk file. The following data are saved:
- * - The calculated H-field, \f$\vec{H} = \mu^{-1} \vec{\nabla} \overset{V}{\times} A\f$,
- *   under the name "VectorField".
+ * - The calculated H-field, \f$\vec{H} = \mu^{-1} \vec{\nabla}
+ *\overset{V}{\times} A\f$, under the name "VectorField".
  * - The \f$L^2\f$ error norm associated with the calculated H-field
  *   under the name "L2norm". One value per mesh cell is saved.
  * - The exact solution projected onto \f$H(\text{curl})\f$ function space is
@@ -97,73 +95,72 @@ namespace StaticScalarSolver
 template<int stage = 1>
 class ProjectAzToHxy : public ProjectHgradToHcurl<2, stage>
 {
-	public:
-		ProjectAzToHxy() = delete;
-/**
- * \brief The only constructor.
- *
- * Constructs the object and runs the calculations. That is, there is no need
- * to call other functions such as run().
- *
- * Constructs the object and runs the calculations. That is, there is no need
- * to call other functions such as run().
- * @param[in] p - The degree of the
- * [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
- * finite elements.
- * @param[in] mapping_degree - The degree of the interpolating polynomials used
- * for mapping. Setting it to 1 will do in the most of the cases. Note, that it
- * makes sense to attach a meaningful manifold to the triangulation if this
- * parameter is greater than 1.
- * @param[in] triangulation_A - Reference to the triangulation inside an
- * object of the class StaticScalarSolver::Solver that has yielded the
- * magnetic vector potential, \f$A\f$.
- * @param[in] dof_handler_A - Reference to the dof handler inside the class
- * StaticScalarSolver::Solver that has yielded the magnetic vector
- * potential, \f$A\f$.
- * @param[in] solution_A - Vector filled with the degrees of freedom that
- * together with the shape functions of the
- * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html)
- * finite elements model the magnetic vector potential, \f$A\f$.
- * @param[in] fname - The name of the output files without extension.
- * @param[in] exact_solution - Points to an object that describes the exact
- * solution to the problem. It is needed for calculating error norms. The
- * exact solution object must exist in the computer memory at the time of
- * calling this constructor.
- * @param[in] print_time_tables - If true, prints time tables on the screen.
- * @param[in] project_exact_solution - If true, projects the exact solution
- * onto the space spanned by the Nedelec finite elements and saves the
- * result into the vtk file next to \f$\vec{H}\f$.
- * @param[in] log_cg_convergence - If true, logs convergence of the conjugate
- * gradient solver into a file. The name of the file is generated by appending
- * "_cg_convergence.csv" to fname.
- *****************************************************************************/
-		ProjectAzToHxy(
-			unsigned int p,
-			unsigned int mapping_degree,
-			const Triangulation<2> & triangulation_A,
-			const DoFHandler<2> & dof_handler_A,
-			const Vector<double> & solutioin_A,
-			std::string fname = "Hxy",
-			const Function<2> * exact_solution = nullptr,
-			bool print_time_tables = false,
-			bool project_exact_solution = false,
-			bool log_cg_convergence = false) :
-				ProjectHgradToHcurl<2, stage>(
-				p,
-				mapping_degree,
-				triangulation_A,
-				dof_handler_A,
-				solutioin_A,
-				fname,
-				exact_solution,
-				false, // axisymmetric
-				true, // vector potential
-				print_time_tables,
-				project_exact_solution,
-				log_cg_convergence){}
+public:
+  ProjectAzToHxy() = delete;
+  /**
+   * \brief The only constructor.
+   *
+   * Constructs the object and runs the calculations. That is, there is no need
+   * to call other functions such as run().
+   *
+   * Constructs the object and runs the calculations. That is, there is no need
+   * to call other functions such as run().
+   * @param[in] p - The degree of the
+   * [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
+   * finite elements.
+   * @param[in] mapping_degree - The degree of the interpolating polynomials
+   *used for mapping. Setting it to 1 will do in the most of the cases. Note,
+   *that it makes sense to attach a meaningful manifold to the triangulation if
+   *this parameter is greater than 1.
+   * @param[in] triangulation_A - Reference to the triangulation inside an
+   * object of the class StaticScalarSolver::Solver that has yielded the
+   * magnetic vector potential, \f$A\f$.
+   * @param[in] dof_handler_A - Reference to the dof handler inside the class
+   * StaticScalarSolver::Solver that has yielded the magnetic vector
+   * potential, \f$A\f$.
+   * @param[in] solution_A - Vector filled with the degrees of freedom that
+   * together with the shape functions of the
+   * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html)
+   * finite elements model the magnetic vector potential, \f$A\f$.
+   * @param[in] fname - The name of the output files without extension.
+   * @param[in] exact_solution - Points to an object that describes the exact
+   * solution to the problem. It is needed for calculating error norms. The
+   * exact solution object must exist in the computer memory at the time of
+   * calling this constructor.
+   * @param[in] print_time_tables - If true, prints time tables on the screen.
+   * @param[in] project_exact_solution - If true, projects the exact solution
+   * onto the space spanned by the Nedelec finite elements and saves the
+   * result into the vtk file next to \f$\vec{H}\f$.
+   * @param[in] log_cg_convergence - If true, logs convergence of the conjugate
+   * gradient solver into a file. The name of the file is generated by appending
+   * "_cg_convergence.csv" to fname.
+   *****************************************************************************/
+  ProjectAzToHxy(unsigned int p,
+                 unsigned int mapping_degree,
+                 const Triangulation<2>& triangulation_A,
+                 const DoFHandler<2>& dof_handler_A,
+                 const Vector<double>& solutioin_A,
+                 std::string fname = "Hxy",
+                 const Function<2>* exact_solution = nullptr,
+                 bool print_time_tables = false,
+                 bool project_exact_solution = false,
+                 bool log_cg_convergence = false)
+    : ProjectHgradToHcurl<2, stage>(p,
+                                    mapping_degree,
+                                    triangulation_A,
+                                    dof_handler_A,
+                                    solutioin_A,
+                                    fname,
+                                    exact_solution,
+                                    false, // axisymmetric
+                                    true,  // vector potential
+                                    print_time_tables,
+                                    project_exact_solution,
+                                    log_cg_convergence)
+  {
+  }
 };
 
 } // namespace StaticScalarSolver
 
 #endif
-

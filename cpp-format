@@ -1,0 +1,4 @@
+#!/bin/bash
+
+find . -not \( -path ./.git -prune \) -type f -name *.[ch]pp -exec clang-format-16 -i -style=Mozilla --verbose {} +
+
