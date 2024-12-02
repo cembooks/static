@@ -42,6 +42,9 @@
 #include <iostream>
 #include <string>
 
+#include "constants.hpp"
+#include "static_scalar_input.hpp"
+
 #define VE scratch_data.ve
 
 #define TMR(__name) TimerOutput::Scope timer_section(timer, __name)

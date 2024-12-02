@@ -46,6 +46,7 @@
 #include <string>
 
 #include "constants.hpp"
+#include "static_vector_input.hpp"
 
 #define SE scratch_data.se
 
