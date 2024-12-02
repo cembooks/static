@@ -66,7 +66,7 @@ void
 SolverCVPI::solve()
 {
   ReductionControl control(
-    Solver1<3>::system_rhs.size(), 0.0, 1e-12, false, false);
+    Solver1<3>::system_rhs.size(), 1e-8, 1e-5, false, false);
 
   if (log_cg_convergence)
     control.enable_history_data();
