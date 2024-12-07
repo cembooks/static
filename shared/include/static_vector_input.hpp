@@ -58,8 +58,8 @@ public:
    * or by StaticVectorSolver::Solver2 class during the  assembly of the system
    * matrix. It is called ones per each cell. This function must fill the vector
    * values[...] with the values of the coefficient. The values[i] is
-   *interpreted the coefficient at quadrature point r[i]. The code snippet below
-   *provides an example in which permeability equals
+   * interpreted the coefficient at quadrature point r[i]. The code snippet
+   * below provides an example in which permeability equals
    *
    * \f$\mu = \mu_0 \big(x^2+y^2+1\big)\f$,
    *
@@ -88,7 +88,7 @@ public:
    * @endcode
    *
    * @param[in] r - A vector that contains the quadrature points of the cell
-   *being processed.
+   * being processed.
    * @param[in] mid - The material ID.
    * @param[in] cuid - The cell user ID.
    * @param[out] values - The output data.
@@ -138,10 +138,10 @@ class PdeRhs
    *
    * This function is called by the StaticVectorSolver::Solver1 class during the
    * assembly of the right-hand side. It is called ones per each cell. This
-   *function must fill values[...] vector with the source vectors sampled at
-   *quadrature points. The values[i] is interpreted as the source vector at
-   *quadrature point r[i]. The code snippet below provides an example in which
-   *the source field equals
+   * function must fill values[...] vector with the source vectors sampled at
+   * quadrature points. The values[i] is interpreted as the source vector at
+   * quadrature point r[i]. The code snippet below provides an example in which
+   * the source field equals
    *
    * \f[
    * \vec{J}_f = (1 / \mu_0)(x^2+y^2) \hat{k},
@@ -149,7 +149,7 @@ class PdeRhs
    *
    * where \f$\mu_0\f$ is the permeability of free space.
    *
-   *@code
+   * @code
    * #pragma GCC diagnostic push
    * #pragma GCC diagnostic ignored "-Wunused-parameter"
    * template<>
@@ -172,10 +172,10 @@ class PdeRhs
    *   }
    * }
    * #pragma GCC diagnostic pop
-   *@endcode
+   * @endcode
    *
    * @param[in] r - A vector that contains the quadrature points of the cell
-   *being processed.
+   * being processed.
    * @param[in] mid - The material ID.
    * @param[in] cuid - The cell user ID.
    * @param[out] values - The output data.
@@ -196,8 +196,8 @@ public:
  * implemented in xyz/src/static_vector_input.cpp, where xyz is the directory of
  * the current numerical experiment. That is, the declaration is shared between
  * all numerical experiments while implementation is specific for each
- *individual numerical experiment. See [the structure of the code](@ref
- *page_code) for more details.
+ * individual numerical experiment. See [the structure of the code](@ref
+ * page_code) for more details.
  *
  * The user is supposed to implement
  * @code
@@ -223,7 +223,7 @@ public:
    * This function must fill the vector values[...] with the values of
    * \f$\gamma\f$. The values[i] is interpreted as \f$\gamma\f$ at quadrature
    * point r[i]. The code snippet below provides an example in which
-   *\f$\gamma\f$ equals
+   * \f$\gamma\f$ equals
    *
    * \f[
    * \gamma = (1 / \mu) ( \sqrt{x^2+y^2}+2 )
@@ -257,7 +257,7 @@ public:
    * @endcode
    *
    * @param[in] r - A vector that contains the quadrature points of the cell
-   *being processed.
+   * being processed.
    * @param[in] n - Vector normal to the boundary.
    * @param[in] bid - The boundary ID.
    * @param[in] mid - The material ID.
@@ -283,8 +283,8 @@ public:
  * implemented in xyz/src/static_vector_input.cpp, where xyz is the directory of
  * the current numerical experiment. That is, the declaration is shared between
  * all numerical experiments while implementation is specific for each
- *individual numerical experiment. See [the structure of the code](@ref
- *page_code) for more details.
+ * individual numerical experiment. See [the structure of the code](@ref
+ * page_code) for more details.
  *
  * The user is supposed to implement
  * @code
@@ -310,7 +310,7 @@ public:
    * This function must fill the vector values[...] with the values of
    * \f$\vec{Q}\f$. The values[i] is interpreted as \f$\vec{Q}\f$ at quadrature
    * point r[i]. The code snippet below provides an example in which
-   *\f$\vec{Q}\f$ equals zero.
+   * \f$\vec{Q}\f$ equals zero.
    *
    * @code
    * #pragma GCC diagnostic push
@@ -338,7 +338,7 @@ public:
    * @endcode
    *
    * @param[in] r - A vector that contains the quadrature points of the cell
-   *being processed.
+   * being processed.
    * @param[in] n - Vector normal to the boundary.
    * @param[in] bid - The boundary ID.
    * @param[in] mid - The material ID.
@@ -364,8 +364,8 @@ public:
  * implemented in xyz/src/static_vector_input.cpp, where xyz is the directory of
  * the current numerical experiment. That is, the declaration is shared between
  * all numerical experiments while implementation is specific for each
- *individual numerical experiment. See [the structure of the code](@ref
- *page_code) for more details.
+ * individual numerical experiment. See [the structure of the code](@ref
+ * page_code) for more details.
  *
  * The user is supposed to implement
  * @code
@@ -417,7 +417,7 @@ class FreeSurfaceCurrent
    * @endcode
    *
    * @param[in] r - A vector that contains the quadrature points of the cell
-   *being processed.
+   * being processed.
    * @param[in] n - Vector normal to the boundary.
    * @param[in] mid - The material ID.
    * @param[in] cuid - The cell user ID.

@@ -68,26 +68,27 @@ namespace StaticVectorSolver {
  * - (2) Recipe for static vector solver in 2D
  *
  * This class template is intended to be a general solver for problems in
- *magnetostatics that can be formulated in terms of the magnetic vector
- *potential, \f$\vec{A}\f$. The Bossavit's diagrams below illustrate the partial
- *differential equations that can be solved with a help of this class template.
+ * magnetostatics that can be formulated in terms of the magnetic vector
+ * potential, \f$\vec{A}\f$. The Bossavit's diagrams below illustrate the
+ * partial differential equations that can be solved with a help of this
+ * class template.
  *
  * ![](svst_svst/diagram_svst.svg)
  *
  * This class template is very similar to StaticVectorSolver::Solver1. The main
  * difference between StaticVectorSolver::Solver1 and
- *StaticVectorSolver::Solver2 is that all inputs to StaticVectorSolver::Solver1
- *must be given in a form of an analytical expression so they can be codded in
- *class templates derived from
- *[Function](https://www.dealii.org/current/doxygen/deal.II/classFunction.html#a8c6e33c27ac2c3c2be40af1f954b71a7)
+ * StaticVectorSolver::Solver2 is that all inputs to StaticVectorSolver::Solver1
+ * must be given in a form of an analytical expression so they can be codded in
+ * class templates derived from
+ * [Function](https://www.dealii.org/current/doxygen/deal.II/classFunction.html#a8c6e33c27ac2c3c2be40af1f954b71a7)
  * class template of deal.II. The same holds for StaticVectorSolver::Solver2
  * with an exception of the input that describes the right-hand side of the
  * partial differential equation. The input on the right-hand side of the
- *partial differential equation fed into the StaticVectorSolver::Solver2 class
- *template must be a current vector potential, \f$\vec{T}\f$, expressed in a
- *form of a field function. That is, \f$\vec{T}\f$ fed into
- *StaticVectorSolver::Solver2 is a result of another deal.II simulation. This
- *allows to solve the curl-curl equation for \f$\vec{A}\f$ observing the
+ * partial differential equation fed into the StaticVectorSolver::Solver2 class
+ * template must be a current vector potential, \f$\vec{T}\f$, expressed in a
+ * form of a field function. That is, \f$\vec{T}\f$ fed into
+ * StaticVectorSolver::Solver2 is a result of another deal.II simulation. This
+ * allows to solve the curl-curl equation for \f$\vec{A}\f$ observing the
  * compatibility condition. The diagram below illustrates how this can be done
  * in two- and three- dimensions.
  *
@@ -119,8 +120,8 @@ namespace StaticVectorSolver {
  *   void value_list(...);
  *   @endcode
  *   of the classes StaticVectorSolver::TheCoefficient,
- *StaticVectorSolver::Gamma, StaticVectorSolver::RobinRhs, and
- *StaticVectorSolver::FreeSurfaceCurrent.
+ *   StaticVectorSolver::Gamma, StaticVectorSolver::RobinRhs, and
+ *   StaticVectorSolver::FreeSurfaceCurrent.
  *
  * - Implement member function
  *   @code
@@ -188,7 +189,7 @@ namespace StaticVectorSolver {
  * MultithreadInfo::set_thread_limit(nr_threads_max);
  * @endcode
  *
- *@note Application examples:
+ * @note Application examples:
  * - [mms-vt-i/](@ref page_mms_vt_i)
  * [mms-vt-ii/](@ref page_mms_vt_ii)
  * [ssol-ii/](@ref page_ssol_ii)
@@ -222,7 +223,7 @@ public:
    * @param[in] exact_solution - Points to an object that describes the exact
    * solution to the problem. It is needed for calculating error norms. It is a
    * responsibility of the user to make sure that the object exists at the time
-   *of the execution of run() or compute_error_norms().
+   * of the execution of run() or compute_error_norms().
    * @param[in] print_time_tables - If true, prints time tables on the screen.
    * @param[in] project_exact_solution - If true, projects the exact solution
    * onto the space spanned by the Nedelec finite elements and saves
@@ -230,6 +231,8 @@ public:
    * debugging purposes as a comparison between the projected exact solution and
    * the solution to the boundary value problem can yield a hint on where to
    * search for bugs.
+   * @param[in] write_higher_order_cells - Switches between the two modes of
+   * operation of the save() function, see the description of save().
    *****************************************************************************/
   Solver2(unsigned int p,
           unsigned int mapping_degree,
@@ -240,11 +243,11 @@ public:
           std::string fname = "data",
           const Function<dim>* exact_solution = nullptr,
           bool print_time_tables = false,
-          bool project_exact_solution = false)
+          bool project_exact_solution = false,
+          bool write_higher_order_cells = false)
     : triangulation_T(triangulation_T)
     , dof_handler_T(dof_handler_T)
     , solution_T(solution_T)
-    ,
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // The public attribute fe.degree is the maximal polynomial degree of a
     // shape function in a single coordinate direction, not the degree of
@@ -252,19 +255,20 @@ public:
     // the finite element is: degree_of_element = fe.degree - 1.
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //        fe(dof_handler_T.get_fe().degree-1),
-    fe(p)
+    , fe(p)
     , mapping_degree(mapping_degree)
     , eta_squared(eta_squared)
     , fname(fname)
     , exact_solution(exact_solution)
     , print_time_tables(print_time_tables)
     , project_exact_solution(project_exact_solution)
+    , write_higher_order_cells(write_higher_order_cells)
   {
   }
 
   /**
-   *  \brief Initializes the data member
-   *StaticVectorSolver::Solver2::dirichlet_stack.
+   * \brief Initializes the data member
+   * StaticVectorSolver::Solver2::dirichlet_stack.
    *
    * This function must be overridden by the user. It must initialize the stack
    * of the Dirichlet boundary conditions. For example:
@@ -323,10 +327,10 @@ public:
    * \brief Projects exact solution.
    *
    * The mesh and the finite elements, are the same as are used for the
-   *numerical solution of the boundary vale problem. The exact solution will be
-   *saved in the vtk file next to the numerical solution to the boundary value
-   *problem. This function works properly only if the exact solution is
-   *submitted to the constructor via the input parameter exact_solution and
+   * numerical solution of the boundary vale problem. The exact solution will be
+   * saved in the vtk file next to the numerical solution to the boundary value
+   * problem. This function works properly only if the exact solution is
+   * submitted to the constructor via the input parameter exact_solution and
    * project_exact_solution=true.
    *****************************************************************************/
   void project_exact_solution_fcn();
@@ -523,6 +527,7 @@ private:
   const Function<dim>* exact_solution;
   const bool print_time_tables;
   const bool project_exact_solution;
+  const bool write_higher_order_cells;
 
   Vector<float> L2_per_cell;
   Vector<float> Linfty_per_cell;
@@ -545,7 +550,8 @@ private:
     AssemblyScratchData(const FiniteElement<dim>& fe,
                         const DoFHandler<dim>& dof_hand_T,
                         const Vector<double>& dofs_T,
-                        unsigned int mapping_degree);
+                        unsigned int mapping_degree,
+                        double eta_squared);
 
     AssemblyScratchData(const AssemblyScratchData& scratch_data);
 
@@ -587,6 +593,7 @@ private:
     bool do_robin;
     bool do_K;
     bool do_T_on_boundary;
+    const double eta_squared;
   };
 
   struct AssemblyCopyData
@@ -662,7 +669,8 @@ Solver2<dim, stage>::assemble()
     *this,
     &Solver2::system_matrix_local,
     &Solver2::copy_local_to_global,
-    AssemblyScratchData(fe, dof_handler_T, solution_T, mapping_degree),
+    AssemblyScratchData(
+      fe, dof_handler_T, solution_T, mapping_degree, eta_squared),
     AssemblyCopyData());
 }
 
@@ -671,7 +679,8 @@ Solver2<dim, stage>::AssemblyScratchData::AssemblyScratchData(
   const FiniteElement<dim>& fe,
   const DoFHandler<dim>& dof_hand_T,
   const Vector<double>& dofs_T,
-  unsigned int mapping_degree)
+  unsigned int mapping_degree,
+  double eta_squared)
   : mapping(mapping_degree)
   , qt(fe.degree - 1)
   , fe_values(mapping,
@@ -707,6 +716,7 @@ Solver2<dim, stage>::AssemblyScratchData::AssemblyScratchData(
   , se(0)
   , dof_hand_T(dof_hand_T)
   , dofs_T(dofs_T)
+  , eta_squared(eta_squared)
 {
 }
 
@@ -748,6 +758,7 @@ Solver2<dim, stage>::AssemblyScratchData::AssemblyScratchData(
   , se(0)
   , dof_hand_T(scratch_data.dof_hand_T)
   , dofs_T(scratch_data.dofs_T)
+  , eta_squared(scratch_data.eta_squared)
 {
 }
 
@@ -799,7 +810,7 @@ Solver2<dim, stage>::system_matrix_local(const IteratorPair& IP,
           ((1 / scratch_data.the_coefficient_list[q_index]) * // 1 / mu
              scratch_data.fe_values[VE].curl(i, q_index) *    // curl N_i
              scratch_data.fe_values[VE].curl(j, q_index)      // curl N_j
-           + eta_squared *                                    // eta^2
+           + scratch_data.eta_squared *                       // eta^2
                scratch_data.fe_values[VE].value(i, q_index) * // N_i
                scratch_data.fe_values[VE].value(j, q_index)   // N_j
            ) *
@@ -1102,12 +1113,31 @@ Solver2<dim, stage>::save() const
     data_out.add_data_vector(Linfty_per_cell, "LinftyNorm");
   }
 
-  data_out.build_patches();
+  std::ofstream ofs;
 
-  std::ofstream out(fname + ".vtk");
+  if (write_higher_order_cells) {
+    DataOutBase::VtkFlags flags;
+    flags.write_higher_order_cells = true;
+    data_out.set_flags(flags);
 
-  data_out.write_vtk(out);
-  out.close();
+    const MappingQ<dim> mapping(mapping_degree);
+
+    data_out.build_patches(mapping,
+                           fe.degree + 2,
+                           DataOut<dim>::CurvedCellRegion::curved_inner_cells);
+
+    ofs.open(fname + ".vtu");
+    data_out.write_vtu(ofs);
+
+  } else {
+
+    data_out.build_patches();
+
+    ofs.open(fname + ".vtk");
+    data_out.write_vtk(ofs);
+  }
+
+  ofs.close();
 }
 
 } // namespace StaticVectorSolver
