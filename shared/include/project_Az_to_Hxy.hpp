@@ -71,23 +71,22 @@ namespace StaticScalarSolver {
  * The output data are saved into a vtk file. The following data are saved:
  * - The calculated H-field, \f$\vec{H} = \mu^{-1} \vec{\nabla}
  *   \overset{V}{\times} A\f$, under the name "VectorField".
- * - The \f$L^2\f$ error norm associated with the calculated H-field
- *   under the name "L2norm". One value per mesh cell is saved.
+ * - The \f$L^2\f$ and \f$L^{\infty}\f$ error norms associated with the
+ *   calculated H-field under the names "L2norm" and "LinftyNorm". One value
+ *   per mesh cell is saved.
  * - The exact solution projected onto \f$H(\text{curl})\f$ function space is
  *   saved under the name "VectorFieldExact". The "VectorField"
  *   and "VectorFieldExact" are modeled by exactly the same finite elements,
  *   i.e., FE_Nedelec.
  *
- * The "L2norm", and "VectorFieldExact" are saved only if an exact solution is
- * passed to the constructor.  Moreover, "VectorFieldExact" is calculated and
- * saved only if the input parameter project_exact_solution passed to the
- * constructor equals true.
+ * The "L2norm", "LinftyNorm", and "VectorFieldExact" are saved only if an
+ * exact solution is passed to the constructor.  Moreover, "VectorFieldExact"
+ * is calculated and saved only if the input parameter
+ * <code>project_exact_solution</code> passed to the constructor equals true.
  *
- * The name of the output file is computed by appending ".vtk" to the string
- * contained by the input parameter fname of the constructor. The vtk file
- * can be viewed with a help of
- * [Visit](https://visit.llnl.gov)
- * software package of the Lawrence Livermore National Laboratory.
+ * The user is supposed to derive an object from this class template. All usual
+ * computations, i.e., setup, assembling the linear system, etc., happen
+ * automatically.
  *
  * @note Application examples:
  *

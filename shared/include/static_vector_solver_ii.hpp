@@ -77,9 +77,9 @@ namespace StaticVectorSolver {
  *
  * This class template is very similar to StaticVectorSolver::Solver1. The main
  * difference between StaticVectorSolver::Solver1 and
- * StaticVectorSolver::Solver2 is that all inputs to StaticVectorSolver::Solver1
- * must be given in a form of an analytical expression so they can be codded in
- * class templates derived from
+ * StaticVectorSolver::Solver2 can be described as the following. All inputs
+ * to StaticVectorSolver::Solver1 must be given in a form of an analytical
+ * expression so they can be codded in class templates derived from
  * [Function](https://www.dealii.org/current/doxygen/deal.II/classFunction.html#a8c6e33c27ac2c3c2be40af1f954b71a7)
  * class template of deal.II. The same holds for StaticVectorSolver::Solver2
  * with an exception of the input that describes the right-hand side of the
@@ -95,7 +95,7 @@ namespace StaticVectorSolver {
  * @anchor diagram_svst2
  * ![](svst_svst/diagram_svst2.svg)
  *
- * The vector potential is modeled by the
+ * The magnetic vector potential is modeled by the
  * [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
  * finite elements.
  *
@@ -105,12 +105,10 @@ namespace StaticVectorSolver {
  *
  * - Override the virtual destructor.
  *
- * - Call constructor StaticVectorSolver::Solver2(...) and pass to it the
- *   degrees of freedom and their handler that describe \f$T\f$.
+ * - Call constructor StaticVectorSolver::Solver2.
  *
  * - Override member functions
  *   @code
- *   virtual void make_mesh() = 0;
  *   virtual void fill_dirichlet_stack() = 0;
  *   virtual void solve() = 0;
  *   @endcode
@@ -134,7 +132,7 @@ namespace StaticVectorSolver {
  *   StaticVectorSolver::run();
  *   @endcode
  *   Alternatively, the user may call individual member functions (such as
- *   make_mesh, fill_dirichlet_stack, setup, etc. ) in a proper order.
+ *   fill_dirichlet_stack(), setup(), etc.) in a proper order.
  *
  * According to the deal.II documentation of
  * [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
@@ -145,8 +143,9 @@ namespace StaticVectorSolver {
  * FE_Nedelec finite elements apply to this class template.
  *
  * The boundaries of the mesh must be labeled such that the
- * boundary_id() member function of a face object returns the corresponding
- * boundary ID. The boundary ID's must obey the following convention.
+ * <code>boundary_id()</code> member function of a face object returns the
+ * corresponding boundary ID. The boundary ID's must obey the following
+ * convention.
  *
  *  @anchor veis_bnd_convention
  * - The Dirichlet boundary conditions are applied on the boundaries with odd
@@ -161,20 +160,19 @@ namespace StaticVectorSolver {
  *   [functional](@ref veibvp_functional).
  *   This boundary condition can also be imposed
  *   by assigning to a boundary an even ID greater than zero, and
- *   setting \f$ \gamma \f$ and \f$\vec{Q}\f$ to zero in the value_list(...)
- *   methods of the classes
+ *   setting \f$ \gamma \f$ and \f$\vec{Q}\f$ to zero in the
+ *   <code>value_list</code> methods of the classes
  *   StaticVectorSolver::Gamma and StaticVectorSolver::RobinRhs.
  *
- * It is assumed that the object of the class StaticVectorSolver::Solver1 that
- * yielded \f$\vec{T}\f$ is still in the computer memory such that the
+ * It is assumed that the object that has been used to calculate \f$\vec{T}\f$
+ * (or \f$T\f$ in 2D) is still in the computer memory such that the
  * triangulation, the degrees of freedom, and the handler of the degrees of
  * freedom are accessible while \f$\vec{A}\f$ is computed. An object of
  * the StaticVectorSolver::Solver2 class template reuses the triangulation by
  * creating an additional dof handler associated with the
  * [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
  * finite elements. That is, \f$\vec{T}\f$ and \f$\vec{A}\f$ share the same
- * triangulation. The finite elements that model them are also the same, i.e.,
- * the Nedelec finite elements. Two separate DoFHandler objects are used for
+ * triangulation. Two separate DoFHandler objects are used for
  * \f$\vec{T}\f$ and \f$\vec{A}\f$.
  *
  * The algorithm walks synchronously through both DoFHandler objects and
@@ -182,7 +180,7 @@ namespace StaticVectorSolver {
  * The algorithm utilizes the
  * [WorkStream](https://www.dealii.org/current/doxygen/deal.II/namespaceWorkStream.html)
  * technology of deal.II. The amount of threads used can be limited as the
- * following
+ * following.
  * @code
  * #include <deal.II/base/multithread_info.h>
  * ...
@@ -190,10 +188,10 @@ namespace StaticVectorSolver {
  * @endcode
  *
  * @note Application examples:
- * - [mms-vt-i/](@ref page_mms_vt_i)
- * [mms-vt-ii/](@ref page_mms_vt_ii)
- * [ssol-ii/](@ref page_ssol_ii)
- * [ssol-iii/](@ref page_ssol_iii)
+ * - [mms-vt-i/](@ref page_mms_vt_i),
+ * [mms-vt-ii/](@ref page_mms_vt_ii),
+ * [ssol-ii/](@ref page_ssol_ii),
+ * [ssol-iii/](@ref page_ssol_iii).
  *****************************************************************************/
 template<int dim, int stage = 1>
 class Solver2
@@ -204,7 +202,9 @@ public:
   /**
    * \brief The only constructor.
    *
-   * @param[in] p - Degree of the FE_Nedelec finite elements.
+   * @param[in] p - Degree of the
+   * [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
+   * finite elements.
    * @param[in] mapping_degree - The degree of the interpolating Lagrange
    * polynomials used for mapping. Setting it to 1 will do in the most of the
    * cases. Note, that it makes sense to attach a meaningful manifold to the
@@ -330,16 +330,37 @@ public:
    * numerical solution of the boundary vale problem. The exact solution will be
    * saved in the vtk file next to the numerical solution to the boundary value
    * problem. This function works properly only if the exact solution is
-   * submitted to the constructor via the input parameter exact_solution and
-   * project_exact_solution=true.
+   * submitted to the constructor via the input parameter
+   * <code>exact_solution</code> and <code>project_exact_solution=true</code>.
    *****************************************************************************/
   void project_exact_solution_fcn();
 
   /**
-   * \brief Saves the result of the simulation into a vtk file.
+   * \brief Saves simulation results into a vtk file.
    *
-   * The calculated vector potential is saved into a vtk file under a name
-   * "solution"
+   * The following data are saved:
+   * - The calculated potential under the name "VectorField".
+   * - The \f$L^2\f$ error norm associated with the calculated potential under
+   *   the name "L2norm". One value per mesh cell is saved.
+   * - The exact solution expressed as a linear combination of the shape
+   *   functions of the
+   *   [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
+   *   finite elements is saved under the name "VectorFieldExact". The
+   *   "VectorField" and "VectorFieldExact" are modeled by exactly the same
+   *   finite elements.
+   *
+   * The "L2norm" and "VectorFieldExact" are saved only if an exact solution
+   * is submitted to the constructor. Moreover, "VectorFieldExact" is
+   * calculated and saved only if <code>project_exact_solution = true</code>.
+   *
+   * If <code>write_higher_order_cells = false</code>, the name of the file is
+   * computed by appending ".vtk" to the string contained by the parameter
+   * <code>fname</code> passed to the constructor. The vtk file can be
+   * inspected with a help of [Visit](https://visit.llnl.gov)
+   * or [Paraview](www.paraview.org). Higher-order cells are not saved.
+   * If <code>write_higher_order_cells = true</code>, the data is saved into
+   * fname.vtu file preserving the higher-order cells. The file can be viewed
+   * with a help of [Paraview](www.paraview.org) version 5.5.0 or higher.
    ****************************************************************************/
   void save() const;
 
@@ -399,7 +420,8 @@ public:
    * \brief Runs the simulation.
    *
    * Executes the following member functions in a proper order:
-   * fill_dirichlet_stack(); setup(); assemble(); solve(); save();
+   * fill_dirichlet_stack(), setup(), assemble(), solve(),
+   * project_exact_solution_fcn(), compute_error_norms(), save().
    *****************************************************************************/
   void run()
   {

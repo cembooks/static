@@ -91,10 +91,10 @@ namespace StaticScalarSolver {
  *
  * The table below lists the recommended settings for switching between
  * different types of projections. The five letters in the first column of the
- * table correspond to the five diagrams above. The dim parameter is the
- * input parameter of the class template. The other two parameters,
- * axisymmetric and vector_potential, are passed as input parameters
- * to the constructor of the class.
+ * table correspond to the five diagrams above. The <code>dim</code> parameter
+ * is the input parameter of the class template. The other two parameters,
+ * <code>axisymmetric</code> and <code>vector_potential</code>, are passed
+ * as input parameters to the constructor of the class.
  *
  * Insert | dim | axisymmetric | vector_potential |
  * -------|-----|--------------|------------------|
@@ -102,9 +102,9 @@ namespace StaticScalarSolver {
  * B), D) |  2  |  true/false  |     false        |
  *   E)   |  2  |  true/false  |     true         |
  *
- * The dim template parameter is, as per usual, the amount of spatial
- * dimensions. The purpose of the stage template parameter is discussed in
- * [here](@ref txt_stage_parameter).
+ * The <code>dim</code> template parameter is, as per usual, the amount of
+ * spatial dimensions. The purpose of the <code>stage</code> template
+ * parameter is discussed in [here](@ref txt_stage_parameter).
  *
  * The user is supposed to derive an object from this class template. All usual
  * computations, i.e., setup, assembling the linear system, etc., happen
@@ -139,12 +139,13 @@ public:
    * @param[in] exact_solution - Points to an object that describes the exact
    * solution to the problem. It is needed for calculating error norms.
    * @param[in] axisymmetric - If true, assumes that the problem is
-   * axisymmetric. If axisymmetric=true, dim must equal 2.
+   * axisymmetric. If <code>axisymmetric=true</code>, <code>dim</code> must
+   * equal 2.
    * @param[in] vector_potential - If true, assumes that the problem is
    * two-dimensional and formulated in terms of the magnitude of vector
    * potential, \f$A\f$, or in terms of the scaled magnitude of vector
    * potential, \f$A'\f$, or current vector potential, \f$T\f$. If
-   * vector_potential=true, dim must equal 2.
+   * <code>vector_potential=true</code>, <code>dim</code> must equal 2.
    * @param[in] print_time_tables - If true, prints time tables on the screen.
    * @param[in] project_exact_solution - If true, projects the exact solution
    * onto the space spanned by the Nedelec finite elements and saves the

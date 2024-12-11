@@ -86,8 +86,8 @@ namespace StaticScalarSolver {
  *
  * The table below lists the recommended settings for switching between
  * different types of problems. The letters in the first column of the table
- * correspond to the seven diagrams above. The dim parameter is the input
- * parameter of the class template. The other three parameters,
+ * correspond to the seven diagrams above. The <code>dim</code> parameter is
+ * the input parameter of the class template. The other three parameters,
  * <code>type_of_pde_rhs</code>, <code>axisymmetric</code>, and
  * <code>vector_potential</code>, are passed as input parameters to the
  * constructor of the class.
@@ -118,7 +118,7 @@ namespace StaticScalarSolver {
  *
  * - Instantiate class templates
  *   StaticScalarSolver::TheCoefficient, StaticScalarSolver::PdeRhs
- *   (or StaticScalarSolver::PdeRhsCvp if type_of_pde_rhs=2),
+ *   (or StaticScalarSolver::PdeRhsCvp if <code>type_of_pde_rhs=2</code>),
  *   StaticScalarSolver::Gamma, StaticScalarSolver::RobinRhs, and
  *   StaticScalarSolver::FreeSurfaceCharge, StaticScalarSolver::Weight.
  *
@@ -130,9 +130,10 @@ namespace StaticScalarSolver {
  *   fill_dirichlet_stack(), setup(), solve(), save()) in a proper order.
  *
  * @anchor seis_bnd_convention
- * The boundaries of the mesh must be labeled such that the boundary_id() member
- * function of a face object returns the corresponding boundary ID. The boundary
- * ID's must obey the following convention.
+ * The boundaries of the mesh must be labeled such that the
+ * <code>boundary_id</code> member function of a face object returns the
+ * corresponding boundary ID. The boundary ID's must obey the following
+ * convention.
  * - The Dirichlet boundary conditions are applied on the boundaries with odd
  *   boundary ID's.
  * - The Robin boundary conditions are applied on the boundaries with
@@ -316,7 +317,7 @@ calculating current vector potential. In this mode dim must be set to 2."));
    * This function must be overridden by the user. It must generate or load
    * the mesh, label the boundaries, and, if necessary, assign user IDs. This
    * function is an ideal place for binding manifolds to the mesh. The last is
-   * a reasonable thing to do if <code>degree_mapping > 1</code>. The mesh must
+   * a reasonable thing to do if <code>mapping_degree > 1</code>. The mesh must
    * be stored in the data member of this
    * class, StaticScalarSolver::Solver::triangulation.
    *****************************************************************************/
@@ -409,9 +410,9 @@ calculating current vector potential. In this mode dim must be set to 2."));
    *   finite elements.
    *
    * The "L2norm", "H1seminorm", and "ScalarFieldExact" are saved only if an
-   * exact solution is submitted as the fifth input parameter to the
-   * constructor. Moreover, "ScalarFieldExact" is calculated and saved only
-   * if the last input parameter to the constructor equals true.
+   * exact solution is submitted to the constructor. Moreover,
+   * "ScalarFieldExact" is calculated and saved only
+   * if <code>project_exact_solution = true</code>.
    *
    * If <code>write_higher_order_cells = false</code>, the name of the file is
    * computed by appending ".vtk" to the string contained by the parameter
@@ -442,7 +443,7 @@ calculating current vector potential. In this mode dim must be set to 2."));
   void save_matrix_and_rhs_to_csv(std::string fname) const;
 
   /**
-   * \brief Releases computer memory associated with system matrix and
+   * \brief Releases computer memory associated with the system matrix and
    * right-hand side.
    *****************************************************************************/
   void clear()
@@ -462,7 +463,7 @@ calculating current vector potential. In this mode dim must be set to 2."));
   const DoFHandler<dim>& get_dof_handler() const { return dof_handler; }
 
   /**
-   * \brief Returns a reference to solution.
+   * \brief Returns a reference to the solution.
    *****************************************************************************/
   const Vector<double>& get_solution() const { return solution; }
 
@@ -507,7 +508,7 @@ calculating current vector potential. In this mode dim must be set to 2."));
   }
 
   /**
-   * \brief Returns the value of **type_of_pde_rhs**.
+   * \brief Returns the value of <code>type_of_pde_rhs</code>.
    *****************************************************************************/
   unsigned int get_type_of_pde_rhs() const { return type_of_pde_rhs; }
 
@@ -522,7 +523,7 @@ calculating current vector potential. In this mode dim must be set to 2."));
   double get_H1_norm() const { return H1_norm; }
 
   /**
-   * \brief Returns \f$L^{infty}\f$ error norm.
+   * \brief Returns \f$L^{\infty}\f$ error norm.
    *****************************************************************************/
   double get_Linfty_norm() const { return Linfty_norm; }
 
@@ -645,17 +646,17 @@ protected:
   Vector<double> system_rhs;
 
   /**
-   * \brief The \f$L^2\f$ norm.
+   * \brief The \f$L^2\f$ error norm.
    *****************************************************************************/
   double L2_norm;
 
   /**
-   * \brief The \f$L^{infty}\f$ norm.
+   * \brief The \f$L^{\infty}\f$ error norm.
    *****************************************************************************/
   double Linfty_norm;
 
   /**
-   * \brief The \f$H^1\f$ semi-norm.
+   * \brief The \f$H^1\f$ error semi-norm.
    *****************************************************************************/
   double H1_norm;
 

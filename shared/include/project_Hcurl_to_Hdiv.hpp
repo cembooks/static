@@ -66,7 +66,7 @@ namespace StaticVectorSolver {
  * electromagnetics.
  *
  * Implements the following recipes:
- * - (1) Recipe for projections from H(curl) to H(div) nr. 12 and 13
+ * - (1) Recipe for projections from H(curl) to H(div) nr. 12 and 13.
  *
  * This class template is supposed to be used in pair with
  * StaticVectorSolver::Solver1 or StaticVectorSolver::Solver2. In all problems
@@ -76,12 +76,13 @@ namespace StaticVectorSolver {
  * \f[
  * \vec{B} = \vec{\nabla} \times \vec{A}.
  * \f]
- * The magnetic vector potential belongs to the H(curl) function space. The
- * magnetic field belongs to the H(div) function space. Therefore, one needs to
- * compute the equation above such that the input, \f$\vec{A}\f$, is in H(curl)
- * and the output, \f$\vec{B}\f$, is in H(div). Such computation can be
- * envisioned as a some kind of projection from one function space, H(curl),
- * into another, H(div).
+ * The magnetic vector potential belongs to the \f$H(\text{curl})\f$ function
+ * space. The magnetic field belongs to the \f$H(\text{div})\f$ function space.
+ * Therefore, one needs to compute the equation above such that the input,
+ * \f$\vec{A}\f$, is in \f$H(\text{curl})\f$ and the output, \f$\vec{B}\f$, is
+ * in \f$H(\text{div})\f$. Such computation can be envisioned as a some kind
+ * of projection from one function space, \f$H(\text{curl})\f$,
+ * into another, \f$H(\text{div})\f$.
  *
  * An identical projection arises in problems in which a numerically computed
  * current vector potential, \f$\vec{T}\f$, needs to be converted back into the
@@ -97,8 +98,9 @@ namespace StaticVectorSolver {
  *
  * ![](svs_prj/diagram_prj_Hcurl_to_Hdiv.svg)
  *
- * The purpose of the stage template parameter is discussed in
- * [here](@ref txt_stage_parameter).
+ * The <code>dim</code> template parameter is, as per usual, the amount of
+ * spatial dimensions. The purpose of the <code>stage</code> template
+ * parameter is discussed in [here](@ref txt_stage_parameter).
  *
  * The user is supposed to derive an object from this class template. All usual
  * computations, i.e., setup, assembling the linear system, etc., happen
@@ -113,7 +115,9 @@ public:
   /**
    * \brief The only constructor.
    *
-   * @param[in] p - The degree of the RaviartThomas finite elements.
+   * @param[in] p - The degree of the
+   * [FE_RaviartThomas](https://www.dealii.org/current/doxygen/deal.II/classFE__RaviartThomas.html)
+   * finite elements.
    * @param[in] mapping_degree - The degree of the interpolating polynomials
    * used for mapping. Setting it to 1 will do in the most of the cases. Note,
    * that it makes sense to attach a meaningful manifold to the triangulation if
@@ -121,13 +125,13 @@ public:
    * @param[in] triangulation_Hcurl - Reference to the triangulation inside the
    * object of the class StaticVectorSolver::Solver1 or
    * StaticVectorSolver::Solver2 that has yielded the vector potential in the
-   * H(curl) function space.
+   * \f$H(\text{curl})\f$ function space.
    * @param[in] dof_handler_Hcurl - Reference to the dof handler inside the
    * class StaticVectorSolver::Solver1 or StaticVectorSolver::Solver2 that has
-   * yielded the vector potential in the H(curl) function space.
+   * yielded the vector potential in the \f$H(\text{curl})\f$ function space.
    * @param[in] solution_Hcurl - Vector filled with the degrees of freedom that
    * together with the shape functions of the Nedelec finite elements model the
-   * vector potential in the H(curl) function space.
+   * vector potential in the \f$H(\text{curl})\f$ function space.
    * @param[in] fname - The name of the output files without extension.
    * @param[in] exact_solution - Points to an object that describes the exact
    * solution to the problem. It is needed for calculating error norms.

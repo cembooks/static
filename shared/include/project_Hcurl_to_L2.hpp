@@ -74,17 +74,19 @@ namespace StaticVectorSolver {
  * \overset{S}{\times} \vec{A}. \f] The magnetic vector potential belongs to
  * the H(curl) function space. The magnetic field belongs to the \f$L^2\f$
  * function space. Therefore, one needs to compute the equation above such
- * that the input, \f$\vec{A}\f$, is in H(curl) and the output, \f$B\f$, is
- * in \f$L^2\f$. Such computation can be envisioned as a some kind of
- * projection from one function space, H(curl), into another, \f$L^2\f$.
+ * that the input, \f$\vec{A}\f$, is in \f$H(\text{curl})\f$ and the output,
+ * \f$B\f$, is in \f$L^2\f$. Such computation can be envisioned as a some
+ * kind of projection from one function space, \f$H(\text{curl})\f$, into
+ * another, \f$L^2\f$.
  *
  * This class template does this projection. The Bossavit's diagram
  * below illustrates it.
  *
  * ![](svs_prj/diagram_prj_Axy_to_Bz.svg)
  *
- * The purpose of the stage template parameter is discussed in
- * [here](@ref txt_stage_parameter).
+ * The <code>dim</code> template parameter is, as per usual, the amount of
+ * spatial dimensions. The purpose of the <code>stage</code> template
+ * parameter is discussed in [here](@ref txt_stage_parameter).
  *
  * The user is supposed to derive an object from this class template. All usual
  * computations, i.e., setup, assembling the linear system, etc., happen
@@ -100,7 +102,8 @@ public:
    * \brief The only constructor.
    *
    * @param[in] p - The degree of the discontinuous Lagrange finite elements,
-   * FE_DGQ, that span the \f$L^2\f$ function space.
+   * [FE_DGQ](https://dealii.org/developer/doxygen/deal.II/classFE__DGQ.html),
+   * that span the \f$L^2\f$ function space.
    * @param[in] mapping_degree - The degree of the interpolating polynomials
    * used for mapping. Setting it to 1 will do in the most of the cases. Note,
    * that it makes sense to attach a meaningful manifold to the triangulation if
@@ -108,13 +111,14 @@ public:
    * @param[in] triangulation_Hcurl - Reference to the triangulation inside the
    * object of the class StaticVectorSolver::Solver1 or
    * StaticVectorSolver::Solver2 that has yielded the magnetic vector potential
-   * in the  H(curl) function space.
+   * in the \f$H(\text{curl})\f$ function space.
    * @param[in] dof_handler_Hcurl - Reference to the dof handler inside the
    * class StaticVectorSolver::Solver1 or StaticVectorSolver::Solver2 that has
-   * yielded the magnetic vector potential in the H(curl) function space.
+   * yielded the magnetic vector potential in the \f$H(\text{curl})\f$ function
+   * space.
    * @param[in] solution_Hcurl - Vector filled with the degrees of freedom that
    * together with the shape functions of the Nedelec finite elements model the
-   * magnetic vector potential in the H(curl) function space.
+   * magnetic vector potential in the \f$H(\text{curl})\f$ function space.
    * @param[in] fname - The name of the output files without extension.
    * @param[in] exact_solution - Points to an object that describes the exact
    * solution to the problem. It is needed for calculating error norms.

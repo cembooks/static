@@ -48,7 +48,7 @@ namespace StaticScalarSolver {
  * yielded \f$A'\f$ is still in the computer memory such that the
  * triangulation, the degrees of freedom, and the handler of the degrees of
  * freedom are accessible while \f$\vec{B}'\f$ is computed. An object of
- * the StaticScalarSolver::ProjectiAphiToBrz class template reuses the
+ * the StaticScalarSolver::ProjectAphiToBrz class template reuses the
  * triangulation by creating an additional dof handler associated with the
  * [FE_RaviartThomas](https://www.dealii.org/current/doxygen/deal.II/classFE__RaviartThomas.html)
  * finite elements. That is, \f$\vec{B}'\f$ and \f$A'\f$ share the same
@@ -74,23 +74,23 @@ namespace StaticScalarSolver {
  * - The calculated scaled magnetic field,
  *   \f$\vec{B}' = - \vec{\nabla} \overset{V}{\times}A'\f$,
  *   under the name "VectorField".
- * - The \f$L^2\f$ error norm associated with the calculated scaled magnetic
- *   field under the name "L2norm". One value per mesh cell is saved.
+ *
+ * - The \f$L^2\f$ and \f$L^{\infty}\f$ error norms associated with the
+ *   calculated scaled magnetic field under the names "L2norm" and "LinftyNorm".
+ *   One value per mesh cell is saved.
  * - The exact solution projected onto \f$H(\text{div})\f$ function space is
  *   saved under the name "VectorFieldExact". The "VectorField"
  *   and "VectorFieldExact" are modeled by exactly the same finite elements,
  *   i.e., FE_RaviartThomas.
  *
- * The "L2norm", and "VectorFieldExact" are saved only if an exact solution is
- * passed to the constructor.  Moreover, "VectorFieldExact" is calculated and
- * saved only if the input parameter project_exact_solution passed to the
- * constructor equals true.
+ * The "L2norm", "LinftyNorm", and "VectorFieldExact" are saved only if an
+ * exact solution is passed to the constructor.  Moreover, "VectorFieldExact"
+ * is calculated and saved only if the input parameter
+ * <code>project_exact_solution</code> passed to the constructor equals true.
  *
- * The name of the output file is computed by appending ".vtk" to the string
- * contained by the input parameter fname of the constructor. The vtk file
- * can be viewed with a help of
- * [Visit](https://visit.llnl.gov)
- * software package of the Lawrence Livermore National Laboratory.
+ * The user is supposed to derive an object from this class template. All usual
+ * computations, i.e., setup, assembling the linear system, etc., happen
+ * automatically.
  *
  * @note Application examples:
  *

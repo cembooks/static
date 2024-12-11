@@ -75,7 +75,7 @@ namespace StaticVectorSolver {
  * finite-element field-function. Such calculated \f$\vec{T}\f$ can be used
  * as an input for StaticVectorSolver::Solver2. The Bossavit's diagrams below
  * illustrate the partial differential equations that can be solved with a
- * help of this class template. In all five cases the the vector potential is
+ * help of this class template. In all five cases the vector potential is
  * modeled by the
  * [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
  * finite elements.
@@ -90,7 +90,7 @@ namespace StaticVectorSolver {
  *
  * - Override the virtual destructor.
  *
- * - Call constructor StaticVectorSolver::Solver1(...) and pass to it the degree
+ * - Call constructor StaticVectorSolver::Solver1 and pass to it the degree
  *   of interpolating polynomials and other arguments.
  *
  * - Override member functions
@@ -119,7 +119,7 @@ namespace StaticVectorSolver {
  *   StaticVectorSolver::run();
  *   @endcode
  *   Alternatively, the user may call individual member functions (such as
- *   make_mesh, fill_dirichlet_stack, setup, etc. ) in a proper order.
+ *   make_mesh(), fill_dirichlet_stack(), setup(), etc.) in a proper order.
  *
  * According to the deal.II documentation of
  * [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
@@ -130,8 +130,8 @@ namespace StaticVectorSolver {
  * FE_Nedelec finite elements apply to this class template.
  *
  * The boundaries of the mesh must be labeled such that the
- * boundary_id() member function of a face object returns the corresponding
- * boundary ID.
+ * <code>boundary_id()</code> member function of a face object returns the
+ * corresponding boundary ID.
  *
  * @anchor veis_bnd_convention
  *
@@ -148,8 +148,8 @@ namespace StaticVectorSolver {
  *   [functional](@ref veibvp_functional).
  *   This boundary condition can also be imposed
  *   by assigning to a boundary an even ID greater than zero, and
- *   setting \f$ \gamma \f$ and \f$\vec{Q}\f$ to zero in the value_list(...)
- *   methods of the classes
+ *   setting \f$ \gamma \f$ and \f$\vec{Q}\f$ to zero in the
+ *   <code>value_list</code> methods of the classes
  *   StaticVectorSolver::Gamma and StaticVectorSolver::RobinRhs.
  *
  * @note Application examples:
@@ -170,146 +170,167 @@ public:
    * \brief The only constructor.
    *
    * The meanings of the input parameters of this constructor, except for the
-   * second parameter, are relatively straightforward. They are described below.
-   * The second input parameter, type_of_pde_rhs, defines how an object
-   * derived from this class template interprets the data provided by an object
-   * derived from StaticVectorSolver::PdeRhs.
+   * second parameter, are relatively straightforward. They are described
+   * below. The second input parameter, <code>type_of_pde_rhs</code>, defines
+   * how an object derived from this class template interprets the data
+   * provided by an object derived from StaticVectorSolver::PdeRhs.
    *
    * @anchor svsi-type_of_pde_rhs
-   * When solving for the magnetic vector potential, \f$\vec{A}\f$ the following
-   * options are available:
+   * When solving for the magnetic vector potential, \f$\vec{A}\f$ the
+   * following options are available:
    *
-   * - type_of_pde_rhs = 0. There is no free-current density in the problem
-   *   domain. The right-hand side of the partial differential equation is
-   *   zero,i.e., \f[ \vec{\nabla}\times\bigg(\dfrac{1}{\mu_0}
-   *   \vec{\nabla}\times\vec{A}\bigg) + \eta^2 \vec{A} = 0. \f]
-   * in a three-dimensional space and
-   * \f[
-   * \vec{\nabla}\overset{V}{\times}\bigg(\dfrac{1}{\mu_0}
-   * \vec{\nabla}\overset{S}{\times}\vec{A}\bigg)+ \eta^2 \vec{A} = 0. \f] in a
-   * two-dimensional space. The data provided by StaticVectorSolver::PdeRhs is
-   * not used.
+   * - <code>type_of_pde_rhs = 0</code>. There is no free-current density in
+   *   the problem domain. The right-hand side of the partial differential
+   *   equation equals zero, i.e., \f[ \vec{\nabla}\times\bigg(\dfrac{1}{\mu_0}
+   *   \vec{\nabla}\times\vec{A}\bigg) + \eta^2 \vec{A} = 0 \f]
+   *   in a three-dimensional space and
+   *   \f[
+   *   \vec{\nabla}\overset{V}{\times}\bigg(\dfrac{1}{\mu_0}
+   *   \vec{\nabla}\overset{S}{\times}\vec{A}\bigg)+\eta^2\vec{A}=0\f]
+   *   in a two-dimensional space. The data provided by
+   *   StaticVectorSolver::PdeRhs is not used.
    *
-   * - type_of_pde_rhs = 1. The data provided by StaticVectorSolver::PdeRhs is
-   * interpreted as the free-current density, \f$\vec{J}_f\f$, i.e., \f[
-   * \vec{\nabla}\times\bigg(\dfrac{1}{\mu_0} \vec{\nabla}\times\vec{A}\bigg)
-   * + \eta^2 \vec{A} = \vec{J}_f.
-   * \f]
-   * in a three-dimensional space and
-   * \f[
-   * \vec{\nabla}\overset{V}{\times}\bigg(\dfrac{1}{\mu_0}
-   * \vec{\nabla}\overset{S}{\times}\vec{A}\bigg)+ \eta^2 \vec{A} = \vec{J}_f.
-   * \f]
-   * in a two-dimensional space.
-   * The corresponding therm of the
-   * functional is
-   * \f[
-   * \iiint_{\Omega} \vec{J}_f \cdot \vec{A} dV
-   * \f]
-   * in a three-dimensional space and
-   * \f[
-   * \iint_{\Omega} \vec{J}_f \cdot \vec{A} dS
-   * \f]
-   * in a two-dimensional space.
+   * - <code>type_of_pde_rhs = 1</code>. The data provided by
+   *   StaticVectorSolver::PdeRhs is interpreted as the free-current density,
+   *   \f$\vec{J}_f\f$, i.e.,
+   *   \f[\vec{\nabla}
+   *   \times\bigg(\dfrac{1}{\mu_0}\vec{\nabla}\times\vec{A}\bigg)
+   *   +\eta^2 \vec{A} = \vec{J}_f \f]
+   *   in a three-dimensional space and
+   *   \f[
+   *   \vec{\nabla}\overset{V}{\times}\bigg(\dfrac{1}{\mu_0}
+   *   \vec{\nabla}\overset{S}{\times}\vec{A}\bigg)+ \eta^2 \vec{A} = \vec{J}_f
+   *   \f]
+   *   in a two-dimensional space.
+   *   The corresponding therm of the
+   *   functional is
+   *   \f[
+   *   \iiint_{\Omega} \vec{J}_f \cdot \vec{A} dV
+   *   \f]
+   *   in a three-dimensional space and
+   *   \f[
+   *   \iint_{\Omega} \vec{J}_f \cdot \vec{A} dS
+   *   \f]
+   *   in a two-dimensional space.
    *
-   * - type_of_pde_rhs = 2. The data provided by StaticVectorSolver::PdeRhs is
-   * interpreted as vector current potential, \f$\vec{T}\f$, i.e., \f[
-   * \vec{\nabla}\times\bigg(\dfrac{1}{\mu_0} \vec{\nabla}\times\vec{A}\bigg)
-   * + \eta^2 \vec{A} = \vec{\nabla}\times\vec{T}. \f]
-   * in a three-dimensional space and
-   * \f[
-   * \vec{\nabla}\overset{V}{\times}\bigg(\dfrac{1}{\mu_0}
-   * \vec{\nabla}\overset{S}{\times}\vec{A}\bigg)+ \eta^2 \vec{A} =
-   * \vec{\nabla}\overset{V}{\times} T. \f] in a two-dimensional space.
-   * Then the corresponding term of the functional is \f[ \iiint_{\Omega}
-   * \vec{T} \cdot \bigg(\vec{\nabla}\times\vec{A}\bigg) dV \f] in a
-   * three-dimensional space and
-   * \f[ \iint_{\Omega} T \bigg(\vec{\nabla}\overset{S}{\times}\vec{A}\bigg
-   * dS \f] in a two-dimensional space.
+   * - <code>type_of_pde_rhs = 2</code>. The data provided by
+   *   StaticVectorSolver::PdeRhs is interpreted as vector current potential,
+   *   \f$\vec{T}\f$, i.e.,
+   *   \f[\vec{\nabla}
+   *   \times\bigg(\dfrac{1}{\mu_0}\vec{\nabla}\times\vec{A}\bigg)
+   *   +\eta^2 \vec{A} = \vec{\nabla}\times\vec{T} \f]
+   *   in a three-dimensional space and
+   *   \f[
+   *   \vec{\nabla}\overset{V}{\times}\bigg(\dfrac{1}{\mu_0}
+   *   \vec{\nabla}\overset{S}{\times}\vec{A}\bigg)+ \eta^2 \vec{A} =
+   *   \vec{\nabla}\overset{V}{\times} T \f] in a two-dimensional space.
+   *   Then the corresponding term of the functional is \f[ \iiint_{\Omega}
+   *   \vec{T} \cdot \bigg(\vec{\nabla}\times\vec{A}\bigg) dV \f] in a
+   *   three-dimensional space and
+   *   \f[ \iint_{\Omega} T \bigg(\vec{\nabla}\overset{S}{\times}\vec{A}\bigg)
+   *   dS \f] in a two-dimensional space.
    *
-   * - type_of_pde_rhs = 3. The data provided by StaticVectorSolver::PdeRhs is
-   * interpreted as vector current potential, \f$\vec{T}\f$, i.e., \f[
-   * \vec{\nabla}\times\bigg(\dfrac{1}{\mu_0} \vec{\nabla}\times\vec{A}\bigg)
-   * + \eta^2 \vec{A} = \vec{\nabla}\times\vec{T}.
-   * \f]
-   * in a three-dimensional space and
-   * \f[
-   * \vec{\nabla}\overset{V}{\times}\bigg(\dfrac{1}{\mu_0}
-   * \vec{\nabla}\overset{S}{\times}\vec{A}\bigg)+ \eta^2 \vec{A} =
-   * \vec{\nabla}\overset{V}{\times} T. \f] in a two-dimensional space. Then the
-   * corresponding terms of the functional are \f[ \iiint_{\Omega}
-   * \vec{T}\cdot\bigg(\vec{\nabla}\times\vec{A}\bigg) dV -
-   * \iint_{\Gamma_{\Omega}}\vec{T}\cdot\bigg(\hat{n}\times\vec{A}\bigg)dS
-   * \f]
-   * in a three dimensional space and
-   * \f[
-   * \iint_{\Omega} T \bigg(\vec{\nabla}\overset{S}{\times}\vec{A}\bigg) dS -
-   * \int_{\Gamma_{\Omega}} T \bigg( \hat{n} \overset{S}{\times} \vec{A}\bigg)dl
-   * \f]
-   * in a two-dimensional space.
+   * - <code>type_of_pde_rhs = 3</code>. The data provided by
+   *   StaticVectorSolver::PdeRhs is interpreted as vector current potential,
+   *   \f$\vec{T}\f$, i.e.,
+   *   \f[
+   *   \vec{\nabla}\times\bigg(\dfrac{1}{\mu_0}\vec{\nabla}\times\vec{A}\bigg)
+   *   +\eta^2 \vec{A}=\vec{\nabla}\times\vec{T}
+   *   \f]
+   *   in a three-dimensional space and
+   *   \f[
+   *   \vec{\nabla}\overset{V}{\times}\bigg(\dfrac{1}{\mu_0}
+   *   \vec{\nabla}\overset{S}{\times}\vec{A}\bigg)+\eta^2\vec{A}=
+   *   \vec{\nabla}\overset{V}{\times} T\f]
+   *   in a two-dimensional space. Then the corresponding terms of the
+   *   functional are
+   *   \f[\iiint_{\Omega}
+   *   \vec{T}\cdot\bigg(\vec{\nabla}\times\vec{A}\bigg) dV -
+   *   \underbrace{
+   *   \iint_{\Gamma_{\Omega}}\vec{T}\cdot\bigg(\hat{n}\times\vec{A}\bigg)dS
+   *   }_{Boundary\ integral}
+   *   \f]
+   *   in a three dimensional space and
+   *   \f[
+   *   \iint_{\Omega}T\bigg(\vec{\nabla}\overset{S}{\times}\vec{A}\bigg)dS-
+   *   \underbrace{
+   *   \int_{\Gamma_{\Omega}}T\bigg(\hat{n}\overset{S}{\times}\vec{A}\bigg)dl
+   *   }_{Boundary\ integral}
+   *   \f]
+   *   in a two-dimensional space.
    *
-   * The option type_of_pde_rhs = 2 differs from the option type_of_pde_rhs = 3
-   * at one point only: the boundary integral is not calculated
-   * if type_of_pde_rhs = 2. This can help to reduce simulation time a bit if
-   * the current vector potential equals zero on the boundary due to a Dirichlet
-   * boundary condition.
+   * The option <code>type_of_pde_rhs = 2</code> differs from the option
+   * <code>type_of_pde_rhs = 3</code> at one point only: the boundary integral
+   * is not calculated if <code>type_of_pde_rhs = 2</code>. This can help to
+   * reduce simulation time a bit if the current vector potential equals zero
+   * on the boundary due to a Dirichlet boundary condition.
    *
    * The same four options are available when solving for the current
    * vector potential, \f$\vec{T}\f$. In the case of \f$\vec{T}\f$, however,
-   * the first two options, i.e., type_of_pde_rhs=0 and type_of_pde_rhs=1,
-   * do not make much sense: the curl of the free-current density must be
-   * present on the right-hand side of the partial differential equation.
-   * The program does not filter out this two options. When solving for
-   * the current vector potential, \f$\vec{T}\f$, the following two options
-   * make sense:
+   * the first two options, i.e., <code>type_of_pde_rhs=0</code> and
+   * <code>type_of_pde_rhs=1</code>, do not make much sense: the curl of the
+   * free-current density must be present on the right-hand side of the
+   * partial differential equation. The program does not filter out this
+   * two options. When solving for the current vector potential,
+   * \f$\vec{T}\f$, the following two options make sense:
    *
-   * - type_of_pde_rhs = 2. The data provided by StaticVectorSolver::PdeRhs
-   * is interpreted as free-current density, \f$\vec{J}_f\f$, i.e.,
-   * \f[
-   * \vec{\nabla}\times\bigg(\vec{\nabla}\times\vec{T}\bigg)
-   * + \eta^2 \vec{T} = \vec{\nabla}\times\vec{J}_f.
-   * \f]
-   * in a three-dimensional space and
-   * \f[
-   * \vec{\nabla}\overset{V}{\times}\bigg(\vec{\nabla}\overset{S}{\times}\vec{T}\bigg)
-   * + \eta^2 \vec{T} = \vec{\nabla}\overset{V}{\times} J_f.
-   * \f]
-   * in a two-dimensional space. Then the corresponding terms of the
-   * functional are
-   * \f[
-   * \iiint_{\Omega} \vec{J}_f\cdot\bigg(\vec{\nabla}\times\vec{T}\bigg) dV
-   * \f]
-   * in a three dimensional space and
-   * \f[
-   * \iint_{\Omega} J_f \bigg(\vec{\nabla}\overset{S}{\times}\vec{T}\bigg) dS
-   * \f]
-   * in a two-dimensional space.
+   * - <code>type_of_pde_rhs = 2</code>. The data provided by
+   *   StaticVectorSolver::PdeRhs is interpreted as free-current density,
+   *   \f$\vec{J}_f\f$, i.e.,
+   *   \f[
+   *   \vec{\nabla}\times\bigg(\vec{\nabla}\times\vec{T}\bigg)
+   *   + \eta^2 \vec{T} = \vec{\nabla}\times\vec{J}_f
+   *   \f]
+   *   in a three-dimensional space and
+   *   \f[\vec{\nabla}
+   *   \overset{V}{\times}\bigg(\vec{\nabla}\overset{S}{\times}\vec{T}\bigg)
+   *   +\eta^2 \vec{T} = \vec{\nabla}\overset{V}{\times} J_f
+   *   \f]
+   *   in a two-dimensional space. Then the corresponding terms of the
+   *   functional are
+   *   \f[
+   *   \iiint_{\Omega} \vec{J}_f\cdot\bigg(\vec{\nabla}\times\vec{T}\bigg) dV
+   *   \f]
+   *   in a three dimensional space and
+   *   \f[
+   *   \iint_{\Omega} J_f\bigg(\vec{\nabla}\overset{S}{\times}\vec{T}\bigg)dS
+   *   \f]
+   *   in a two-dimensional space.
    *
-   * - type_of_pde_rhs = 3. The data provided by StaticVectorSolver::PdeRhs
-   * is interpreted as free-current density, \f$\vec{J}_f\f$.
-   * \f[
-   * \vec{\nabla}\times\bigg(\vec{\nabla}\times\vec{T}\bigg)
-   * + \eta^2 \vec{T} = \vec{\nabla}\times\vec{J}_f.
-   * \f]
-   * in a three-dimensional space and
-   * \f[
-   * \vec{\nabla}\overset{V}{\times}\bigg(\vec{\nabla}\overset{S}{\times}\vec{T}\bigg)
-   * + \eta^2 \vec{T} = \vec{\nabla}\overset{V}{\times} J_f.
-   * \f]
-   * in a two-dimensional space. Then the
-   * corresponding terms of the functional are
-   * \f[
-   * \iiint_{\Omega} \vec{J}_f\cdot\bigg(\vec{\nabla}\times\vec{T}\bigg) dV -
-   * \iint_{\Gamma_{\Omega}}\vec{J}_f\cdot\bigg(\hat{n}\times\vec{T}\bigg)dS
-   * \f]
-   * in a three dimensional space and
-   * \f[
-   * \iint_{\Omega} J_f \bigg(\vec{\nabla}\overset{S}{\times}\vec{T}\bigg) dS -
-   * \int_{\Gamma_{\Omega}} J_f \bigg( \hat{n} \overset{S}{\times}
-   * \vec{T}\bigg)dl \f] in a two-dimensional space.
-   *
-   * Here again the option type_of_pde_rhs = 3 differs from the option
-   * type_of_pde_rhs = 2 by the boundary integral in the functional.
+   * - <code>type_of_pde_rhs = 3</code>. The data provided by
+   *   StaticVectorSolver::PdeRhs is interpreted as free-current density,
+   *   \f$\vec{J}_f\f$,
+   *   \f[
+   *   \vec{\nabla}\times\bigg(\vec{\nabla}\times\vec{T}\bigg)
+   *   +\eta^2 \vec{T} = \vec{\nabla}\times\vec{J}_f
+   *   \f]
+   *   in a three-dimensional space and
+   *   \f[
+   *   \vec{\nabla}
+   *   \overset{V}{\times}\bigg(\vec{\nabla}\overset{S}{\times}\vec{T}\bigg)
+   *   +\eta^2 \vec{T} = \vec{\nabla}\overset{V}{\times} J_f
+   *   \f]
+   *   in a two-dimensional space. Then the
+   *   corresponding terms of the functional are
+   *   \f[
+   *   \iiint_{\Omega}
+   *   \vec{J}_f\cdot\bigg(\vec{\nabla}\times\vec{T}\bigg) dV -
+   *   \underbrace{
+   *   \iint_{\Gamma_{\Omega}}\vec{J}_f\cdot\bigg(\hat{n}\times\vec{T}\bigg)dS
+   *   }_{Boundary\ integral}
+   *   \f]
+   *   in a three dimensional space and
+   *   \f[
+   *   \iint_{\Omega} J_f
+   *   \bigg(\vec{\nabla}\overset{S}{\times}\vec{T}\bigg) dS -
+   *   \underbrace{
+   *   \int_{\Gamma_{\Omega}} J_f \bigg( \hat{n} \overset{S}{\times}
+   *   \vec{T}\bigg)dl
+   *   }_{Boundary\ integral}
+   *   \f] in a two-dimensional space.
+   *   Here again the option <code>type_of_pde_rhs = 3</code> differs from
+   *   the option <code>type_of_pde_rhs = 2</code> by the boundary integral in
+   *   the functional.
    *
    * Note, the code that implements the solver for \f$\vec{A}\f$ is identical
    * to the code that implements the solver for \f$\vec{T}\f$ as the list of
@@ -318,16 +339,19 @@ public:
    * mode and "solving for T" mode. The user toggles the code between
    * these two modes by feeding the right data through
    * StaticVectorSolver::PdeRhs and StaticVectorSolver::TheCoefficient and
-   * ignoring options type_of_pde_rhs = 0 and type_of_pde_rhs = 1 when solving
-   * for \f$\vec{T}\f$. If the magnetic vector potential, \f$\vec{A}\f$, is
-   * being computed, StaticVectorSolver::PdeRhs::value_list must return the
-   * values of \f$\vec{T}\f$ (type_of_pde_rhs = 2, type_of_pde_rhs = 3) or
-   * values of \f$\vec{J}_f\f$ (type_of_pde_rhs = 1). If the current vector
+   * ignoring options <code>type_of_pde_rhs = 0</code> and
+   * <code>type_of_pde_rhs = 1</code> when solving for \f$\vec{T}\f$. If the
+   * magnetic vector potential, \f$\vec{A}\f$, is being computed,
+   * StaticVectorSolver::PdeRhs::value_list must return the values of
+   * \f$\vec{T}\f$ (<code>type_of_pde_rhs = 2</code>,
+   * <code>type_of_pde_rhs = 3</code>) or values of \f$\vec{J}_f\f$
+   * (<code>type_of_pde_rhs  1</code>). If the current vector
    * potential, \f$\vec{T}\f$, is being computed,
    * StaticVectorSolver::PdeRhs::value_list must return the values
-   * of \f$\vec{J}_f\f$ (type_of_pde_rhs = 2, type_of_pde_rhs = 3).
-   * The StaticVectorSolver::TheCoefficient must return 1.0 when solving
-   * for \f$\vec{T}\f$ and \f$\mu\f$ when solving for \f$\vec{A}\f$.
+   * of \f$\vec{J}_f\f$ (<code>type_of_pde_rhs = 2</code>,
+   * <code>type_of_pde_rhs = 3</code>). The StaticVectorSolver::TheCoefficient
+   * must return 1.0 when solving for \f$\vec{T}\f$ and \f$\mu\f$ when solving
+   * for \f$\vec{A}\f$.
    *
    * @param[in] p - Degree of the FE_Nedelec finite elements.
    * @param[in] mapping_degree - The degree of the interpolating Lagrange
@@ -449,19 +473,40 @@ public:
    * \brief Projects exact solution.
    *
    * The mesh and the finite elements, are the same as are used for the
-   * numerical solution of the boundary vale problem. The exact solution will be
-   * saved in the vtk file next to the numerical solution to the boundary value
-   * problem. This function works properly only if the exact solution is
-   * submitted to the constructor via the input parameter exact_solution and
-   * project_exact_solution=true.
+   * numerical solution of the boundary value problem. The exact solution will
+   * be saved in the vtk file next to the numerical solution to the boundary
+   * value problem. This function works properly only if the exact solution is
+   * submitted to the constructor via the input parameter
+   * <code>exact_solution</code> and <code>project_exact_solution=true</code>.
    *****************************************************************************/
   void project_exact_solution_fcn();
 
   /**
-   * \brief Saves the result of the simulation into a vtk file.
+   * \brief Saves simulation results into a vtk file.
    *
-   * The calculated vector potential is saved into a vtk file under a name
-   * "VectorField"
+   * The following data are saved:
+   * - The calculated potential under the name "VectorField".
+   * - The \f$L^2\f$ error norm associated with the calculated potential under
+   *   the name "L2norm". One value per mesh cell is saved.
+   * - The exact solution expressed as a linear combination of the shape
+   *   functions of the
+   *   [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
+   *   finite elements is saved under the name "VectorFieldExact". The
+   *   "VectorField" and "VectorFieldExact" are modeled by exactly the same
+   *   finite elements.
+   *
+   * The "L2norm" and "VectorFieldExact" are saved only if an exact solution
+   * is submitted to the constructor. Moreover, "VectorFieldExact" is
+   * calculated and saved only if <code>project_exact_solution = true</code>.
+   *
+   * If <code>write_higher_order_cells = false</code>, the name of the file is
+   * computed by appending ".vtk" to the string contained by the parameter
+   * <code>fname</code> passed to the constructor. The vtk file can be
+   * inspected with a help of [Visit](https://visit.llnl.gov)
+   * or [Paraview](www.paraview.org). Higher-order cells are not saved.
+   * If <code>write_higher_order_cells = true</code>, the data is saved into
+   * fname.vtu file preserving the higher-order cells. The file can be viewed
+   * with a help of [Paraview](www.paraview.org) version 5.5.0 or higher.
    ****************************************************************************/
   void save() const;
 
@@ -530,8 +575,9 @@ public:
   /**
    * \brief Runs the simulation.
    *
-   * Executes the following member functions in a proper order: make_mesh();
-   * fill_dirichlet_stack(); setup(); assemble(); solve(); save();
+   * Executes the following member functions in a proper order: make_mesh(),
+   * fill_dirichlet_stack(), setup(), assemble(), solve(),
+   * project_exact_solution_fcn(), compute_error_norms(), save().
    *****************************************************************************/
   void run()
   {

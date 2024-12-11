@@ -42,16 +42,16 @@ namespace StaticScalarSolver {
  * divergence and the gradient on the left-hand side of the div-grad partial
  * differential equation.
  *
- * This class template is declared in shared/include/static_scalar_input.hpp but
- * must be implemented in xyz/src/static_scalar_input.cpp, where xyz is
+ * This class template is declared in shared/include/static_scalar_input.hpp
+ * but must be implemented in xyz/src/static_scalar_input.cpp, where xyz is
  * the directory of the current numerical experiment. That is, the declaration
- * is shared between all numerical experiments while implementation is specific
- * for each individual numerical experiment. See
+ * is shared between all numerical experiments while implementation is
+ * specific for each individual numerical experiment. See
  * [the structure of the code](@ref page_code) for more details.
  *
- * The dim template parameter is, as per usual, the amount of spatial
- * dimensions. The purpose of the stage template parameter is discussed in
- * [here](@ref txt_stage_parameter).
+ * The <code>dim</code> template parameter is, as per usual, the amount of
+ * spatial dimensions. The purpose of the <code>stage</code> template parameter
+ * is discussed in [here](@ref txt_stage_parameter).
  *
  * The user is supposed to implement
  * @code
@@ -69,10 +69,11 @@ public:
    * This function is called by objects derived from the
    * StaticScalarSolver::Solver template during the assembly of the system
    * matrix. It is called ones per each cell. This function must fill the vector
-   * values[...] with the values of the coefficient. The values[i] is
-   * interpreted as the value of the coefficient at quadrature point r[i]. The
-   * code snippet below provides an example in which the permittivity equals the
-   * permittivity of the free space at each quadrature point.
+   * <code>values</code> with the values of the coefficient. The
+   * <code>values[i]</code> is interpreted as the value of the coefficient at
+   * quadrature point <code>r[i]</code>. The code snippet below provides an
+   * example in which the permittivity equals the permittivity of the free
+   * space at each quadrature point.
    *
    * @code
    * #pragma GCC diagnostic push
@@ -116,7 +117,7 @@ public:
  * In the case of a problem formulated in terms of the electrostatic scalar
  * potential, \f$\Phi\f$, the right-hand side is the volume free-charge density,
  * \f$\rho_f\f$. In the case of a problem formulated in terms of the total
- * magnetic scalar potential, \f$\Psi\f$ the right-hand side is the volume
+ * magnetic scalar potential, \f$\Psi\f$, the right-hand side is the volume
  * magnetic-charge density, \f$\rho_t\f$. (Note, that normally in the literature
  * \f$\rho_t / \mu_0\f$ is designated as volume magnetic-charge density.)
  * In the case of a problem formulated in terms of the reduced magnetic scalar
@@ -138,9 +139,9 @@ public:
  * for each individual numerical experiment. See
  * [the structure of the code](@ref page_code) for more details.
  *
- * The dim template parameter is, as per usual, the amount of spatial
- * dimensions. The purpose of the stage template parameter is discussed in
- * [here](@ref txt_stage_parameter).
+ * The <code>dim</code> template parameter is, as per usual, the amount of
+ * spatial dimensions. The purpose of the <code>stage</code> template parameter
+ * is discussed in [here](@ref txt_stage_parameter).
  *
  * The user is supposed to implement
  * @code
@@ -159,12 +160,14 @@ public:
    * This function is called by objects derived from the
    * StaticScalarSolver::Solver template during the assembly of the system
    * right-hand side. It is called ones per each cell. This function must fill
-   * the vector values[...] with the values of the right-hand side of the
-   * partial differential equation. The values[i] is interpreted as the
-   * right-hand side of the partial differential equation at quadrature point
-   * r[i]. The right- hand side of the partial differential equation may vary
-   * from point-to-point, or may have the same value at all points. The
-   * following code snippet provides an example.
+   * the vector <code>values</code> with the values of the right-hand side of
+   * the partial differential equation. The <code>values[i]</code> is
+   * interpreted as the right-hand side of the partial differential equation
+   * at quadrature point <code>r[i]</code>. The right- hand side of the
+   * partial differential equation may vary from point-to-point, or may have
+   * the same value at all points. The following code snippet provides an
+   * example.
+   *
    * @code
    * #pragma GCC diagnostic push
    * #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -230,9 +233,9 @@ public:
  * for each individual numerical experiment. See
  * [the structure of the code](@ref page_code) for more details.
  *
- * The dim template parameter is, as per usual, the amount of spatial
- * dimensions. The purpose of the stage template parameter is discussed in
- * [here](@ref txt_stage_parameter).
+ * The <code>dim</code> template parameter is, as per usual, the amount of
+ * spatial dimensions. The purpose of the <code>stage</code> template parameter
+ * is discussed in [here](@ref txt_stage_parameter).
  *
  * The user is supposed to implement
  * @code
@@ -241,8 +244,8 @@ public:
  * member function of this class template.
  *
  * @note This class template can only be used in two-dimensional problems, so,
- * strictly peaking, the template parameter dim is redundant. This template
- * parameter, however, makes the code more uniform.
+ * strictly peaking, the template parameter <code>dim</code> is redundant. This
+ * template parameter, however, makes the code more uniform.
  *****************************************************************************/
 template<int dim, int stage = 1>
 class PdeRhsCvp : private Settings
@@ -256,8 +259,10 @@ public:
    * This function is called by objects derived from the
    * StaticScalarSolver::Solver template during the assembly of the system
    * right-hand side. It is called ones per each cell and each face located on
-   * the boundary. This function must fill the vector values with the values of
-   * \f$\vec{J}_f\f$. The following code snippet provides an example.
+   * the boundary. This function must fill the vector <code>values</code> with
+   * the values of \f$\vec{J}_f\f$. The following code snippet provides an
+   * example.
+   *
    * @code
    * #pragma GCC diagnostic push
    * #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -318,9 +323,9 @@ public:
  * [the structure of the code](@ref page_code)
  * for more details.
  *
- * The dim template parameter is, as per usual, the amount of spatial
- * dimensions. The purpose of the stage template parameter is discussed in
- * [here](@ref txt_stage_parameter).
+ * The <code>dim</code> template parameter is, as per usual, the amount of
+ * spatial dimensions. The purpose of the <code>stage</code> template parameter
+ * is discussed in [here](@ref txt_stage_parameter).
  *
  * The user is supposed to implement
  * @code
@@ -337,12 +342,14 @@ public:
    *
    * This function is called by objects derived from the
    * StaticScalarSolver::Solver template during the assembly of the system
-   * matrix. It is called once for each face located on the boundary if the cell
-   * ID is even and is greater than zero. This function must fill the vector
-   * values[...] with the values of \f$\gamma\f$. The values[i] is interpreted
-   * as \f$\gamma\f$ at quadrature point r[i]. The \f$\gamma\f$ may vary from
-   * point-to-point, or may have the same value at all points. The following
-   * code snippet provides an example.
+   * matrix. It is called once for each face located on the boundary if the
+   * cell ID is even and is greater than zero. This function must fill the
+   * vector <code>values</code> with the values of \f$\gamma\f$. The
+   * <code>values[i]</code> is interpreted as \f$\gamma\f$ at quadrature point
+   * <code>r[i]</code>. The \f$\gamma\f$ may vary from point-to-point, or may
+   * have the same value at all points. The following code snippet provides
+   * an example.
+   *
    * @code
    * #pragma GCC diagnostic push
    * #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -406,9 +413,9 @@ public:
  * [the structure of the code](@ref page_code)
  * for more details.
  *
- * The dim template parameter is, as per usual, the amount of spatial
- * dimensions. The purpose of the stage template parameter is discussed in
- * [here](@ref txt_stage_parameter).
+ * The <code>dim</code> template parameter is, as per usual, the amount of
+ * spatial dimensions. The purpose of the <code>stage</code> template parameter
+ * is discussed in [here](@ref txt_stage_parameter).
  *
  * The user is supposed to implement
  * @code
@@ -426,13 +433,14 @@ public:
    *
    * This function is called by objects derived from the
    * StaticScalarSolver::Solver template during the assembly of the system
-   * right-hand side. It is called once for each face located on the boundary if
-   * the face ID is even and is greater than zero. This function must fill the
-   * vector values[...] with the values of the right-hand side of the Robin
-   * boundary condition. The values[i] is interpreted as the right-hand side at
-   * quadrature point r[i]. The value of the right-hand side may vary from
-   * point-to-point, or may have the same value at all points. The following
-   * code snippet provides an example.
+   * right-hand side. It is called once for each face located on the boundary
+   * if the face ID is even and is greater than zero. This function must fill
+   * the vector <code>values</code> with the values of the right-hand side of
+   * the Robin boundary condition. The <code>values[i]</code> is interpreted
+   * as the right-hand side at quadrature point <code>r[i]</code>. The value
+   * of the right-hand side may vary from point-to-point, or may have the same
+   * value at all points. The following code snippet provides an example.
+   *
    * @code
    * #pragma GCC diagnostic push
    * #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -497,9 +505,9 @@ public:
  * [the structure of the code](@ref page_code)
  * for more details.
  *
- * The dim template parameter is, as per usual, the amount of spatial
- * dimensions. The purpose of the stage template parameter is discussed in
- * [here](@ref txt_stage_parameter).
+ * The <code>dim</code> template parameter is, as per usual, the amount of
+ * spatial dimensions. The purpose of the <code>stage</code> template parameter
+ * is discussed in [here](@ref txt_stage_parameter).
  *
  * The user is supposed to implement
  * @code
@@ -516,15 +524,16 @@ public:
    * (\f$\kappa_f\f$ or \f$K_f\f$) on the right-hand side in the continuity
    * condition.
    *
-   * This function is called by the StaticScalarSolver::Solver class during the
-   * assembly of the right-hand side of the system of linear equations. It is
-   * called once for each face if both user IDs, the cell user ID and the face
-   * user ID, are greater than zero. This function must fill the vector
-   * values[...] with the values of the surface free-charge density. The
-   * values[i] is interpreted as surface free-charge density at quadrature
-   * point r[i]. The value of the surface free-charge density may vary from
-   * point-to-point, or may have the same value at all points. The following
-   * code snippet provides an example.
+   * This function is called by the StaticScalarSolver::Solver class during
+   * the assembly of the right-hand side of the system of linear equations.
+   * It is called once for each face if both user IDs, the cell user ID and
+   * the face user ID, are greater than zero. This function must fill the
+   * vector <code>values</code> with the values of the surface free-charge
+   * density. The <code>values[i]</code> is interpreted as surface free-charge
+   * density at quadrature point <code>r[i]</code>. The value of the surface
+   * free-charge density may vary from point-to-point, or may have the same
+   * value at all points. The following code snippet provides an example.
+   *
    * @code
    * #pragma GCC diagnostic push
    * #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -572,8 +581,8 @@ public:
 };
 
 /**
- * \brief Implements the weight function for calculating the \f$L^2\f$
- * and \f$H^1\f$ error norms.
+ * \brief Implements the weight function for calculating the \f$L^2\f$,
+ * \f$L^{\infty}\f$, and \f$H^1\f$ error norms.
  *
  * Objects of this class template are passed to
  * [VectorTools::integrate_difference](https://www.dealii.org/current/doxygen/deal.II/namespaceVectorTools.html).
@@ -588,6 +597,10 @@ public:
  * for each individual numerical experiment. See
  * [the structure of the code](@ref page_code) for more details.
  *
+ * The <code>dim</code> template parameter is, as per usual, the amount of
+ * spatial dimensions. The purpose of the <code>stage</code> template parameter
+ * is discussed in [here](@ref txt_stage_parameter).
+ *
  * The user is supposed to implement
  * @code
  * double value(...)
@@ -601,8 +614,9 @@ class Weight
 {
 public:
   /**
-   * \brief Return the value of weight at point r. Both error norms, \f$L^2\f$
-   * and \f$H^1\f$, at point \f$r\f$ will be multiplied by this value.
+   * \brief Returns the value of weight at point <code>r</code>. All error
+   * norms, \f$L^2\f$, \f$L^{\infty}\f$, and \f$H^1\f$, at point
+   * <code>r</code> will be multiplied by this value.
    *
    * @param r - The quadrature point at which the error norm is currently
    * evaluated.
