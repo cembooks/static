@@ -376,7 +376,7 @@ calculating current vector potential. In this mode dim must be set to 2."));
   void assemble();
 
   /**
-   * \brief Computes \f$L^2\f$ and \f$H^1\f$ error norms.
+   * \brief Computes error norms.
    *****************************************************************************/
   void compute_error_norms();
 

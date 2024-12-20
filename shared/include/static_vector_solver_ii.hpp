@@ -319,7 +319,7 @@ public:
   void assemble();
 
   /**
-   * \brief Computes \f$L^2\f$ error norms.
+   * \brief Computes error norms.
    *****************************************************************************/
   void compute_error_norms();
 
@@ -406,7 +406,7 @@ public:
   double get_L2_norm() const { return L2_norm; }
 
   /**
-   * \brief Returns \f$L^{infty}\f$ error norm.
+   * \brief Returns \f$L^{\infty}\f$ error norm.
    *****************************************************************************/
   double get_Linfty_norm() const { return L2_norm; }
 
@@ -538,7 +538,7 @@ protected:
   double L2_norm;
 
   /**
-   * \brief The \f$L^2\f$ norm.
+   * \brief The \f$L^{\infty}\f$ norm.
    *****************************************************************************/
   double Linfty_norm;
 
