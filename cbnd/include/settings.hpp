@@ -18,9 +18,8 @@
 using namespace dealii;
 
 /**
- * \brief Global settings for the
- * [Effect of curved boundaries (cbnd/)](@ref page_cbnd)
- * numerical experiment.
+ * \brief Global settings for the Effect of curved boundaries
+ * [(cbnd/)](@ref page_cbnd) numerical experiment.
  *****************************************************************************/
 class SettingsCBND : public Constants::Physics
 {

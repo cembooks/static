@@ -23,9 +23,8 @@ using namespace Misc;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the
- * [Effect of curved boundaries (cbnd/)](@ref page_cbnd)
- * numerical experiment.
+ * that implements the Effect of curved boundaries
+ * [(cbnd/)](@ref page_cbnd) numerical experiment.
  *****************************************************************************/
 class BatchCBND : public SettingsCBND
 {
@@ -68,9 +67,8 @@ public:
           table_PHI.add_value("r", r);
           table_PHI.add_value("p", p);
 
-          //        SolverCBND<DIMENSION__> problem(p, 2, r,
           SolverCBND<DIMENSION__> problem(p,
-                                          1,
+                                          1, // 2,
                                           r,
                                           dir + "solution_PHI_p" +
                                             std::to_string(p) + "_r" +

@@ -30,9 +30,8 @@
 using namespace StaticScalarSolver;
 
 /**
- * \brief Implements the solver of the
- * [Effect of curved boundaries (cbnd/)](@ref page_cbnd)
- * numerical experiment.
+ * \brief Implements the solver of the Effect of curved boundaries
+ * [(cbnd/)](@ref page_cbnd) numerical experiment.
  *****************************************************************************/
 template<int dim>
 class SolverCBND
@@ -49,9 +48,9 @@ public:
    * finite elements,
    * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
    * @param[in] mapping_degree - The degree of the interpolating polynomials
-   *used for mapping. Setting it to 1 will do in the most of the cases. Note,
-   *that it makes sense to attach a meaningful manifold to the triangulation if
-   *this parameter is greater than 1.
+   * used for mapping. Setting it to 1 will do in the most of the cases. Note,
+   * that it makes sense to attach a meaningful manifold to the triangulation
+   * if this parameter is greater than 1.
    * @param[in] r - The parameter that encodes the degree of mesh refinement.
    * Must coincide with one of the values set in cbnd/gmsh/build. This parameter
    * is used to compose the name of the mesh file to be uploaded from
@@ -164,7 +163,6 @@ SolverCBND<dim>::data_slice(std::string fname)
 
   VectorTools::interpolate(dof_handler_slice, potential, solution_slice);
 
-  //  DataOut<1,DoFHandler<1,dim>> data_out;
   DataOut<1, dim> data_out;
 
   data_out.attach_dof_handler(dof_handler_slice);
@@ -186,9 +184,9 @@ SolverCBND<dim>::attach_manifold_refine()
 
   //  for (unsigned int i = 0; i < 3; ++i)
   //  {
-  //    for (auto &cell:
-  // Solver<dim>::triangulation.active_cell_iterators())       if
-  // (cell->at_boundary())         cell->set_refine_flag();
+  //    for (auto &cell: Solver<dim>::triangulation.active_cell_iterators())
+  //     if (cell->at_boundary())
+  //       cell->set_refine_flag();
 
   //  Solver<dim>::triangulation.execute_coarsening_and_refinement();
   //  Solver<dim>::triangulation.set_all_manifold_ids(0);
