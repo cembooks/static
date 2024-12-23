@@ -18,9 +18,8 @@
 using namespace dealii;
 
 /**
- * \brief Global settings for the
- * [Method of manufactured solutions (mms/)](@ref page_mms)
- * numerical experiment.
+ * \brief Global settings for the Method of manufactured solutions
+ * [(mms/)](@ref page_mms) numerical experiment.
  *****************************************************************************/
 class SettingsMMS : public Constants::Physics
 {
@@ -60,7 +59,7 @@ public:
 
   /**
    * \brief Two values in double format are considered to be equal if the
-   * absolute value of their difference is less than eps.
+   * absolute value of their difference is less than <code>eps</code>.
    *****************************************************************************/
   const double eps = 1e-12;
 

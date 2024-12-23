@@ -23,9 +23,8 @@
 using namespace StaticScalarSolver;
 
 /**
- * \brief Implements the solver of the
- * [Method of manufactured solutions (mms/)](@ref page_mms)
- * numerical experiment.
+ * \brief Implements the solver of the Method of manufactured solutions 
+ * [(mms/)](@ref page_mms) numerical experiment.
  *****************************************************************************/
 template<int dim>
 class SolverMMS
@@ -42,9 +41,9 @@ public:
    * finite elements,
    * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
    * @param[in] mapping_degree - The degree of the interpolating polynomials
-   *used for mapping. Setting it to 1 will do in the most of the cases. Note,
-   *that it makes sense to attach a meaningful manifold to the triangulation if
-   *this parameter is greater than 1.
+   * used for mapping. Setting it to 1 will do in the most of the cases. Note,
+   * that it makes sense to attach a meaningful manifold to the triangulation if
+   * this parameter is greater than 1.
    * @param[in] r - The parameter that encodes the degree of mesh refinement.
    * Must coincide with one of the values set in mms/gmsh/build. This parameter
    * is used to compose the name of the mesh file to be uploaded from
