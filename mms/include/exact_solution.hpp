@@ -26,8 +26,8 @@
 using namespace dealii;
 
 /**
- * \brief Describes exact solution, \f$\Phi_M\f$, of the Method of 
- * manufactured solutions [(mms/)](@ref page_mms) numerical experiment in 
+ * \brief Describes exact solution, \f$\Phi_M\f$, of the Method of
+ * manufactured solutions [(mms/)](@ref page_mms) numerical experiment in
  * two and three dimensions.
  *****************************************************************************/
 template<int dim>
@@ -47,7 +47,7 @@ public:
 };
 
 /**
- * \brief Describes exact solution, \f$\vec{E}_M\f$, of the Method of 
+ * \brief Describes exact solution, \f$\vec{E}_M\f$, of the Method of
  * manufactured solutions [(mms/)](@ref page_mms) numerical experiment in two
  * and three dimensions.
  *****************************************************************************/
@@ -68,7 +68,7 @@ public:
 };
 
 /**
- * \brief Describes exact solution, \f$\vec{D}_M\f$, of the Method of 
+ * \brief Describes exact solution, \f$\vec{D}_M\f$, of the Method of
  * manufactured solutions [(mms/)](@ref page_mms) numerical experiment in
  * two and three dimensions.
  *****************************************************************************/

@@ -23,7 +23,7 @@
 using namespace StaticScalarSolver;
 
 /**
- * \brief Implements the solver of the Method of manufactured solutions 
+ * \brief Implements the solver of the Method of manufactured solutions
  * [(mms/)](@ref page_mms) numerical experiment.
  *****************************************************************************/
 template<int dim>
@@ -108,8 +108,10 @@ template<int dim>
 void
 SolverMMS<dim>::solve()
 {
-  ReductionControl control(
-    Solver<dim>::system_rhs.size(), 0.0, 1e-8, false, false);
+  SolverControl control(Solver<dim>::system_rhs.size(),
+                        1e-8 * Solver<dim>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();

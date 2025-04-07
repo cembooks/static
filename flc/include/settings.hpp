@@ -18,9 +18,8 @@
 using namespace dealii;
 
 /**
- * \brief Global settings for the
- * [Floating conductor (flc/)](@ref page_flc)
- * numerical experiment.
+ * \brief Global settings for the Floating conductor
+ * [(flc/)](@ref page_flc) numerical experiment.
  *****************************************************************************/
 class SettingsFLC : public Constants::Physics
 {

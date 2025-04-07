@@ -19,9 +19,8 @@
 using namespace dealii;
 
 /**
- * \brief Describes exact solution, \f$\Phi\f$, of the
- * [Floating conductor (flc/)](@ref page_flc)
- * numerical experiment.
+ * \brief Describes exact solution, \f$\Phi\f$, of the Floating conductor
+ * [(flc/)](@ref page_flc) numerical experiment.
  *****************************************************************************/
 template<int dim>
 class ExactSolutionFLC_PHI

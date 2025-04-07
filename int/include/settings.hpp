@@ -18,9 +18,8 @@
 using namespace dealii;
 
 /**
- * \brief Global settings for the
- * [Interface between dielectrics (int/)](@ref page_int)
- * numerical experiment.
+ * \brief Global settings for the Interface between dielectrics
+ * [(int/)](@ref page_int) numerical experiment.
  *****************************************************************************/
 class SettingsINT : public Constants::Physics
 {
