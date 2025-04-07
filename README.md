@@ -34,7 +34,7 @@ To run the code do the following.
 
    printenv | grep DEAL
 
-   Check if the version of deal.ii in the CMakeLists.txt files is correct. To do so,
+   Check if the version of deal.II in the CMakeLists.txt files is correct. To do so,
    change into static/ directory and type the following:
 
    find . -name "CMakeLists.txt" -exec grep "find_package(deal.II" {} +
