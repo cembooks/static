@@ -1,0 +1,9 @@
+22-07-2024 - The initial preliminary version of the code.
+
+07-04-2025 - The first release of the code (version 1.0).
+             The code of the numerical experiment has been modified to
+             accommodate the new face orientation scheme of the FE_Nedelec
+             finite elements of deal.II. The static logbook has been modified
+             accordingly. No new numerical experiments has been added. The code
+             should work with the versions of deal.II that were released after
+             29.01.2025, i.e., deal.II-9.7.0 and newer versions.
