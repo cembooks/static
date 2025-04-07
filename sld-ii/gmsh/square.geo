@@ -116,7 +116,7 @@ s = news; Plane Surface(s) = {ll};
 
 Physical Surface(100) = Surface{:};
 
-Physical Line(1) = {21, 22, 60, 40, 118, 138, 98, 78};
+Physical Line(1) = {22, 60, 138, 98, 21, 40, 118, 78};
 
 Recombine Surface "*";
 

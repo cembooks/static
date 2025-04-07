@@ -45,24 +45,18 @@ SolverRHOAXI<false>::make_mesh()
   Solver<2>::triangulation.reset_all_manifolds();
 
   for (auto cell : Solver<2>::triangulation.active_cell_iterators()) {
-    if (cell->center().norm() < a) {
+
+    if (cell->center().norm() < a)
       cell->set_material_id(mid_2);
 
-      for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; f++) {
-        double dif_norm = 0.0;
-        for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_face; v++)
-          dif_norm += std::abs(cell->face(f)->vertex(v).norm() - a);
+    for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f) {
+      double dif_norm = 0.0;
+      for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_face; v++)
+        dif_norm += std::abs(cell->face(f)->vertex(0).norm() -
+                             cell->face(f)->vertex(v).norm());
 
-        if (dif_norm < eps)
-          cell->face(f)->set_all_manifold_ids(1);
-      }
-    } else {
-      cell->set_material_id(mid_1);
-
-      for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; f++)
-        if (cell->face(f)->at_boundary() &&
-            (cell->face(f)->boundary_id() == bid))
-          cell->face(f)->set_all_manifold_ids(1);
+      if ((dif_norm < eps) && (cell->center().norm() > rd))
+        cell->face(f)->set_all_manifold_ids(1);
     }
   }
 

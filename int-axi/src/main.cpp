@@ -25,9 +25,8 @@ using namespace Misc;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the
- * [Axisymmetric - interface between dielectrics (int-axi/)](@ref page_int_axi)
- * numerical experiment.
+ * that implements the *Axisymmetric - interface between dielectrics*
+ * [(int-axi/)](@ref page_int_axi) numerical experiment.
  *****************************************************************************/
 class BatchINTAXI : public SettingsINTAXI
 {
@@ -105,7 +104,8 @@ public:
                                     true,
                                     Settings::print_time_tables,
                                     Settings::project_exact_solution,
-                                    Settings::log_cg_convergence);
+                                    Settings::log_cg_convergence,
+                                    true);
 
             table_E.add_value("ndofs", projector.get_n_dofs());
             table_E.add_value("ncells", projector.get_n_cells());
@@ -134,7 +134,8 @@ public:
                                     true,
                                     Settings::print_time_tables,
                                     Settings::project_exact_solution,
-                                    Settings::log_cg_convergence);
+                                    Settings::log_cg_convergence,
+                                    true);
 
             table_D.add_value("ndofs", projector.get_n_dofs());
             table_D.add_value("ncells", projector.get_n_cells());

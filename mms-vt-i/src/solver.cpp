@@ -11,12 +11,7 @@
 
 #define BOOST_ALLOW_DEPRECATED_HEADERS
 
-#include <deal.II/grid/grid_in.h>
-#include <deal.II/grid/grid_out.h>
-#include <deal.II/grid/grid_tools.h>
-
 #include "solver.hpp"
-#include <fstream>
 
 using namespace StaticVectorSolver;
 
@@ -32,6 +27,24 @@ SolverMMSVTI_T::make_mesh()
   std::ifstream ifs("../../gmsh/data/sphere_r" + std::to_string(r) + ".msh");
 #endif
   gridin.read_msh(ifs);
+
+#if DOMAIN__ == 1
+  Solver1<3, 0>::triangulation.reset_all_manifolds();
+
+  for (auto cell : Solver1<3, 0>::triangulation.active_cell_iterators()) {
+    for (unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; f++) {
+      double dif_norm = 0.0;
+      for (unsigned int v = 1; v < GeometryInfo<3>::vertices_per_face; v++)
+        dif_norm += std::abs(cell->face(f)->vertex(0).norm() -
+                             cell->face(f)->vertex(v).norm());
+
+      if ((dif_norm < eps) && (cell->center().norm() > rd1))
+        cell->face(f)->set_all_manifold_ids(1);
+    }
+  }
+
+  Solver1<3, 0>::triangulation.set_manifold(1, sphere);
+#endif
 }
 
 void
@@ -43,8 +56,10 @@ SolverMMSVTI_T::fill_dirichlet_stack()
 void
 SolverMMSVTI_T::solve()
 {
-  ReductionControl control(
-    Solver1<3, 0>::system_rhs.size(), 0.0, 1e-8, false, false);
+  SolverControl control(1000 * Solver1<3, 0>::system_rhs.size(),
+                        1e-6 * Solver1<3, 0>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();
@@ -89,8 +104,10 @@ SolverMMSVTI_A::fill_dirichlet_stack()
 void
 SolverMMSVTI_A::solve()
 {
-  ReductionControl control(
-    Solver2<3, 2>::system_rhs.size(), 0.0, 1e-8, false, false);
+  SolverControl control(1000 * Solver2<3, 2>::system_rhs.size(),
+                        1e-6 * Solver2<3, 2>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();

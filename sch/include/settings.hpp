@@ -18,9 +18,8 @@
 using namespace dealii;
 
 /**
- * \brief Global settings for the
- * [Surface charge (sch/)](@ref page_sch)
- * numerical experiment.
+ * \brief Global settings for the *Surface charge*
+ * [(sch/)](@ref page_sch) numerical experiment.
  *****************************************************************************/
 class SettingsSCH : public Constants::Physics
 {
@@ -31,7 +30,7 @@ public:
    * \brief If greater than zero, limits the amount of threads used in the
    * simulations.
    *****************************************************************************/
-  const unsigned int nr_threads_max = 8;
+  const unsigned int nr_threads_max = 0;
 
   /**
    * \brief The permittivity of free space.
@@ -49,6 +48,17 @@ public:
    * \brief The radius of the outer boundary of the problem domain.
    *****************************************************************************/
   double b = 1.0;
+
+  /**
+   * \brief The half-side of the square (cube) in the middle of the mesh.
+   *****************************************************************************/
+  double d1 = 0.2;
+
+  /**
+   * \brief The radius of the circle (sphere) that encloses the square (cube) in
+   * the middle of the mesh.
+   *****************************************************************************/
+  const double rd1 = sqrt(DIMENSION__) * d1;
 
 /**
  * \brief The surface free-charge density.
@@ -73,7 +83,7 @@ public:
   const double eps = 1e-12;
 
   /**
-   * \brief If set to true, the program will print the time tables on the
+   * \brief If set to true, the program will print time tables on the
    * screen.
    *****************************************************************************/
   const bool print_time_tables = false;
@@ -83,7 +93,7 @@ public:
    *
    * The exact solution will be modeled on the same mesh and by the same finite
    * elements that are used to model the solution. The projected exact solution
-   * will be saved in the vtk file next to the solution. This option can be
+   * will be saved in the vtu file next to the solution. This option can be
    * useful when debugging.
    *****************************************************************************/
   const bool project_exact_solution = false;

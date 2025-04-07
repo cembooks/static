@@ -25,8 +25,9 @@
 using namespace dealii;
 
 /**
- * \brief Describes the exact solution, \f$\Phi\f$, of the Interface between
- * dielectrics [(int/)](@ref page_int) numerical experiment.
+ * \brief Describes the exact solution, \f$\Phi\f$, of the
+ * *Interface between dielectrics* [(int/)](@ref page_int)
+ * numerical experiment.
  *****************************************************************************/
 template<int dim>
 class ExactSolutionINT_PHI
@@ -49,8 +50,9 @@ private:
 };
 
 /**
- * \brief Describes the exact solution, \f$\vec{E}\f$, of the Interface
- * between dielectrics [(int/)](@ref page_int) numerical experiment.
+ * \brief Describes the exact solution, \f$\vec{E}\f$, of the
+ * *Interface between dielectrics* [(int/)](@ref page_int)
+ * numerical experiment.
  *****************************************************************************/
 template<int dim>
 class ExactSolutionINT_E
@@ -72,8 +74,9 @@ private:
 };
 
 /**
- * \brief Describes the exact solution, \f$\vec{D}\f$, of the Interface
- * between dielectrics [(int/)](@ref page_int) numerical experiment.
+ * \brief Describes the exact solution, \f$\vec{D}\f$, of the
+ * *Interface between dielectrics* [(int/)](@ref page_int)
+ * numerical experiment.
  *****************************************************************************/
 template<int dim>
 class ExactSolutionINT_D

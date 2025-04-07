@@ -17,8 +17,6 @@
 
 using namespace dealii;
 
-//-----------------------------------------------------------------------------
-
 template<>
 ExactSolutionMMSV_A<3>::ExactSolutionMMSV_A()
   : Function<3>(3)
@@ -66,8 +64,6 @@ ExactSolutionMMSV_A<2>::vector_value_list(
     v++;
   }
 }
-
-//-----------------------------------------------------------------------------
 
 template<>
 ExactSolutionMMSV_B<3>::ExactSolutionMMSV_B()
@@ -123,5 +119,3 @@ ExactSolutionMMSV_B<2>::value(const Point<2>& r,
 {
   return cos(k * r[0]) + cos(k * r[1]);
 }
-
-//-----------------------------------------------------------------------------

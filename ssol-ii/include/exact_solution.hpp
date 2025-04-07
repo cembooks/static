@@ -104,8 +104,7 @@ magnetic_field(double x,
 
 /**
  * \brief Describes the exact solution, \f$\vec{J}_f\f$, of the
- * [Thick spherical coil (ssol-ii/)](@ref page_ssol_ii)
- * numerical experiment.
+ * *Thick spherical coil* [(ssol-ii/)](@ref page_ssol_ii) numerical experiment.
  *****************************************************************************/
 class ExactSolutionSSOLII_Jf
   : public Function<3>
@@ -121,8 +120,7 @@ public:
 
 /**
  * \brief Describes the exact solution, \f$\vec{B}\f$, of the
- * [Thick spherical coil (ssol-ii/)](@ref page_ssol_ii)
- * numerical experiment.
+ * *Thick spherical coil* [(ssol-ii/)](@ref page_ssol_ii) numerical experiment.
  *****************************************************************************/
 class ExactSolutionSSOLII_B
   : public Function<3>

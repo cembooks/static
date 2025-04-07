@@ -17,9 +17,15 @@
 
 using namespace dealii;
 
+enum BoundaryConditionType
+{
+  Dirichlet,
+  Exact
+};
+
 /**
  * \brief Global settings for the
- * [Magnetostatic shield - 2 (sld-ii/)](@ref page_sld_ii)
+ * *Magnetostatic shield - 2* [(sld-ii/)](@ref page_sld_ii)
  * numerical experiment.
  *****************************************************************************/
 class SettingsSLDII : public Constants::Physics
@@ -33,12 +39,24 @@ public:
    * \brief If greater than zero, limits the amount of threads used in the
    * simulations.
    *****************************************************************************/
-  const unsigned int nr_threads_max = 8;
+  const unsigned int nr_threads_max = 0;
 
   /**
    * \brief The permeability of free space.
    *****************************************************************************/
   const double mu_0 = permeability_fs;
+
+  /**
+   * \brief The half-side of the cube (square) in the middle of the spherical
+   * (circular) mesh.
+   *****************************************************************************/
+  const double d1 = (DIMENSION__ == 2) ? 0.07 : 0.05;
+
+  /**
+   * \brief The radius of the circle (sphere) that encloses the square (cube) in
+   * the middle of the mesh.
+   *****************************************************************************/
+  const double rd1 = sqrt(DIMENSION__) * d1;
 
   /**
    * \brief The inner radius of the shield.
@@ -78,6 +96,11 @@ public:
    * \brief The ID of the only boundary of the problem domain.
    *****************************************************************************/
   const types::boundary_id bid = 1;
+
+  /**
+   * \brief Switches between two boundary conditions options.
+   *****************************************************************************/
+  const BoundaryConditionType type_of_bc = Exact;
 
   /**
    * \brief The ID of the material inside the shield.
@@ -138,7 +161,7 @@ public:
   const double eps = 1e-12;
 
   /**
-   * \brief If set to true, the program will print the time tables on the
+   * \brief If set to true, the program will print time tables on the
    * screen.
    *****************************************************************************/
   const bool print_time_tables = false;
@@ -148,7 +171,7 @@ public:
    *
    * The exact solutions will be modeled on the same mesh and by the same finite
    * elements that are used to model the solution. The projected exact solution
-   * will be saved in the vtk file next to the solution. This option can be
+   * will be saved in the vtu file next to the solution. This option can be
    * useful when debugging.
    *****************************************************************************/
   const bool project_exact_solution = false;

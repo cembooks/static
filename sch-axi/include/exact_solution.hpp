@@ -20,7 +20,7 @@ using namespace dealii;
 
 /**
  * \brief Describes exact solution, \f$\Phi\f$, of the
- * [Axisymmetric - surface charge (sch-axi/)](@ref page_sch_axi)
+ * *Axisymmetric - surface charge* [(sch-axi/)](@ref page_sch_axi)
  * numerical experiment.
  *****************************************************************************/
 template<bool is_cylinder>

@@ -8,8 +8,8 @@ set grid lw 1 lc rgb "black"
 
 set key font ",16"
 
-set xtics font ",8"
-set ytics font ",8"
+set xtics font ",16"
+set ytics font ",16"
 
 set title font ",16"
 

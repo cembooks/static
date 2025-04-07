@@ -25,7 +25,7 @@ using namespace Misc;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the Interface between dielectrics
+ * that implements the *Interface between dielectrics*
  * [(int/)](@ref page_int) numerical experiment.
  *****************************************************************************/
 class BatchINT : public SettingsINT

@@ -71,16 +71,16 @@ namespace StaticScalarSolver {
  * This class template is supposed to be used in pair with
  * StaticScalarSolver::Solver. In some problems the numerically calculated
  * scalar potential needs to be converted into a vector field. For example,
- * an electric scalar potential, \f$\Phi_h\f$, calculated with a help of
+ * an electric scalar potential, \f$\Phi\f$, calculated with a help of
  * StaticScalarSolver::Solver may need to be converted into displacement
  * as
  * \f[
- * \vec{D}_h = - \epsilon \vec{\nabla} \Phi_h.
+ * \vec{D} = - \epsilon \vec{\nabla} \Phi.
  * \f]
  * The electric scalar potential belongs to the H(grad) function space. The
  * displacement belongs to the H(div) function space. Therefore, one needs to
- * compute the equation above such that the input, \f$\Phi_h\f$, is in H(grad)
- * and the output, \f$\vec{D}_h\f$, is in H(div). Such computation can be
+ * compute the equation above such that the input, \f$\Phi\f$, is in H(grad)
+ * and the output, \f$\vec{D}\f$, is in H(div). Such computation can be
  * envisioned as a some kind of projection from one function space into another.
  * This class template does such projections. The Bossavit's diagrams
  * below illustrate the projections that can be made with a help of this class
@@ -90,19 +90,21 @@ namespace StaticScalarSolver {
  *
  * The table below lists the recommended settings for switching between
  * different types of projections. The six letters in the first column of the
- * table correspond to the six diagrams above. The <code>dim</code> parameter
- * is the input parameter of the class template. The other two parameters,
- * <code>axisymmetric</code> and <code>vector_potential</code>, are passed
- * as input parameters to the constructor of the class.
+ * table correspond to the six diagrams above. The `dim` parameter is the input
+ * parameter of the class template. The other two parameters, `axisymmetric` and
+ * `vector_potential`, are passed as input parameters to the constructor of the
+ * class.
  *
  * Insert         | dim | axisymmetric | vector_potential |
  * ---------------|-----|--------------|------------------|
- * A), B), C), D) |  3  |    false     |     false        |
- * E), F)         |  2  |  true/false  |     true         |
+ * A), C)         |  3  |    false     |     false        |
+ * B), D)         |  2  |  true/false  |     false        |
+ * E)             |  2  |  true/false  |     true         |
+ * F)             |  2  |    false     |     true         |
  *
- * The <code>dim</code> template parameter is, as per usual, the amount of
- * spatial dimensions. The purpose of the <code>stage</code> template
- * parameter is discussed in [here](@ref txt_stage_parameter).
+ * The `dim` template parameter is, as per usual, the amount of spatial
+ * dimensions. The purpose of the `stage` template parameter is discussed in
+ * [here](@ref txt_stage_parameter).
  *
  * The user is supposed to derive an object from this class template. All usual
  * computations, i.e., setup, assembling the linear system, etc., happen
@@ -138,13 +140,12 @@ public:
    * @param[in] exact_solution - Points to an object that describes the exact
    * solution to the problem. It is needed for calculating error norms.
    * @param[in] axisymmetric - If true, assumes that the problem is
-   * axisymmetric. If <code>axisymmetric=true</code>, <code>dim</code> must
-   * equal 2.
+   * axisymmetric. If `axisymmetric=true`, `dim` must equal 2.
    * @param[in] vector_potential - If true, assumes that the problem is
    * two-dimensional and formulated in terms of the magnitude of vector
    * potential, \f$A\f$, or in terms of the scaled magnitude of vector
    * potential, \f$A'\f$, or current vector potential, \f$T\f$. If
-   * <code>vector_potential=true</code>, <code>dim</code> must equal 2.
+   * `vector_potential=true`, `dim` must equal 2.
    * @param[in] print_time_tables - If true, prints time tables on the screen.
    * @param[in] project_exact_solution - If true, projects the exact solution
    * onto the space spanned by the Raviart-Thomas finite elements and saves the
@@ -163,7 +164,7 @@ public:
                      unsigned int mapping_degree,
                      const Triangulation<dim>& triangulation_Hgrad,
                      const DoFHandler<dim>& dof_handler_Hgrad,
-                     const Vector<double>& solutioin_Hgrad,
+                     const Vector<double>& solution_Hgrad,
                      std::string fname = "Hdiv",
                      const Function<dim>* exact_solution = nullptr,
                      bool axisymmetric = false,
@@ -443,6 +444,34 @@ ProjectHgradToHdiv<dim, stage>::ProjectHgradToHdiv(
 
 template<int dim, int stage>
 void
+ProjectHgradToHdiv<dim, stage>::save_matrix_and_rhs_to_csv(
+  std::string fname) const
+{
+  std::ofstream ofs_matrix(fname + "_matrix.csv");
+  std::ofstream ofs_rhs(fname + "_rhs.csv");
+
+  for (unsigned int i = 0; i < system_matrix.m(); ++i) {
+    ofs_rhs << system_rhs(i);
+    if (i < (system_matrix.m() - 1))
+      ofs_rhs << "\n";
+
+    for (unsigned int j = 0; j < system_matrix.n(); ++j) {
+      ofs_matrix << std::scientific << std::setprecision(16)
+                 << system_matrix.el(i, j);
+
+      if (j < (system_matrix.m() - 1))
+        ofs_matrix << ", ";
+    }
+    if (i < (system_matrix.m() - 1))
+      ofs_matrix << "\n";
+  }
+
+  ofs_rhs.close();
+  ofs_matrix.close();
+}
+
+template<int dim, int stage>
+void
 ProjectHgradToHdiv<dim, stage>::setup()
 {
   constraints.close();
@@ -470,9 +499,206 @@ ProjectHgradToHdiv<dim, stage>::setup()
 
 template<int dim, int stage>
 void
+ProjectHgradToHdiv<dim, stage>::assemble()
+{
+  WorkStream::run(IteratorPair(IteratorTuple(dof_handler_Hdiv.begin_active(),
+                                             dof_handler_Hgrad.begin_active())),
+                  IteratorPair(IteratorTuple(dof_handler_Hdiv.end(),
+                                             dof_handler_Hgrad.end())),
+                  *this,
+                  &ProjectHgradToHdiv::system_matrix_local,
+                  &ProjectHgradToHdiv::copy_local_to_global,
+                  AssemblyScratchData(fe_Hdiv,
+                                      dof_handler_Hgrad,
+                                      solution_Hgrad,
+                                      axisymmetric,
+                                      vector_potential,
+                                      mapping_degree),
+                  AssemblyCopyData());
+}
+
+template<int dim, int stage>
+ProjectHgradToHdiv<dim, stage>::AssemblyScratchData::AssemblyScratchData(
+  const FiniteElement<dim>& fe,
+  const DoFHandler<dim>& dof_hand_Hgrad,
+  const Vector<double>& dofs_Hgrad,
+  bool axisymmetric,
+  bool vector_potential,
+  unsigned int mapping_degree)
+  : mapping(mapping_degree)
+  , qt(fe.degree - 1)
+  , fe_values_Hdiv(mapping,
+                   fe,
+                   QGauss<dim>(qt.sim()),
+                   update_values | update_quadrature_points | update_JxW_values)
+  , fe_values_Hgrad(mapping,
+                    dof_hand_Hgrad.get_fe(),
+                    QGauss<dim>(qt.sim()),
+                    update_gradients)
+  , dofs_per_cell(fe_values_Hdiv.dofs_per_cell)
+  , n_q_points(fe_values_Hdiv.get_quadrature().size())
+  , the_coefficient_list(n_q_points)
+  , vector_gradients(n_q_points, Tensor<1, dim>())
+  , nabla_xV_oopvector(n_q_points, Tensor<1, dim>())
+  , ve(0)
+  , dof_hand_Hgrad(dof_hand_Hgrad)
+  , dofs_Hgrad(dofs_Hgrad)
+  , axisymmetric(axisymmetric)
+  , vector_potential(vector_potential)
+  , axi_mult(1.0)
+{
+}
+
+template<int dim, int stage>
+ProjectHgradToHdiv<dim, stage>::AssemblyScratchData::AssemblyScratchData(
+  const AssemblyScratchData& scratch_data)
+  : mapping(scratch_data.mapping.get_degree())
+  , qt(scratch_data.qt)
+  , fe_values_Hdiv(mapping,
+                   scratch_data.fe_values_Hdiv.get_fe(),
+                   scratch_data.fe_values_Hdiv.get_quadrature(),
+                   update_values | update_quadrature_points | update_JxW_values)
+  , fe_values_Hgrad(mapping,
+                    scratch_data.fe_values_Hgrad.get_fe(),
+                    scratch_data.fe_values_Hgrad.get_quadrature(),
+                    update_gradients)
+  , dofs_per_cell(fe_values_Hdiv.dofs_per_cell)
+  , n_q_points(fe_values_Hdiv.get_quadrature().size())
+  , the_coefficient_list(n_q_points)
+  , vector_gradients(n_q_points, Tensor<1, dim>())
+  , nabla_xV_oopvector(n_q_points, Tensor<1, dim>())
+  , ve(0)
+  , dof_hand_Hgrad(scratch_data.dof_hand_Hgrad)
+  , dofs_Hgrad(scratch_data.dofs_Hgrad)
+  , axisymmetric(scratch_data.axisymmetric)
+  , vector_potential(scratch_data.vector_potential)
+  , axi_mult(1.0)
+{
+}
+
+template<int dim, int stage>
+void
+ProjectHgradToHdiv<dim, stage>::system_matrix_local(
+  const IteratorPair& IP,
+  AssemblyScratchData& scratch_data,
+  AssemblyCopyData& copy_data)
+{
+  // See the color boxes
+  // (1) Recipe for projections from H(grad) to H(div) nr. 6 and 7
+  // (2) Recipe for projections from H(grad) to H(div) nr. 8 and 9 (planar)
+  // (3) Recipe for projections from H(grad) to H(div) nr. 8 and 9 (axisym.)
+  // (4) Recipe for projections from H(grad) to H(div) nr. 10 and 11 (planar)
+  // (5) Recipe for projections from H(grad) to H(div) nr. 10 (axisym.)
+  //
+  // The comments below refer to these recipes by number, i.e., recipe (1),
+  // recipe (2), etc.
+
+  copy_data.cell_matrix.reinit(scratch_data.dofs_per_cell,
+                               scratch_data.dofs_per_cell);
+
+  copy_data.cell_rhs.reinit(scratch_data.dofs_per_cell);
+
+  copy_data.local_dof_indices.resize(scratch_data.dofs_per_cell);
+
+  scratch_data.fe_values_Hdiv.reinit(std::get<0>(*IP));
+  scratch_data.fe_values_Hgrad.reinit(std::get<1>(*IP));
+
+  scratch_data.fe_values_Hgrad.get_function_gradients(
+    scratch_data.dofs_Hgrad, scratch_data.vector_gradients);
+
+  if (!scratch_data.vector_potential)
+    scratch_data.the_coefficient.value_list(
+      scratch_data.fe_values_Hdiv.get_quadrature_points(),
+      std::get<0>(*IP)->material_id(),
+      std::get<0>(*IP)->user_index(),
+      scratch_data.the_coefficient_list);
+
+  for (unsigned int q_index = 0; q_index < scratch_data.n_q_points; ++q_index) {
+
+    scratch_data.axi_mult = 1.0;
+
+    if ((scratch_data.axisymmetric) && (!scratch_data.vector_potential))
+      scratch_data.axi_mult =
+        scratch_data.fe_values_Hdiv.quadrature_point(q_index)[0];
+
+    for (unsigned int i = 0; i < scratch_data.dofs_per_cell; ++i) {
+      for (unsigned int j = 0; j < scratch_data.dofs_per_cell; ++j) {
+        // Mass matrix is the same in all recipes.
+        copy_data.cell_matrix(i, j) +=
+          scratch_data.axi_mult *                             // 1.0 or r
+          scratch_data.fe_values_Hdiv[VE].value(i, q_index) * // curl N_i
+          scratch_data.fe_values_Hdiv[VE].value(j, q_index) * // curl N_j
+          scratch_data.fe_values_Hdiv.JxW(q_index);           // dV (dS in 2D)
+      }
+
+      if (scratch_data.vector_potential) // A and A'.
+      {
+        // The option vector_potential = true exists only in 2D
+        scratch_data.nabla_xV_oopvector[q_index][0] =
+          scratch_data.vector_gradients[q_index][1];
+
+        scratch_data
+          .nabla_xV_oopvector[q_index][1] = // nabla_xV_oopvector is the
+          -scratch_data.vector_gradients[q_index][0]; // two-dimensional vector
+                                                      // field in H(div),
+                                                      // 'curl_v A' for short.
+        double tmp;
+        tmp = scratch_data.nabla_xV_oopvector[q_index] *          // curl_v A
+              scratch_data.fe_values_Hdiv[VE].value(i, q_index) * // N_i
+              scratch_data.fe_values_Hdiv.JxW(q_index);           // dS
+
+        if (scratch_data.axisymmetric) // A'.
+        {                              // Integral b_i in recipe (5).
+          copy_data.cell_rhs(i) -= tmp;
+
+          // The recipe (5) yields B'=rB, where r is the distance to the axis of
+          // rotation symmetry. If you do not like to have the scaled magnetic
+          // field, B', and would rather have the magnetic field itself, B,
+          // replace the line above with the following line. Note, that a
+          // quadrature point can, in general, be at the origin. If so, the line
+          // below will yield an error.
+
+          //          copy_data.cell_rhs(i) -=
+          // tmp/scratch_data.fe_values_Hdiv.quadrature_point(q_index)[0];
+        } else // A.
+        {      // Integral b_i in recipe (4).
+          copy_data.cell_rhs(i) += tmp;
+        }
+
+      } else // Phi, Psi, Theta.
+      {
+        // Integral b_i in recipes (1), (2), and (3).
+        copy_data.cell_rhs(i) -=
+          scratch_data.axi_mult *                             // 1.0 or r
+          scratch_data.the_coefficient_list[q_index] *        // epsilon
+          scratch_data.vector_gradients[q_index] *            // grad PHI
+          scratch_data.fe_values_Hdiv[VE].value(i, q_index) * // N_i
+          scratch_data.fe_values_Hdiv.JxW(q_index);           // dV (dS in 2D)
+      }
+    }
+  }
+
+  std::get<0>(*IP)->get_dof_indices(copy_data.local_dof_indices);
+}
+
+template<int dim, int stage>
+void
+ProjectHgradToHdiv<dim, stage>::copy_local_to_global(
+  const AssemblyCopyData& copy_data)
+{
+  constraints.distribute_local_to_global(copy_data.cell_matrix,
+                                         copy_data.cell_rhs,
+                                         copy_data.local_dof_indices,
+                                         system_matrix,
+                                         system_rhs);
+}
+
+template<int dim, int stage>
+void
 ProjectHgradToHdiv<dim, stage>::solve()
 {
-  ReductionControl control(system_rhs.size(), 0.0, 1e-12, false, false);
+  SolverControl control(
+    1000 * system_rhs.size(), 1e-12 * system_rhs.l2_norm(), false, false);
 
   if (log_cg_convergence)
     control.enable_history_data();
@@ -604,231 +830,6 @@ ProjectHgradToHdiv<dim, stage>::project_exact_solution_fcn()
                        QGauss<dim>(qt.sim()),
                        *exact_solution,
                        projected_exact_solution);
-}
-
-template<int dim, int stage>
-ProjectHgradToHdiv<dim, stage>::AssemblyScratchData::AssemblyScratchData(
-  const FiniteElement<dim>& fe,
-  const DoFHandler<dim>& dof_hand_Hgrad,
-  const Vector<double>& dofs_Hgrad,
-  bool axisymmetric,
-  bool vector_potential,
-  unsigned int mapping_degree)
-  : mapping(mapping_degree)
-  , qt(fe.degree - 1)
-  , fe_values_Hdiv(mapping,
-                   fe,
-                   QGauss<dim>(qt.sim()),
-                   update_values | update_quadrature_points | update_JxW_values)
-  , fe_values_Hgrad(mapping,
-                    dof_hand_Hgrad.get_fe(),
-                    QGauss<dim>(qt.sim()),
-                    update_gradients)
-  , dofs_per_cell(fe_values_Hdiv.dofs_per_cell)
-  , n_q_points(fe_values_Hdiv.get_quadrature().size())
-  , the_coefficient_list(n_q_points)
-  , vector_gradients(n_q_points, Tensor<1, dim>())
-  , nabla_xV_oopvector(n_q_points, Tensor<1, dim>())
-  , ve(0)
-  , dof_hand_Hgrad(dof_hand_Hgrad)
-  , dofs_Hgrad(dofs_Hgrad)
-  , axisymmetric(axisymmetric)
-  , vector_potential(vector_potential)
-  , axi_mult(1.0)
-{
-}
-
-template<int dim, int stage>
-ProjectHgradToHdiv<dim, stage>::AssemblyScratchData::AssemblyScratchData(
-  const AssemblyScratchData& scratch_data)
-  : mapping(scratch_data.mapping.get_degree())
-  , qt(scratch_data.qt)
-  , fe_values_Hdiv(mapping,
-                   scratch_data.fe_values_Hdiv.get_fe(),
-                   scratch_data.fe_values_Hdiv.get_quadrature(),
-                   update_values | update_quadrature_points | update_JxW_values)
-  , fe_values_Hgrad(mapping,
-                    scratch_data.fe_values_Hgrad.get_fe(),
-                    scratch_data.fe_values_Hgrad.get_quadrature(),
-                    update_gradients)
-  , dofs_per_cell(fe_values_Hdiv.dofs_per_cell)
-  , n_q_points(fe_values_Hdiv.get_quadrature().size())
-  , the_coefficient_list(n_q_points)
-  , vector_gradients(n_q_points, Tensor<1, dim>())
-  , nabla_xV_oopvector(n_q_points, Tensor<1, dim>())
-  , ve(0)
-  , dof_hand_Hgrad(scratch_data.dof_hand_Hgrad)
-  , dofs_Hgrad(scratch_data.dofs_Hgrad)
-  , axisymmetric(scratch_data.axisymmetric)
-  , vector_potential(scratch_data.vector_potential)
-  , axi_mult(1.0)
-{
-}
-
-template<int dim, int stage>
-void
-ProjectHgradToHdiv<dim, stage>::system_matrix_local(
-  const IteratorPair& IP,
-  AssemblyScratchData& scratch_data,
-  AssemblyCopyData& copy_data)
-{
-  // See the color boxes
-  // (1) Recipe for projections from H(grad) to H(div) nr. 6 and 7
-  // (2) Recipe for projections from H(grad) to H(div) nr. 8 and 9 (planar)
-  // (3) Recipe for projections from H(grad) to H(div) nr. 8 and 9 (axisym.)
-  // (4) Recipe for projections from H(grad) to H(div) nr. 10 and 11 (planar)
-  // (5) Recipe for projections from H(grad) to H(div) nr. 10 (axisym.)
-  //
-  // The comments below refer to these recipes by number, i.e., recipe (1),
-  // recipe (2), etc.
-
-  copy_data.cell_matrix.reinit(scratch_data.dofs_per_cell,
-                               scratch_data.dofs_per_cell);
-
-  copy_data.cell_rhs.reinit(scratch_data.dofs_per_cell);
-
-  copy_data.local_dof_indices.resize(scratch_data.dofs_per_cell);
-
-  scratch_data.fe_values_Hdiv.reinit(std::get<0>(*IP));
-  scratch_data.fe_values_Hgrad.reinit(std::get<1>(*IP));
-
-  scratch_data.fe_values_Hgrad.get_function_gradients(
-    scratch_data.dofs_Hgrad, scratch_data.vector_gradients);
-
-  if (!scratch_data.vector_potential)
-    scratch_data.the_coefficient.value_list(
-      scratch_data.fe_values_Hdiv.get_quadrature_points(),
-      std::get<0>(*IP)->material_id(),
-      std::get<0>(*IP)->user_index(),
-      scratch_data.the_coefficient_list);
-
-  for (unsigned int q_index = 0; q_index < scratch_data.n_q_points; ++q_index) {
-
-    scratch_data.axi_mult = 1.0;
-
-    if ((scratch_data.axisymmetric) && (!scratch_data.vector_potential))
-      scratch_data.axi_mult =
-        scratch_data.fe_values_Hdiv.quadrature_point(q_index)[0];
-
-    for (unsigned int i = 0; i < scratch_data.dofs_per_cell; ++i) {
-      for (unsigned int j = 0; j < scratch_data.dofs_per_cell; ++j) {
-        // Mass matrix is the same in all recipes.
-        copy_data.cell_matrix(i, j) +=
-          scratch_data.axi_mult *                             // 1.0 or r
-          scratch_data.fe_values_Hdiv[VE].value(i, q_index) * // curl N_i
-          scratch_data.fe_values_Hdiv[VE].value(j, q_index) * // curl N_j
-          scratch_data.fe_values_Hdiv.JxW(q_index);           // dV (dS in 2D)
-      }
-
-      if (scratch_data.vector_potential) // A and A'.
-      {
-        // The option vector_potential = true exists only in 2D
-        scratch_data.nabla_xV_oopvector.at(q_index)[0] =
-          scratch_data.vector_gradients.at(q_index)[1];
-
-        scratch_data.nabla_xV_oopvector.at(
-          q_index)[1] = // nabla_xV_oopvector is the
-          -scratch_data.vector_gradients.at(
-            q_index)[0]; // two-dimensional vector
-                         // field in H(div),
-                         // 'curl_v A' for short.
-        double tmp;
-        tmp = scratch_data.nabla_xV_oopvector.at(q_index) *       // curl_v A
-              scratch_data.fe_values_Hdiv[VE].value(i, q_index) * // N_i
-              scratch_data.fe_values_Hdiv.JxW(q_index);           // dS
-
-        if (scratch_data.axisymmetric) // A'.
-        {                              // Integral b_i in recipe (5).
-          copy_data.cell_rhs(i) -= tmp;
-
-          // The recipe (5) yields B'=rB, where r is the distance to the axis of
-          // rotation symmetry. If you do not like to have the scaled magnetic
-          // field, B', and would rather have the magnetic field itself, B,
-          // replace the line above with the following line. Note, that a
-          // quadrature point can, in general, be at the origin. If so, the line
-          // below will yield an error.
-
-          //          copy_data.cell_rhs(i) -=
-          // tmp/scratch_data.fe_values_Hdiv.quadrature_point(q_index)[0];
-        } else // A.
-        {      // Integral b_i in recipe (4).
-          copy_data.cell_rhs(i) += tmp;
-        }
-
-      } else // Phi, Psi, Theta.
-      {
-        // Integral b_i in recipes (1), (2), and (3).
-        copy_data.cell_rhs(i) -=
-          scratch_data.axi_mult *                             // 1.0 or r
-          scratch_data.the_coefficient_list[q_index] *        // epsilon
-          scratch_data.vector_gradients.at(q_index) *         // grad PHI
-          scratch_data.fe_values_Hdiv[VE].value(i, q_index) * // N_i
-          scratch_data.fe_values_Hdiv.JxW(q_index);           // dV (dS in 2D)
-      }
-    }
-  }
-
-  std::get<0>(*IP)->get_dof_indices(copy_data.local_dof_indices);
-}
-
-template<int dim, int stage>
-void
-ProjectHgradToHdiv<dim, stage>::copy_local_to_global(
-  const AssemblyCopyData& copy_data)
-{
-  constraints.distribute_local_to_global(copy_data.cell_matrix,
-                                         copy_data.cell_rhs,
-                                         copy_data.local_dof_indices,
-                                         system_matrix,
-                                         system_rhs);
-}
-
-template<int dim, int stage>
-void
-ProjectHgradToHdiv<dim, stage>::assemble()
-{
-  WorkStream::run(IteratorPair(IteratorTuple(dof_handler_Hdiv.begin_active(),
-                                             dof_handler_Hgrad.begin_active())),
-                  IteratorPair(IteratorTuple(dof_handler_Hdiv.end(),
-                                             dof_handler_Hgrad.end())),
-                  *this,
-                  &ProjectHgradToHdiv::system_matrix_local,
-                  &ProjectHgradToHdiv::copy_local_to_global,
-                  AssemblyScratchData(fe_Hdiv,
-                                      dof_handler_Hgrad,
-                                      solution_Hgrad,
-                                      axisymmetric,
-                                      vector_potential,
-                                      mapping_degree),
-                  AssemblyCopyData());
-}
-
-template<int dim, int stage>
-void
-ProjectHgradToHdiv<dim, stage>::save_matrix_and_rhs_to_csv(
-  std::string fname) const
-{
-  std::ofstream ofs_matrix(fname + "_matrix.csv");
-  std::ofstream ofs_rhs(fname + "_rhs.csv");
-
-  for (unsigned int i = 0; i < system_matrix.m(); ++i) {
-    ofs_rhs << system_rhs(i);
-    if (i < (system_matrix.m() - 1))
-      ofs_rhs << "\n";
-
-    for (unsigned int j = 0; j < system_matrix.n(); ++j) {
-      ofs_matrix << std::scientific << std::setprecision(16)
-                 << system_matrix.el(i, j);
-
-      if (j < (system_matrix.m() - 1))
-        ofs_matrix << ", ";
-    }
-    if (i < (system_matrix.m() - 1))
-      ofs_matrix << "\n";
-  }
-
-  ofs_rhs.close();
-  ofs_matrix.close();
 }
 
 } // namespace StaticScalarSolver

@@ -26,8 +26,9 @@ using namespace dealii;
 
 /**
  * \brief Describes the exact solution, \f$\Phi\f$, of the
- * [Axisymmetric - method of manufactured solutions (mms-axi/)](@ref
- *page_mms_axi) numerical experiment in two and three dimensions.
+ * *Axisymmetric - method of manufactured solutions*
+ * [(mms-axi/)](@ref page_mms_axi)
+ * numerical experiment in two and three dimensions.
  *****************************************************************************/
 template<int dim>
 class ExactSolutionMMSAXI_PHI
@@ -47,8 +48,9 @@ public:
 
 /**
  * \brief Describes the exact solution, \f$\vec{E}\f$, of the
- * [Axisymmetric - method of manufactured solutions (mms-axi/)](@ref
- *page_mms_axi) numerical experiment in two and three dimensions.
+ * *Axisymmetric - method of manufactured solutions*
+ * [(mms-axi/)](@ref page_mms_axi)
+ * numerical experiment in two and three dimensions.
  *****************************************************************************/
 template<int dim>
 class ExactSolutionMMSAXI_E
@@ -68,8 +70,9 @@ public:
 
 /**
  * \brief Describes the exact solution, \f$\vec{D}\f$, of the
- * [Axisymmetric - method of manufactured solutions (mms-axi/)](@ref
- *page_mms_axi) numerical experiment in two and three dimensions.
+ * *Axisymmetric - method of manufactured solutions*
+ * [(mms-axi/)](@ref page_mms_axi)
+ * numerical experiment in two and three dimensions.
  *****************************************************************************/
 template<int dim>
 class ExactSolutionMMSAXI_D

@@ -23,9 +23,8 @@ using namespace Misc;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the
- * [Surface charge (sch/)](@ref page_sch)
- * numerical experiment.
+ * that implements the *Surface charge*
+ * [(sch/)](@ref page_sch) numerical experiment.
  *****************************************************************************/
 class BatchSCH : public SettingsSCH
 {

@@ -34,7 +34,7 @@ using namespace StaticScalarSolver;
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 /**
  * \brief The Dirichlet boundary condition of the
- * [Magnetostatic shield - 1 (sld-i/)](@ref page_sld_i)
+ * *Magnetostatic shield - 1* [(sld-i/)](@ref page_sld_i)
  * numerical experiment. Applied to the outer (the only) boundary of the problem
  * domain.
  *****************************************************************************/
@@ -54,7 +54,7 @@ public:
 
 /**
  * \brief Implements the solver that solves for \f$\Psi\f$ in the
- * [Magnetostatic shield - 1 (sld-i/)](@ref page_sld_i)
+ * *Magnetostatic shield - 1* [(sld-i/)](@ref page_sld_i)
  * numerical experiment.
  *****************************************************************************/
 template<int dim>
@@ -71,14 +71,12 @@ public:
    * finite elements,
    * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
    * @param[in] mapping_degree - The degree of the interpolating polynomials
-   *used for mapping. Setting it to 1 will do in the most of the cases. Note,
-   *that it makes sense to attach a meaningful manifold to the triangulation if
-   *this parameter is greater than 1.
+   * used for mapping.
    * @param[in] r - The parameter that encodes the degree of mesh refinement.
    * Must coincide with one of the values set in sld-i/gmsh/build. This
-   *parameter is used to compose the name of the mesh file to be uploaded from
-   * sld-i/gmsh/data/.
-   * @param[in] fname - The name of the vtk file without extension to save
+   * parameter is used to compose the name of the mesh file to be uploaded
+   * from sld-i/gmsh/data/.
+   * @param[in] fname - The name of the vtu file without extension to save
    * the data.
    *****************************************************************************/
   SolverSLDI(unsigned int p,
@@ -93,7 +91,8 @@ public:
                   false,
                   false,
                   print_time_tables,
-                  project_exact_solution)
+                  project_exact_solution,
+                  true)
     , r(r)
     , fname(fname)
   {
@@ -120,8 +119,17 @@ template<int dim>
 void
 SolverSLDI<dim>::fill_dirichlet_stack()
 {
-  //  Solver<dim>::dirichlet_stack = {{bid, & dirichlet}};
-  Solver<dim>::dirichlet_stack = { { bid, &exact_solution } };
+  switch (type_of_bc) {
+    case DirichletOnly:
+      Solver<dim>::dirichlet_stack = { { bid, &dirichlet } };
+      break;
+    case DirichletNeumann:
+      Solver<dim>::dirichlet_stack = { { bid, &dirichlet } };
+      break;
+    case Exact:
+      Solver<dim>::dirichlet_stack = { { bid, &exact_solution } };
+      break;
+  }
 }
 
 template<int dim>
@@ -140,14 +148,18 @@ SolverSLDI<dim>::make_mesh()
 
   Solver<dim>::triangulation.reset_all_manifolds();
 
-  double cell_r;
   for (auto cell : Solver<dim>::triangulation.active_cell_iterators()) {
-    cell_r = cell->center().norm();
 
-    if (cell_r < a) {
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; f++) {
+      if (((type_of_bc == DirichletOnly) || (type_of_bc == Exact)) &&
+          cell->face(f)->at_boundary())
+        cell->face(f)->set_boundary_id(bid);
+    }
+
+    if (cell->center().norm() < a) {
       // The cell is inside the shield.
       cell->set_material_id(mid_1);
-    } else if (cell_r < b) {
+    } else if (cell->center().norm() < b) {
       // The cell is inside the wall of the shield.
       cell->set_material_id(mid_2);
     } else {
@@ -155,15 +167,16 @@ SolverSLDI<dim>::make_mesh()
       cell->set_material_id(mid_3);
     }
 
-    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; f++) {
-      double dif_norm = 0.0;
-      for (unsigned int v = 1; v < GeometryInfo<dim>::vertices_per_face; v++)
-        dif_norm += std::abs(cell->face(f)->vertex(0).norm() -
-                             cell->face(f)->vertex(v).norm());
+    if ((cell->center().norm() > rd1) && (cell->center().norm() < b))
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; f++) {
+        double dif_norm = 0.0;
+        for (unsigned int v = 1; v < GeometryInfo<dim>::vertices_per_face; v++)
+          dif_norm += std::abs(cell->face(f)->vertex(0).norm() -
+                               cell->face(f)->vertex(v).norm());
 
-      if (dif_norm < eps)
-        cell->face(f)->set_all_manifold_ids(1);
-    }
+        if (dif_norm < eps)
+          cell->face(f)->set_all_manifold_ids(1);
+      }
   }
 
   Solver<dim>::triangulation.set_manifold(1, sphere);
@@ -173,8 +186,10 @@ template<int dim>
 void
 SolverSLDI<dim>::solve()
 {
-  ReductionControl control(
-    Solver<dim>::system_rhs.size(), 0.0, 1e-12, false, false);
+  SolverControl control(Solver<dim>::system_rhs.size(),
+                        1e-8 * Solver<dim>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();

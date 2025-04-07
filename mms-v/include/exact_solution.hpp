@@ -21,8 +21,8 @@ using namespace dealii;
 
 /**
  * \brief Describes exact solutions, \f$\vec{A}\f$, of the
- * [Method of manufactured solutions, vector potential (mms-v/)](@ref
- *page_mms_v) numerical experiment.
+ * *Method of manufactured solutions, vector potential*
+ * [(mms-v/)](@ref page_mms_v) numerical experiment.
  *****************************************************************************/
 template<int dim>
 class ExactSolutionMMSV_A
@@ -39,8 +39,8 @@ public:
 
 /**
  * \brief Describes exact solutions, \f$\vec{B}\f$, of the
- * [Method of manufactured solutions, vector potential (mms-v/)](@ref
- *page_mms_v) numerical experiment.
+ * *Method of manufactured solutions, vector potential*
+ * [(mms-v/)](@ref page_mms_v) numerical experiment.
  *****************************************************************************/
 template<int dim>
 class ExactSolutionMMSV_B

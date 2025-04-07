@@ -19,7 +19,7 @@ using namespace dealii;
 
 /**
  * \brief Global settings for the
- * [Thick spherical coil with magnetic core (ssol-iii/)](@ref page_ssol_iii)
+ * *Spherical coil with magnetic core* [(ssol-iii/)](@ref page_ssol_iii)
  * numerical experiment.
  *****************************************************************************/
 class SettingsSSOLIII : public Constants::Physics
@@ -31,7 +31,7 @@ public:
    * \brief If greater than zero, limits the amount of threads used in the
    * simulations.
    *****************************************************************************/
-  const unsigned int nr_threads_max = 8;
+  const unsigned int nr_threads_max = 0;
 
   /**
    * \brief The permeability of free space.
@@ -41,12 +41,23 @@ public:
   /**
    * \brief The relative permeability of the material of the magnetic core.
    *****************************************************************************/
-  const double mu_r = 4.0;
+  const double mu_r = 4;
 
   /**
    * \brief The permeability of the material of the magnetic core.
    *****************************************************************************/
   const double mu = mu_r * mu_0;
+
+  /**
+   * \brief The half-side of the cube in the middle of the mesh.
+   *****************************************************************************/
+  const double d1 = 0.1;
+
+  /**
+   * \brief The radius of the sphere that encloses the cube in the middle of
+   * the mesh.
+   *****************************************************************************/
+  const double rd1 = sqrt(3) * d1;
 
   /**
    * \brief The inner radius of the magnetic core.
@@ -69,9 +80,15 @@ public:
   const double b2 = 1.2;
 
   /**
+   * \brief The radius of the sphere that delineates the area in which the
+   * \f$L^2\f$ error norms are computed.
+   *****************************************************************************/
+  const double d2 = 2.0;
+
+  /**
    * \brief The radius of the problem domain
    *****************************************************************************/
-  const double d2 = 2.4;
+  const double d3 = 3.0;
 
   /**
    * \brief A constant that defines the magnitude of the surface free-current
@@ -110,17 +127,17 @@ public:
   const double eps = 1e-12;
 
   /**
-   * \brief If set to true, the program will print the time tables on the
+   * \brief If set to true, the program will print time tables on the
    * screen.
    *****************************************************************************/
-  const bool print_time_tables = false; // true;
+  const bool print_time_tables = false;
 
   /**
    * \brief If set to true, the program will project the exact solution.
    *
    * The exact solutions will be modeled on the same mesh and by the same finite
    * elements that are used to model the solution. The projected exact solution
-   * will be saved in the vtk file next to the solution. This option can be
+   * will be saved in the vtu file next to the solution. This option can be
    * useful when debugging.
    *****************************************************************************/
   const bool project_exact_solution = false;

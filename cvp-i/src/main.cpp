@@ -28,8 +28,7 @@ using namespace StaticVectorSolver;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the
- * [Current vector potential (cvp-i/)](@ref page_cvp_i)
+ * that implements the *Current vector potential* [(cvp-i/)](@ref page_cvp_i)
  * numerical experiment.
  *****************************************************************************/
 class BatchCVPI : public SettingsCVPI
@@ -87,7 +86,8 @@ public:
                               &exact_solution,
                               Settings::print_time_tables,
                               Settings::project_exact_solution,
-                              Settings::log_cg_convergence);
+                              Settings::log_cg_convergence,
+                              true);
 
         table_J.add_value("ndofs", projector.get_n_dofs());
         table_J.add_value("ncells", projector.get_n_cells());

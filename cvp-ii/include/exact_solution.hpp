@@ -23,7 +23,7 @@ using namespace dealii;
 
 /**
  * \brief The exact solution, \f$T\f$, in the
- * [Current vector potential (cvp-ii/)](@ref page_cvp_ii)
+ * *Current vector potential* [(cvp-ii/)](@ref page_cvp_ii)
  * numerical experiment.
  *****************************************************************************/
 class ExactSolutionCVPII_T
@@ -43,8 +43,7 @@ public:
 
 /**
  * \brief Describes the given volume free-current density, \f$\vec{J}_f\f$,
- * in the
- * [Current vector potential (cvp-ii/)](@ref page_cvp_ii)
+ * in the *Current vector potential* [(cvp-ii/)](@ref page_cvp_ii)
  * numerical experiment.
  *****************************************************************************/
 class ExactSolutionCVPII_Jf

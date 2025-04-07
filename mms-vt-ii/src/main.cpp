@@ -30,9 +30,8 @@ using namespace StaticVectorSolver;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the
- * [Method of manufactured solutions, vector potential (mms-vt-ii/)](@ref
- *page_mms_vt_ii) numerical experiment.
+ * that implements the *Method of manufactured solutions, vector potential*
+ * [(mms-vt-ii/)](@ref page_mms_vt_ii) numerical experiment.
  *****************************************************************************/
 class BatchMMSVTII : public SettingsMMSVTII
 {
@@ -43,11 +42,13 @@ public:
       MultithreadInfo::set_thread_limit(nr_threads_max);
 
 #if DOMAIN__ == 0
-    std::string dir = "Data/circle/";
+    const unsigned int mapping_degree = 1;
+    std::string dir = "Data/square/";
 #endif
 
 #if DOMAIN__ == 1
-    std::string dir = "Data/square/";
+    const unsigned int mapping_degree = 2;
+    std::string dir = "Data/circle/";
 #endif
 
     std::cout << "Program: mss-vt-ii\n"
@@ -79,6 +80,7 @@ public:
         std::cout << "Stage 0: solving for T ...\n";
 
         SolverMMSVTII_T stage0(p + 1,
+                               mapping_degree,
                                r,
                                dir + "solution_T_p" + std::to_string(p) + "_r" +
                                  std::to_string(r));
@@ -95,7 +97,7 @@ public:
         ExactSolutionMMSVTII_Jf exact_solution_Jf;
 
         ProjectTzToJxy<1> stage1(p,
-                                 stage0.get_mapping_degree(),
+                                 mapping_degree,
                                  stage0.get_tria(),
                                  stage0.get_dof_handler(),
                                  stage0.get_solution(),
@@ -104,7 +106,8 @@ public:
                                  &exact_solution_Jf,
                                  Settings::print_time_tables,
                                  Settings::project_exact_solution,
-                                 Settings::log_cg_convergence);
+                                 Settings::log_cg_convergence,
+                                 true);
 
         table_J.add_value("ndofs", stage0.get_n_dofs());
         table_J.add_value("ncells", stage0.get_n_cells());
@@ -113,11 +116,11 @@ public:
 
         stage1.clear();
 
-        // Stage 2
-        // --------------------------------------------------------------
+        // Stage 2 -------------------------------------------------------------
         std::cout << "Stage 2: solving for A ...\n";
 
         SolverMMSVTII_A stage2(p,
+                               mapping_degree,
                                stage0.get_tria(),
                                stage0.get_dof_handler(),
                                stage0.get_solution(),
@@ -133,7 +136,7 @@ public:
         ExactSolutionMMSVTII_B exact_solution_B;
 
         ProjectAxyToBz<3> stage3(p,
-                                 1,
+                                 mapping_degree,
                                  stage0.get_tria(),
                                  stage2.get_dof_handler(),
                                  stage2.get_solution(),
@@ -142,7 +145,8 @@ public:
                                  &exact_solution_B,
                                  Settings::print_time_tables,
                                  Settings::project_exact_solution,
-                                 Settings::log_cg_convergence);
+                                 Settings::log_cg_convergence,
+                                 true);
 
         table_B.add_value("ndofs", stage0.get_n_dofs());
         table_B.add_value("ncells", stage0.get_n_cells());

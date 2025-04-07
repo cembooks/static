@@ -30,9 +30,8 @@
 using namespace StaticScalarSolver;
 
 /**
- * \brief Implements the
- * [Surface charge (sch/)](@ref page_sch)
- * numerical experiment.
+ * \brief Implements the *Surface charge*
+ * [(sch/)](@ref page_sch) numerical experiment.
  *****************************************************************************/
 template<int dim>
 class SolverSCH
@@ -49,14 +48,12 @@ public:
    * finite elements,
    * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
    * @param[in] mapping_degree - The degree of the interpolating polynomials
-   *used for mapping. Setting it to 1 will do in the most of the cases. Note,
-   *that it makes sense to attach a meaningful manifold to the triangulation if
-   *this parameter is greater than 1.
+   * used for mapping.
    * @param[in] r - The parameter that encodes the degree of mesh refinement.
    * Must coincide with one of the values set in sch/gmsh/build. This parameter
    * is used to compose the name of the mesh file to be uploaded from
    * sch/gmsh/data/.
-   * @param[in] fname - The name of the vtk file without extension to save
+   * @param[in] fname - The name of the vtu file without extension to save
    * the data.
    *****************************************************************************/
   SolverSCH(unsigned int p,
@@ -71,7 +68,8 @@ public:
                   false,
                   false,
                   print_time_tables,
-                  project_exact_solution)
+                  project_exact_solution,
+                  true)
     , r(r)
     , fname(fname)
     , fe_slice(1)
@@ -137,25 +135,25 @@ SolverSCH<dim>::mark_materials()
   Solver<dim>::triangulation.reset_all_manifolds();
 
   for (auto cell : Solver<dim>::triangulation.active_cell_iterators()) {
-    if (std::abs(cell->center().norm()) < a) {
-      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; f++) {
-        double dif_norm = 0.0;
-        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face;
-             v++) {
-          dif_norm += std::abs(cell->face(f)->vertex(v).norm() - a);
-        }
-
-        if (dif_norm < eps) {
-          cell->face(f)->set_user_index(1);
-          cell->set_user_index(1);
-
-          cell->face(f)->set_all_manifold_ids(1);
-        }
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; f++) {
+      double dif_norm_a = 0.0;
+      double dif_norm = 0.0;
+      for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; v++) {
+        dif_norm_a += std::abs(cell->face(f)->vertex(v).norm() - a);
+        dif_norm += std::abs(cell->face(f)->vertex(0).norm() -
+                             cell->face(f)->vertex(v).norm());
       }
+
+      if ((dif_norm_a < eps) && (cell->center().norm() < a)) {
+        cell->face(f)->set_user_index(1);
+        cell->set_user_index(1);
+      }
+
+      if ((dif_norm < eps) && (cell->center().norm() > rd1))
+        cell->face(f)->set_all_manifold_ids(1);
     }
   }
 
-  Solver<dim>::triangulation.set_all_manifold_ids_on_boundary(1);
   Solver<dim>::triangulation.set_manifold(1, sphere);
 }
 
@@ -192,8 +190,10 @@ template<int dim>
 void
 SolverSCH<dim>::solve()
 {
-  ReductionControl control(
-    Solver<dim>::system_rhs.size(), 0.0, 1e-8, false, false);
+  SolverControl control(Solver<dim>::system_rhs.size(),
+                        1e-8 * Solver<dim>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();

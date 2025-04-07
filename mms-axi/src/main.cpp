@@ -25,9 +25,8 @@ using namespace Misc;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the
- * [Axisymmetric - method of manufactured solutions (mms-axi/)](@ref
- *page_mms_axi) numerical experiment.
+ * that implements the *Axisymmetric - method of manufactured solutions*
+ * [(mms-axi/)](@ref page_mms_axi) numerical experiment.
  *****************************************************************************/
 class BatchMMSAXI : public SettingsMMSAXI
 {

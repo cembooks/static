@@ -11,20 +11,21 @@
 
 r = 7; //@1
 
-a = 0.2;
+d = 0.2;
 b = 1.0;
-d = 0.5;
+a = 0.5;
 
 Point(0) = { 0, 0, 0 };
-Point(1) = { 0, a, 0 };
-Point(2) = { 0, d, 0 };
-Point(3) = { d/Sqrt(2), d/Sqrt(2), 0 };
-Point(4) = { a, a, 0 };
+Point(1) = { 0, d, 0 };
+Point(2) = { 0, a, 0 };
+Point(3) = { a/Sqrt(2), a/Sqrt(2), 0 };
+Point(4) = { d, d, 0 };
 Point(5) = { b/Sqrt(2), b/Sqrt(2), 0 };
 Point(6) = { 0, b, 0 };
-Point(7) = { a, 0, 0 };
-Point(8) = { d, 0, 0 };
+Point(7) = { d, 0, 0 };
+Point(8) = { a, 0, 0 };
 Point(9) = { b, 0, 0 };
+
 
 Line(1) = {1, 2};
 Line(2) = {3, 4};

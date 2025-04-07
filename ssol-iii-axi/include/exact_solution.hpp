@@ -165,8 +165,8 @@ magnetic_field_core(double x,
 
 /**
  * \brief Describes exact solution, \f$\vec{B}\f$, of the
- * [Axisymmetric - thick spherical coil with magnetic core (ssol-iii-axi/)](@ref
- *page_ssol_iii_axi) numerical experiment.
+ * *Axisymmetric - thick spherical coil with magnetic core*
+ * [(ssol-iii-axi/)](@ref page_ssol_iii_axi) numerical experiment.
  *****************************************************************************/
 class ExactSolutionSSOLIIIAXI_B
   : public Function<2>
@@ -189,8 +189,8 @@ private:
 
 /**
  * \brief Describes exact solution, \f$\vec{H}\f$, of the
- * [Axisymmetric - thick spherical coil with magnetic core (ssol-iii-axi/)](@ref
- *page_ssol_iii_axi) numerical experiment.
+ * *Axisymmetric - thick spherical coil with magnetic core*
+ * [(ssol-iii-axi/)](@ref page_ssol_iii_axi) numerical experiment.
  *****************************************************************************/
 class ExactSolutionSSOLIIIAXI_H
   : public Function<2>

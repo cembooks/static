@@ -31,7 +31,7 @@ using namespace StaticScalarSolver;
 
 /**
  * \brief Implements the solver of the
- * [Asymptotic boundary condition (abc/)](@ref page_abc)
+ * *Asymptotic boundary condition* [(abc/)](@ref page_abc)
  * numerical experiment.
  *****************************************************************************/
 template<int dim>
@@ -51,14 +51,12 @@ public:
    * finite elements,
    * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
    * @param[in] mapping_degree - The degree of the interpolating polynomials
-   *used for mapping. Setting it to 1 will do in the most of the cases. Note,
-   *that it makes sense to attach a meaningful manifold to the triangulation if
-   *this parameter is greater than 1.
+   * used for mapping.
    * @param[in] r - The parameter that encodes the degree of mesh refinement.
    * Must coincide with one of the values set in abc/gmsh/build. This parameter
    * is used to compose the name of the mesh file to be uploaded from
    * abc/gmsh/data/.
-   * @param[in] fname - The name of the vtk file without extension to save
+   * @param[in] fname - The name of the vtu file without extension to save
    * the data.
    *****************************************************************************/
   SolverABC(unsigned int m,
@@ -74,7 +72,8 @@ public:
                   false,
                   false,
                   print_time_tables,
-                  project_exact_solution)
+                  project_exact_solution,
+                  true)
     , m(m)
     , r(r)
     , fname(fname)
@@ -85,7 +84,6 @@ public:
     , circle_right(Point<2>(x0, 0.0))
     , circle_infty(Point<2>(0.0, 0.0))
   {
-    R_infty = m * R_mid;
     TimerOutput::OutputFrequency tf =
       (print_time_tables) ? TimerOutput::summary : TimerOutput::never;
 
@@ -143,8 +141,10 @@ template<int dim>
 void
 SolverABC<dim>::solve()
 {
-  ReductionControl control(
-    Solver<dim>::system_rhs.size(), 0.0, 1e-8, false, false);
+  SolverControl control(Solver<dim>::system_rhs.size(),
+                        1e-8 * Solver<dim>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();

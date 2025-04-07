@@ -18,7 +18,7 @@
 using namespace dealii;
 
 /**
- * \brief Global settings for the Floating conductor
+ * \brief Global settings for the *Floating conductor*
  * [(flc/)](@ref page_flc) numerical experiment.
  *****************************************************************************/
 class SettingsFLC : public Constants::Physics
@@ -30,7 +30,7 @@ public:
    * \brief If greater than zero, limits the amount of threads used in the
    * simulations.
    *****************************************************************************/
-  const unsigned int nr_threads_max = 8;
+  const unsigned int nr_threads_max = 0;
 
   /**
    * \brief The permittivity of free space.
@@ -84,7 +84,6 @@ public:
 
   /**
    * \brief Permittivity of the inner dielectric.
-   * simulations.
    *****************************************************************************/
   const double ep_1 = 32.0 * ep_0;
 
@@ -106,7 +105,7 @@ public:
   const double eps = 1e-12;
 
   /**
-   * \brief If set to true, the program will print the time tables on the
+   * \brief If set to true, the program will print time tables on the
    * screen.
    *****************************************************************************/
   const bool print_time_tables = false;
@@ -116,7 +115,7 @@ public:
    *
    * The exact solution will be modeled on the same mesh and by the same finite
    * elements that are used to model the solution. The projected exact solution
-   * will be saved in the vtk file next to the solution. This option can be
+   * will be saved in the vtu file next to the solution. This option can be
    * useful when debugging.
    *****************************************************************************/
   const bool project_exact_solution = false;

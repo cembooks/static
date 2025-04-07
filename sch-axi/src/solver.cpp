@@ -54,20 +54,21 @@ SolverSCHAXI<false>::make_mesh()
   for (auto cell : Solver<2>::triangulation.active_cell_iterators()) {
     for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f) {
       double dif_norm = 0.0;
-      for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_face; v++) {
-        dif_norm += std::abs(cell->face(f)->vertex(v).norm() - a);
+      for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_face; v++)
+        dif_norm += std::abs(cell->face(f)->vertex(0).norm() -
+                             cell->face(f)->vertex(v).norm());
 
-        if (cell->face(f)->at_boundary() &&
-            (cell->face(f)->boundary_id() == bid))
-          cell->face(f)->set_all_manifold_ids(1);
-      }
+      if ((dif_norm < eps) && (cell->center().norm() > rd)) {
 
-      if (dif_norm < eps) {
-        if (std::abs(cell->center().norm()) < a) {
+        cell->face(f)->set_all_manifold_ids(1);
+
+        double dif_norm_a = 0.0;
+        for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_face; v++)
+          dif_norm_a += std::abs(cell->face(f)->vertex(v).norm() - a);
+
+        if ((dif_norm < eps) && (std::abs(cell->center().norm()) < a)) {
           cell->face(f)->set_user_index(2);
           cell->set_user_index(1);
-        } else {
-          cell->face(f)->set_all_manifold_ids(1);
         }
       }
     }

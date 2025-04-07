@@ -16,13 +16,12 @@ a = 0.5;
 b = 1.0;
 
 a3 = a / Sqrt(3);
-d13 = d1 / Sqrt(3);
 b3 = b / Sqrt(3);
 
 Point(1) = {0,0,0};
 
-Point(2) = { d13, d13, d13};
-Point(3) = {-d13, d13, d13};
+Point(2) = { d1, d1, d1};
+Point(3) = {-d1, d1, d1};
 
 Point(4) = { a3, a3, a3};
 Point(5) = {-a3, a3, a3};

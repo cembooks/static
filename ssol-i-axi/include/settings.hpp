@@ -17,9 +17,15 @@
 
 using namespace dealii;
 
+enum BoundaryConditionType
+{
+  Dirichlet,
+  Exact
+};
+
 /**
  * \brief Global settings for the
- * [Axisymmetric - thin spherical coil (ssol-i-axi)](@ref page_ssol_i_axi)
+ * *Axisymmetric - thin spherical coil* [(ssol-i-axi)](@ref page_ssol_i_axi)
  * numerical experiment.
  *****************************************************************************/
 class SettingsSSOLIAXI : public Constants::Physics
@@ -31,7 +37,7 @@ public:
    * \brief If greater than zero, limits the amount of threads used in the
    * simulations.
    *****************************************************************************/
-  const unsigned int nr_threads_max = 8;
+  const unsigned int nr_threads_max = 0;
 
   /**
    * \brief The permeability of free space.
@@ -43,6 +49,17 @@ public:
    * density.
    *****************************************************************************/
   const double K_0 = 1.0;
+
+  /**
+   * \brief The width of the rectangle in the middle of the mesh.
+   *****************************************************************************/
+  const double d = 0.2;
+
+  /**
+   * \brief The radius of the circle that encloses the rectangle in the middle
+   * of the mesh.
+   *****************************************************************************/
+  const double rd = sqrt(2) * d;
 
   /**
    * \brief The radius of the coil.
@@ -63,10 +80,15 @@ public:
 
   /**
    * \brief The ID of the straight section of the boundary of the problem
-   *domain. The boundary ID is set in the geo files that are located in the
-   * ssol-i-axi/gmsh directory.
+   * domain. The boundary ID is set in the geo files that are located in
+   * the ssol-i-axi/gmsh directory.
    *****************************************************************************/
   const types::boundary_id bid_axi = 1;
+
+  /**
+   * \brief Switches between two boundary conditions options.
+   *****************************************************************************/
+  const BoundaryConditionType type_of_bc = Exact;
 
   /**
    * \brief Two values in double format are considered to be equal if the
@@ -85,7 +107,7 @@ public:
    *
    * The exact solutions will be modeled on the same mesh and by the same finite
    * elements that are used to model the solution. The projected exact solution
-   * will be saved in the vtk file next to the solution. This option can be
+   * will be saved in the vtu file next to the solution. This option can be
    * useful when debugging.
    *****************************************************************************/
   const bool project_exact_solution = false;

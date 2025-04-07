@@ -23,7 +23,7 @@ using namespace Misc;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the Floating conductor
+ * that implements the *Floating conductor*
  * [(flc/)](@ref page_flc) numerical experiment.
  *****************************************************************************/
 class BatchFLC : public SettingsFLC

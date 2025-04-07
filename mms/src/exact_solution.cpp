@@ -68,8 +68,8 @@ ExactSolutionMMS_E<2>::vector_value_list(
          ExcDimensionMismatch(values.size(), r.size()));
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    values.at(i)[0] = k * sin(k * r.at(i)[0]);
-    values.at(i)[1] = k * sin(k * r.at(i)[1]);
+    values[i][0] = k * sin(k * r[i][0]);
+    values[i][1] = k * sin(k * r[i][1]);
   }
 }
 
@@ -83,9 +83,9 @@ ExactSolutionMMS_E<3>::vector_value_list(
          ExcDimensionMismatch(values.size(), r.size()));
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    values.at(i)[0] = k * sin(k * r.at(i)[0]);
-    values.at(i)[1] = k * sin(k * r.at(i)[1]);
-    values.at(i)[2] = k * sin(k * r.at(i)[2]);
+    values[i][0] = k * sin(k * r[i][0]);
+    values[i][1] = k * sin(k * r[i][1]);
+    values[i][2] = k * sin(k * r[i][2]);
   }
 }
 
@@ -101,10 +101,10 @@ ExactSolutionMMS_D<2>::vector_value_list(
   double alpha;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    alpha = ep_0 * k * (pow(r.at(i)[0], 2.0) * pow(r.at(i)[1], 2.0) + 1.0);
+    alpha = ep_0 * k * (pow(r[i][0], 2.0) * pow(r[i][1], 2.0) + 1.0);
 
-    values.at(i)[0] = alpha * sin(k * r.at(i)[0]);
-    values.at(i)[1] = alpha * sin(k * r.at(i)[1]);
+    values[i][0] = alpha * sin(k * r[i][0]);
+    values[i][1] = alpha * sin(k * r[i][1]);
   }
 }
 
@@ -120,14 +120,12 @@ ExactSolutionMMS_D<3>::vector_value_list(
   double alpha;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    alpha =
-      ep_0 * k *
-      (pow(r.at(i)[0], 2.0) * pow(r.at(i)[1], 2.0) * pow(r.at(i)[2], 2.0) +
-       1.0);
+    alpha = ep_0 * k *
+            (pow(r[i][0], 2.0) * pow(r[i][1], 2.0) * pow(r[i][2], 2.0) + 1.0);
 
-    values.at(i)[0] = alpha * sin(k * r.at(i)[0]);
-    values.at(i)[1] = alpha * sin(k * r.at(i)[1]);
-    values.at(i)[2] = alpha * sin(k * r.at(i)[2]);
+    values[i][0] = alpha * sin(k * r[i][0]);
+    values[i][1] = alpha * sin(k * r[i][1]);
+    values[i][2] = alpha * sin(k * r[i][2]);
   }
 }
 

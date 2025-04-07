@@ -9,7 +9,7 @@
 * Refer to COPYING.LESSER for more details.
 ******************************************************************************/
 
-r = 9; //@1
+r = 7; //@1
 
 a = 1.0;
 
@@ -36,5 +36,5 @@ Physical Line(2) = {1, 4};
 Recombine Surface "*";
 
 Transfinite Surface "*";
-Transfinite Line "*" = r;
+Transfinite Line "*" = 2*r - 1;
 

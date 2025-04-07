@@ -26,7 +26,7 @@ using namespace Misc;
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
  * that implements the
- * [Magnetostatic shield - 2 (sld-ii/)](@ref page_sld_ii)
+ * *Magnetostatic shield - 2* [(sld-ii/)](@ref page_sld_ii)
  * numerical experiment.
  *****************************************************************************/
 class BatchSLDII : public SettingsSLDII
@@ -50,12 +50,10 @@ public:
               << "Writing to: " << dir << "\n";
 
     MainOutputTable table_THETA(DIMENSION__);
-    MainOutputTable table_B(DIMENSION__);
     MainOutputTable table_H(DIMENSION__);
 
     for (unsigned int p = 1; p < 4; p++) {
       table_THETA.clear();
-      table_B.clear();
       table_H.clear();
 
 #if DIMENSION__ == 2
@@ -102,42 +100,13 @@ public:
               false,
               Settings::print_time_tables,
               Settings::project_exact_solution,
-              Settings::log_cg_convergence);
+              Settings::log_cg_convergence,
+              true);
 
             table_H.add_value("ndofs", projector.get_n_dofs());
             table_H.add_value("ncells", projector.get_n_cells());
             table_H.add_value("L2", projector.get_L2_norm());
             table_H.add_value("H1", 0.0);
-          }
-          {
-            table_B.add_value("r", r);
-            table_B.add_value("p", p);
-
-            fname = dir + "solution_B_p" + std::to_string(p) + "_r" +
-                    std::to_string(r);
-
-            if (SettingsSLDII::print_time_tables)
-              std::cout << "Time table B \n";
-
-            ExactSolutionSLDII_B<DIMENSION__> exact_solution;
-
-            ProjectTHETAtoB<DIMENSION__> projector(
-              p - 1,
-              problem.get_mapping_degree(),
-              problem.get_tria(),
-              problem.get_dof_handler(),
-              problem.get_solution(),
-              fname,
-              &exact_solution,
-              false,
-              Settings::print_time_tables,
-              Settings::project_exact_solution,
-              Settings::log_cg_convergence);
-
-            table_B.add_value("ndofs", projector.get_n_dofs());
-            table_B.add_value("ncells", projector.get_n_cells());
-            table_B.add_value("L2", projector.get_L2_norm() / mu_0);
-            table_B.add_value("H1", 0.0);
           }
         }
       // Saving convergence tables
@@ -146,9 +115,6 @@ public:
 
       std::cout << "Table H\n";
       table_H.save(dir + "table_H_p" + std::to_string(p));
-
-      std::cout << "Table B\n";
-      table_B.save(dir + "table_B_p" + std::to_string(p));
     }
   }
 };

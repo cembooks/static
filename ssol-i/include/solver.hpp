@@ -22,6 +22,8 @@
 
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_in.h>
+#include <deal.II/grid/grid_tools.h>
+#include <deal.II/grid/manifold_lib.h>
 
 #include <string>
 
@@ -33,7 +35,7 @@ using namespace StaticVectorSolver;
 
 /**
  * \brief Solves for the magnetic vector potential, \f$\vec{A}\f$, in the
- * [Thin spherical coil (ssol-i/)](@ref page_ssol_i)
+ * *Thin spherical coil* [(ssol-i/)](@ref page_ssol_i)
  * numerical experiment.
  *****************************************************************************/
 class SolverSSOLI
@@ -48,14 +50,12 @@ public:
    *
    * @param[in] p - The degree of the Nedelec finite elements.
    * @param[in] mapping_degree - The degree of the interpolating polynomials
-   *used for mapping. Setting it to 1 will do in the most of the cases. Note,
-   *that it makes sense to attach a meaningful manifold to the triangulation if
-   *this parameter is greater than 1.
+   * used for mapping.
    * @param[in] r - The parameter that encodes the degree of mesh refinement.
-   * Must coincide with one of the values set in ssol-i/gmsh/build. This
-   *parameter is used to compose the name of the mesh file to be uploaded from
-   * ssol-i/gmsh/data/.
-   * @param[in] fname - The name of the vtk file without extension to save
+   * Must coincide with one of the values set in <br> ssol-i/gmsh/build. This
+   * parameter is used to compose the name of the mesh file to be uploaded
+   * from <br> ssol-i/gmsh/data/.
+   * @param[in] fname - The name of the vtu file without extension to save
    * the data.
    *****************************************************************************/
   SolverSSOLI(unsigned int p,
@@ -65,11 +65,12 @@ public:
     : Solver1<3>(p,
                  mapping_degree,
                  0,
-                 0.001 / mu_0,
+                 0.0000001 / mu_0,
                  fname,
                  nullptr,
                  SettingsSSOLI::print_time_tables,
-                 false)
+                 false,
+                 true)
     , r(r)
     , fname(fname)
   {
@@ -87,6 +88,8 @@ private:
   virtual void solve() override final;
 
   void mark_materials();
+
+  const SphericalManifold<3> sphere;
 };
 
 #endif

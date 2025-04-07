@@ -25,7 +25,7 @@ using namespace Misc;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the
- * program that implements the Method of manufactured solutions
+ * program that implements the *Method of manufactured solutions*
  * [(mms/)](@ref page_mms) numerical experiment.
  *****************************************************************************/
 class BatchMMS : public SettingsMMS

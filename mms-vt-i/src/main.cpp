@@ -29,9 +29,8 @@ using namespace StaticVectorSolver;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the
- * [Method of manufactured solutions, vector potential (mms-vt-i/)](@ref
- *page_mms_vt_i) numerical experiment.
+ * that implements the *Method of manufactured solutions, vector potential*
+ * [(mms-vt-i/)](@ref page_mms_vt_i) numerical experiment.
  *****************************************************************************/
 class BatchMMSVTI : public SettingsMMSVTI
 {
@@ -47,7 +46,7 @@ public:
 #endif
 
 #if DOMAIN__ == 1
-    const unsigned int mapping_degree = 1;
+    const unsigned int mapping_degree = 2;
     const std::string dir = "Data/sphere/";
 #endif
 
@@ -97,7 +96,8 @@ public:
                            &exact_solution_Jf,
                            Settings::print_time_tables,
                            Settings::project_exact_solution,
-                           Settings::log_cg_convergence);
+                           Settings::log_cg_convergence,
+                           true);
 
         table_J.add_value("ndofs", stage0.get_n_dofs());
         table_J.add_value("ncells", stage0.get_n_cells());
@@ -106,8 +106,7 @@ public:
 
         stage1.clear();
 
-        // Stage 2
-        // --------------------------------------------------------------
+        // Stage 2 -------------------------------------------------------------
         std::cout << "Stage 2: solving for A ...\n";
 
         SolverMMSVTI_A stage2(p,
@@ -136,7 +135,8 @@ public:
                            &exact_solution_B,
                            Settings::print_time_tables,
                            Settings::project_exact_solution,
-                           Settings::log_cg_convergence);
+                           Settings::log_cg_convergence,
+                           true);
 
         table_B.add_value("ndofs", stage0.get_n_dofs());
         table_B.add_value("ncells", stage0.get_n_cells());
@@ -146,6 +146,7 @@ public:
 
       std::cout << "Table J \n";
       table_J.save(dir + "main_table_J_p" + std::to_string(p));
+
       std::cout << "Table B \n";
       table_B.save(dir + "main_table_B_p" + std::to_string(p));
     }

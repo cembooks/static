@@ -36,7 +36,7 @@ StaticVectorSolver::TheCoefficient<2, 2>::value_list(
          ExcDimensionMismatch(r.size(), values.size()));
 
   for (unsigned int i = 0; i < values.size(); i++)
-    values[i] = permeability(r.at(i)[0], r.at(i)[1], mu_0);
+    values[i] = permeability(r[i][0], r[i][1], mu_0);
 }
 
 template<>
@@ -51,9 +51,9 @@ StaticVectorSolver::PdeRhs<2, 2>::value_list(
          ExcDimensionMismatch(r.size(), values.size()));
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    values.at(i)[0] = 0.0;
-    values.at(i)[1] = 0.0;
-    values.at(i)[2] = 0.0;
+    values[i][0] = 0.0;
+    values[i][1] = 0.0;
+    values[i][2] = 0.0;
   }
 }
 
@@ -73,7 +73,7 @@ StaticVectorSolver::Gamma<2, 2>::value_list(const std::vector<Point<2>>& r,
   Assert(r.size() == n.size(), ExcDimensionMismatch(r.size(), n.size()));
 
   for (unsigned int i = 0; i < values.size(); i++)
-    values[i] = robin_gamma(r.at(i)[0], r.at(i)[1], mu_0);
+    values[i] = robin_gamma(r[i][0], r[i][1], mu_0);
 }
 
 template<>
@@ -92,21 +92,21 @@ StaticVectorSolver::RobinRhs<2, 2>::value_list(
 
   Assert(r.size() == n.size(), ExcDimensionMismatch(r.size(), n.size()));
 
+  Assert(bid == bid_robin, ExcMessage("bid is wrong"));
+
   Tensor<1, 2> A;
   double mu, gamma, T;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    mu = permeability(r.at(i)[0], r.at(i)[1], mu_0);
-    gamma = robin_gamma(r.at(i)[0], r.at(i)[1], mu_0);
-    T = current_vector_potential(r.at(i)[0], r.at(i)[1], mu_0, k);
-    A = vector_potential(r.at(i)[0], r.at(i)[1], k);
+    mu = permeability(r[i][0], r[i][1], mu_0);
+    gamma = robin_gamma(r[i][0], r[i][1], mu_0);
+    T = current_vector_potential(r[i][0], r[i][1], mu_0, k);
+    A = magnetic_vector_potential(r[i][0], r[i][1], k);
 
-    values.at(i)[0] =
-      n.at(i)[1] * T +
-      gamma * n.at(i)[1] * (n.at(i)[0] * A[1] - n.at(i)[1] * A[0]);
-    values.at(i)[1] =
-      -n.at(i)[0] * T -
-      gamma * n.at(i)[0] * (n.at(i)[0] * A[1] - n.at(i)[1] * A[0]);
+    values[i][0] =
+      n[i][1] * T + gamma * n[i][1] * (n[i][0] * A[1] - n[i][1] * A[0]);
+    values[i][1] =
+      -n[i][0] * T - gamma * n[i][0] * (n[i][0] * A[1] - n[i][1] * A[0]);
   }
 }
 

@@ -48,10 +48,10 @@ ExactSolutionMMSVTII_Jf::vector_value_list(
   Tensor<1, 2> Jf;
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    Jf = volume_free_current_density(r.at(i)[0], r.at(i)[1], mu_0, k);
+    Jf = volume_free_current_density(r[i][0], r[i][1], mu_0, k);
 
-    values.at(i)[0] = Jf[0];
-    values.at(i)[1] = Jf[1];
+    values[i][0] = Jf[0];
+    values[i][1] = Jf[1];
   }
 }
 
@@ -64,24 +64,25 @@ ExactSolutionMMSVTII_B::value_list(const std::vector<Point<2>>& r,
          ExcDimensionMismatch(values.size(), r.size()));
 
   for (unsigned int i = 0; i < values.size(); i++)
-    values.at(i) = magnetic_field(r.at(i)[0], r.at(i)[1], k);
+    values[i] = magnetic_field(r[i][0], r[i][1], k);
 }
 
 void
-DirichletBC_T::value_list(const std::vector<Point<2>>& r,
-                          std::vector<double>& values,
-                          const unsigned int component) const
+DirichletBC_MMSVTII_T::value_list(const std::vector<Point<2>>& r,
+                                  std::vector<double>& values,
+                                  const unsigned int component) const
 {
   Assert(values.size() == r.size(),
          ExcDimensionMismatch(values.size(), r.size()));
 
   for (unsigned int i = 0; i < values.size(); i++)
-    values.at(i) = current_vector_potential(r.at(i)[0], r.at(i)[1], mu_0, k);
+    values[i] = current_vector_potential(r[i][0], r[i][1], mu_0, k);
 }
 
 void
-DirichletBC_A::vector_value_list(const std::vector<Point<2>>& r,
-                                 std::vector<Vector<double>>& values) const
+DirichletBC_MMSVTII_A::vector_value_list(
+  const std::vector<Point<2>>& r,
+  std::vector<Vector<double>>& values) const
 {
   Assert(values.size() == r.size(),
          ExcDimensionMismatch(values.size(), r.size()));
@@ -89,9 +90,9 @@ DirichletBC_A::vector_value_list(const std::vector<Point<2>>& r,
   Tensor<1, 2> A;
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    A = vector_potential(r.at(i)[0], r.at(i)[1], k);
+    A = magnetic_vector_potential(r[i][0], r[i][1], k);
 
-    values.at(i)[0] = A[0];
-    values.at(i)[1] = A[1];
+    values[i][0] = A[0];
+    values[i][1] = A[1];
   }
 }

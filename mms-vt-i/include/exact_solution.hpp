@@ -62,7 +62,7 @@ current_vector_potential(double x, double y, double mu_0, double k)
 }
 
 inline Tensor<1, 3>
-vector_potential(double x, double y, double k)
+magnetic_vector_potential(double x, double y, double k)
 {
   Tensor<1, 3> A;
 
@@ -87,8 +87,8 @@ magnetic_field(double x, double y, double k)
 
 /**
  * \brief Describes exact solution, \f$\vec{J}_{f}\f$, of the
- * [Method of manufactured solutions, vector potential (mms-vt-i/)](@ref
- *page_mms_vt_i) numerical experiment.
+ * *Method of manufactured solutions, vector potential*
+ * [(mms-vt-i/)](@ref page_mms_vt_i) numerical experiment.
  *****************************************************************************/
 class ExactSolutionMMSVTI_Jf
   : public Function<3>
@@ -104,8 +104,8 @@ public:
 
 /**
  * \brief Describes exact solution, \f$\vec{B}\f$, of the
- * [Method of manufactured solutions, vector potential (mms-vt-i/)](@ref
- *page_mms_vt_i) numerical experiment.
+ * *Method of manufactured solutions, vector potential*
+ * [(mms-vt-i/)](@ref page_mms_vt_i) numerical experiment.
  *****************************************************************************/
 class ExactSolutionMMSVTI_B
   : public Function<3>
@@ -121,15 +121,15 @@ public:
 
 /**
  * \brief Describes the Dirichlet boundary condition for \f$\vec{T}\f$, in the
- * [Method of manufactured solutions, vector potential (mms-vt-i/)](@ref
- *page_mms_vt_i) numerical experiment.
+ * *Method of manufactured solutions, vector potential*
+ * [(mms-vt-i/)](@ref page_mms_vt_i) numerical experiment.
  *****************************************************************************/
-class DirichletBC_T
+class DirichletBC_MMSVTI_T
   : public Function<3>
   , public SettingsMMSVTI
 {
 public:
-  DirichletBC_T();
+  DirichletBC_MMSVTI_T();
 
   virtual void vector_value_list(
     const std::vector<Point<3>>& r,
@@ -138,15 +138,15 @@ public:
 
 /**
  * \brief Describes the Dirichlet boundary condition for \f$\vec{A}\f$, in the
- * [Method of manufactured solutions, vector potential (mms-vt-i/)](@ref
- *page_mms_vt_i) numerical experiment.
+ * *Method of manufactured solutions, vector potential*
+ * [(mms-vt-i/)](@ref page_mms_vt_i) numerical experiment.
  *****************************************************************************/
-class DirichletBC_A
+class DirichletBC_MMSVTI_A
   : public Function<3>
   , public SettingsMMSVTI
 {
 public:
-  DirichletBC_A();
+  DirichletBC_MMSVTI_A();
 
   virtual void vector_value_list(
     const std::vector<Point<3>>& r,

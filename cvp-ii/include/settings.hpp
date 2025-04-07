@@ -19,7 +19,7 @@ using namespace dealii;
 
 /**
  * \brief Global settings for the
- * [Current vector potential (cvp-ii/)](@ref page_cvp_ii)
+ * *Current vector potential* [(cvp-ii/)](@ref page_cvp_ii)
  * numerical experiment.
  *****************************************************************************/
 class SettingsCVPII : public Constants::Physics
@@ -31,22 +31,33 @@ public:
    * \brief If greater than zero, limits the amount of threads used in the
    * simulations.
    *****************************************************************************/
-  const unsigned int nr_threads_max = 8;
+  const unsigned int nr_threads_max = 0;
+
+  /**
+   * \brief The half-side of the square in the middle of the mesh.
+   *****************************************************************************/
+  const double d1 = 0.1;
+
+  /**
+   * \brief The radius of the circle that encloses the square in the middle of
+   * the mesh.
+   *****************************************************************************/
+  const double rd1 = sqrt(2) * d1;
 
   /**
    * \brief The inner radius of the coil.
    *****************************************************************************/
-  const double a1 = 0.3;
+  const double a = 0.3;
 
   /**
    * \brief The outer radius of the coil.
    *****************************************************************************/
-  const double a2 = 0.5;
+  const double b = 0.5;
 
   /**
    * \brief The radius of the boundary of the problem domain.
    *****************************************************************************/
-  const double b = 1.0;
+  const double d2 = 1.0;
 
   /**
    * \brief The Dirichlet boundary condition will be applied to the boundaries
@@ -71,7 +82,7 @@ public:
   const double eps = 1e-12;
 
   /**
-   * \brief If set to true, the program will print the time tables on the
+   * \brief If set to true, the program will print time tables on the
    * screen.
    *****************************************************************************/
   const bool print_time_tables = false;
@@ -81,10 +92,10 @@ public:
    *
    * The exact solution will be modeled on the same mesh and by the same finite
    * elements that are used to model the solution. The projected exact solution
-   * will be saved in the vtk file next to the solution. This option can be
+   * will be saved in the vtu file next to the solution. This option can be
    * useful when debugging.
    *****************************************************************************/
-  const bool project_exact_solution = true;
+  const bool project_exact_solution = false;
 
   /**
    * \brief If set to true, saves the residual at each iteration of the

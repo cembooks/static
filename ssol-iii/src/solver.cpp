@@ -11,12 +11,7 @@
 
 #define BOOST_ALLOW_DEPRECATED_HEADERS
 
-#include <deal.II/grid/grid_in.h>
-#include <deal.II/grid/grid_out.h>
-#include <deal.II/grid/grid_tools.h>
-
 #include "solver.hpp"
-#include <fstream>
 
 using namespace StaticVectorSolver;
 
@@ -29,6 +24,8 @@ SolverSSOLIII_T::make_mesh()
   std::ifstream ifs("../../gmsh/data/sphere_r" + std::to_string(r) + ".msh");
   gridin.read_msh(ifs);
 
+  Solver1<3, 0>::triangulation.reset_all_manifolds();
+
   for (auto cell : Solver1<3, 0>::triangulation.active_cell_iterators()) {
     cell->set_material_id(mid_1); // The cell is outside the coil and the core.
 
@@ -37,20 +34,34 @@ SolverSSOLIII_T::make_mesh()
 
     if ((cell->center().norm() > a2) && (cell->center().norm() < b2))
       cell->set_material_id(mid_3); // The cell is inside the coil.
+
+    for (unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; f++) {
+      double dif_norm = 0.0;
+      for (unsigned int v = 1; v < GeometryInfo<3>::vertices_per_face; v++)
+        dif_norm += std::abs(cell->face(f)->vertex(0).norm() -
+                             cell->face(f)->vertex(v).norm());
+
+      if ((dif_norm < eps) && (cell->center().norm() > rd1))
+        cell->face(f)->set_all_manifold_ids(1);
+    }
   }
+
+  Solver1<3, 0>::triangulation.set_manifold(1, sphere);
 }
 
 void
 SolverSSOLIII_T::fill_dirichlet_stack()
 {
-  Solver1<3, 0>::dirichlet_stack = {};
+  Solver1<3, 0>::dirichlet_stack = { { 1, &dirichlet_bc } };
 }
 
 void
 SolverSSOLIII_T::solve()
 {
-  ReductionControl control(
-    Solver1<3, 0>::system_rhs.size(), 0.0, 1e-8, false, false);
+  SolverControl control(1000 * Solver1<3, 0>::system_rhs.size(),
+                        1e-6 * Solver1<3, 0>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();
@@ -95,8 +106,10 @@ SolverSSOLIII_A::fill_dirichlet_stack()
 void
 SolverSSOLIII_A::solve()
 {
-  ReductionControl control(
-    Solver2<3, 2>::system_rhs.size(), 0.0, 1e-8, false, false);
+  SolverControl control(1000 * Solver2<3, 2>::system_rhs.size(),
+                        1e-6 * Solver2<3, 2>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();

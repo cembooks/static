@@ -53,11 +53,11 @@ StaticVectorSolver::PdeRhs<3, 0>::value_list(
   Tensor<1, 3> Jf;
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    Jf = volume_free_current_density(r.at(i)[0], r.at(i)[1], mu_0, k);
+    Jf = volume_free_current_density(r[i][0], r[i][1], mu_0, k);
 
-    values.at(i)[0] = Jf[0];
-    values.at(i)[1] = Jf[1];
-    values.at(i)[2] = Jf[2];
+    values[i][0] = Jf[0];
+    values[i][1] = Jf[1];
+    values[i][2] = Jf[2];
   }
 }
 
@@ -99,11 +99,11 @@ StaticVectorSolver::RobinRhs<3, 0>::value_list(
   Tensor<1, 3> Jf;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    Jf = volume_free_current_density(r.at(i)[0], r.at(i)[1], mu_0, k);
+    Jf = volume_free_current_density(r[i][0], r[i][1], mu_0, k);
 
-    values.at(i)[0] = (n.at(i)[1] * Jf[2] - n.at(i)[2] * Jf[1]);
-    values.at(i)[1] = -(n.at(i)[0] * Jf[2] - n.at(i)[2] * Jf[0]);
-    values.at(i)[2] = (n.at(i)[0] * Jf[1] - n.at(i)[1] * Jf[0]);
+    values[i][0] = (n[i][1] * Jf[2] - n[i][2] * Jf[1]);
+    values[i][1] = -(n[i][0] * Jf[2] - n[i][2] * Jf[0]);
+    values[i][2] = (n[i][0] * Jf[1] - n[i][1] * Jf[0]);
   }
 }
 
@@ -165,7 +165,7 @@ StaticVectorSolver::TheCoefficient<3, 2>::value_list(
          ExcDimensionMismatch(r.size(), values.size()));
 
   for (unsigned int i = 0; i < values.size(); i++)
-    values[i] = permeability(r.at(i)[0], r.at(i)[1], mu_0);
+    values[i] = permeability(r[i][0], r[i][1], mu_0);
 }
 
 template<>
@@ -180,9 +180,9 @@ StaticVectorSolver::PdeRhs<3, 2>::value_list(
          ExcDimensionMismatch(r.size(), values.size()));
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    values.at(i)[0] = 0.0;
-    values.at(i)[1] = 0.0;
-    values.at(i)[2] = 0.0;
+    values[i][0] = 0.0;
+    values[i][1] = 0.0;
+    values[i][2] = 0.0;
   }
 }
 
@@ -202,7 +202,7 @@ StaticVectorSolver::Gamma<3, 2>::value_list(const std::vector<Point<3>>& r,
   Assert(r.size() == n.size(), ExcDimensionMismatch(r.size(), n.size()));
 
   for (unsigned int i = 0; i < values.size(); i++)
-    values[i] = robin_gamma(r.at(i)[0], r.at(i)[1], mu_0);
+    values[i] = robin_gamma(r[i][0], r[i][1], mu_0);
 }
 
 template<>
@@ -225,14 +225,13 @@ StaticVectorSolver::RobinRhs<3, 2>::value_list(
   double mu, gamma;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    mu = permeability(r.at(i)[0], r.at(i)[1], mu_0);
-    gamma = robin_gamma(r.at(i)[0], r.at(i)[1], mu_0);
-    T = current_vector_potential(r.at(i)[0], r.at(i)[1], mu_0, k);
-    A = vector_potential(r.at(i)[0], r.at(i)[1], k);
+    mu = permeability(r[i][0], r[i][1], mu_0);
+    gamma = robin_gamma(r[i][0], r[i][1], mu_0);
+    T = current_vector_potential(r[i][0], r[i][1], mu_0, k);
+    A = magnetic_vector_potential(r[i][0], r[i][1], k);
 
-    values.at(i) =
-      cross_product_3d(n.at(i), T) +
-      gamma * cross_product_3d(n.at(i), cross_product_3d(n.at(i), A));
+    values[i] = cross_product_3d(n[i], T) +
+                gamma * cross_product_3d(n[i], cross_product_3d(n[i], A));
   }
 }
 

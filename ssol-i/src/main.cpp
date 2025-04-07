@@ -25,8 +25,7 @@ using namespace Misc;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the
- * [Thin spherical coil (ssol-i/)](@ref page_ssol_i)
+ * that implements the *Thin spherical coil* [(ssol-i/)](@ref page_ssol_i)
  * numerical experiment.
  *****************************************************************************/
 class BatchSSOLI : public SettingsSSOLI
@@ -47,49 +46,55 @@ public:
 
     MainOutputTable table_B(3);
 
-    for (unsigned int p = 0; p < 1; p++) {
+    for (unsigned int p = 0; p < 3; p++) {
       table_B.clear();
 
-      for (unsigned int r = 14; r < 18; r++) {
+      for (unsigned int r = 6; r < 10; r++) {
+
+        // Stage 0 -------------------------------------------------------------
+        std::cout << "Solving for A ...\n";
+
         fname =
           dir + "solution_A_p" + std::to_string(p) + "_r" + std::to_string(r);
 
         if (SettingsSSOLI::print_time_tables)
           std::cout << "Time table A \n";
 
-        SolverSSOLI problem(p, 1, r, fname);
+        SolverSSOLI problem(p, 2, r, fname);
 
         problem.clear();
-        {
-          fname =
-            dir + "solution_B_p" + std::to_string(p) + "_r" + std::to_string(r);
 
-          table_B.add_value("r", r);
-          table_B.add_value("p", p);
+        // Stage 1 -------------------------------------------------------------
+        std::cout << "Projecting A in H(curl) to B in H(div) ...\n";
 
-          if (SettingsSSOLI::print_time_tables)
-            std::cout << "Time table B \n";
+        fname =
+          dir + "solution_B_p" + std::to_string(p) + "_r" + std::to_string(r);
 
-          ExactSolutionSSOLI_B exact_solution;
+        table_B.add_value("r", r);
+        table_B.add_value("p", p);
 
-          ProjectAtoB projector(p,
-                                1,
-                                problem.get_tria(),
-                                problem.get_dof_handler(),
-                                problem.get_solution(),
-                                fname,
-                                &exact_solution,
-                                Settings::print_time_tables,
-                                Settings::project_exact_solution,
-                                Settings::log_cg_convergence);
+        if (SettingsSSOLI::print_time_tables)
+          std::cout << "Time table B \n";
 
-          table_B.add_value("ndofs", projector.get_n_dofs());
-          table_B.add_value("ncells", projector.get_n_cells());
-          table_B.add_value("L2", projector.get_L2_norm());
-          table_B.add_value("H1", 0.0);
-        }
+        ExactSolutionSSOLI_B exact_solution;
+
+        ProjectAtoB projector(p,
+                              2,
+                              problem.get_tria(),
+                              problem.get_dof_handler(),
+                              problem.get_solution(),
+                              fname,
+                              &exact_solution,
+                              Settings::print_time_tables,
+                              Settings::project_exact_solution,
+                              Settings::log_cg_convergence,
+                              true);
+
+        table_B.add_value("ndofs", projector.get_n_dofs());
+        table_B.add_value("ncells", projector.get_n_cells());
+        table_B.add_value("L2", projector.get_L2_norm());
+        table_B.add_value("H1", 0.0);
       }
-      // Saving convergence tables
 
       std::cout << "Table B\n";
       table_B.save(dir + "table_B_p" + std::to_string(p));

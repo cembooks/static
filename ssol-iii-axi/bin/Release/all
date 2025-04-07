@@ -5,3 +5,5 @@
 ./combine_data_1 -d ssol-iii-axi -f circle -lb 12 -la 4 -p 1 -s table_B -a B
 ./combine_data_1 -d ssol-iii-axi -f circle -lb 12 -la 4 -p 1 -s table_H -a H
 
+gnuplot -p circle.gpi
+

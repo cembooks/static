@@ -162,7 +162,7 @@ magnetic_field_core(double x,
 
 /**
  * \brief Describes exact solution, \f$\vec{J}_f\f$, of the
- * [Thick spherical coil with magnetic core (ssol-iii/)](@ref page_ssol_iii)
+ * *Spherical coil with magnetic core* [(ssol-iii/)](@ref page_ssol_iii)
  * numerical experiment.
  *****************************************************************************/
 class ExactSolutionSSOLIII_Jf
@@ -179,7 +179,7 @@ public:
 
 /**
  * \brief Describes exact solution, \f$\vec{B}\f$, of the
- * [Thick spherical coil with magnetic core (ssol-iii/)](@ref page_ssol_iii)
+ * *Spherical coil with magnetic core* [(ssol-iii/)](@ref page_ssol_iii)
  * numerical experiment.
  *****************************************************************************/
 class ExactSolutionSSOLIII_B

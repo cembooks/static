@@ -33,10 +33,10 @@ TheCoefficient<2>::value_list(const std::vector<Point<2>>& r,
 
   if (mid == mid_2) {
     for (unsigned int i = 0; i < values.size(); i++)
-      values[i] = 1.0 / (mu * r.at(i)[0]);
+      values[i] = 1.0 / (mu * r[i][0]);
   } else {
     for (unsigned int i = 0; i < values.size(); i++)
-      values[i] = 1.0 / (mu_0 * r.at(i)[0]);
+      values[i] = 1.0 / (mu_0 * r[i][0]);
   }
 }
 
@@ -52,7 +52,7 @@ PdeRhs<2>::value_list(const std::vector<Point<2>>& r,
 
   if (mid == mid_3) {
     for (unsigned int i = 0; i < values.size(); i++)
-      values[i] = K_0 * r.at(i)[0];
+      values[i] = K_0 * r[i][0];
   } else {
     for (unsigned int i = 0; i < values.size(); i++)
       values[i] = 0.0;
@@ -70,8 +70,8 @@ PdeRhsCvp<2>::value_list(const std::vector<Point<2>>& r,
          ExcDimensionMismatch(r.size(), values.size()));
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    values.at(i)[0] = 0.0;
-    values.at(i)[1] = 0.0;
+    values[i][0] = 0.0;
+    values[i][1] = 0.0;
   }
 }
 
@@ -89,7 +89,7 @@ Gamma<2>::value_list(const std::vector<Point<2>>& r,
          ExcDimensionMismatch(r.size(), values.size()));
 
   for (unsigned int i = 0; i < values.size(); i++)
-    values[i] = 1.0 / (mu_0 * r.at(i)[0] * d3);
+    values[i] = 1.0 / (mu_0 * r[i][0] * d3);
 }
 
 template<>

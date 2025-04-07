@@ -24,8 +24,16 @@ SolverSSOLIAXI::make_mesh()
 void
 SolverSSOLIAXI::fill_dirichlet_stack()
 {
-  Solver<2>::dirichlet_stack = { { bid_infty, &exact_solution },
-                                 { bid_axi, &dirichlet_function } };
+  switch (type_of_bc) {
+    case Dirichlet:
+      Solver<2>::dirichlet_stack = { { bid_infty, &dirichlet_function },
+                                     { bid_axi, &dirichlet_function } };
+      break;
+    case Exact:
+      Solver<2>::dirichlet_stack = { { bid_infty, &exact_solution },
+                                     { bid_axi, &dirichlet_function } };
+      break;
+  }
 }
 
 void
@@ -43,9 +51,10 @@ SolverSSOLIAXI::mark_materials()
         }
       }
 
-      if (std::abs(cell->face(f)->vertex(1).norm() -
-                   cell->face(f)->vertex(0).norm()) < eps)
-        cell->face(f)->set_all_manifold_ids(1);
+      if (cell->center().norm() > rd)
+        if (std::abs(cell->face(f)->vertex(1).norm() -
+                     cell->face(f)->vertex(0).norm()) < eps)
+          cell->face(f)->set_all_manifold_ids(1);
     }
   }
 
@@ -82,8 +91,10 @@ SolverSSOLIAXI::data_slice(std::string fname)
 void
 SolverSSOLIAXI::solve()
 {
-  ReductionControl control(
-    Solver<2>::system_rhs.size(), 0.0, 1e-12, false, false);
+  SolverControl control(Solver<2>::system_rhs.size(),
+                        1e-8 * Solver<2>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();

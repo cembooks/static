@@ -26,8 +26,7 @@ using namespace Misc;
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
  * that implements the
- * [Magnetic wire (mwr/)](@ref page_mwr)
- * numerical experiment.
+ * *Magnetic wire* [(mwr/)](@ref page_mwr) numerical experiment.
  *****************************************************************************/
 class BatchMWR : public SettingsMWR
 {
@@ -92,7 +91,8 @@ public:
                                    &exact_solution,
                                    Settings::print_time_tables,
                                    Settings::project_exact_solution,
-                                   Settings::log_cg_convergence);
+                                   Settings::log_cg_convergence,
+                                   true);
 
           table_H.add_value("ndofs", projector.get_n_dofs());
           table_H.add_value("ncells", projector.get_n_cells());
@@ -120,7 +120,8 @@ public:
                                    &exact_solution,
                                    Settings::print_time_tables,
                                    Settings::project_exact_solution,
-                                   Settings::log_cg_convergence);
+                                   Settings::log_cg_convergence,
+                                   true);
 
           table_B.add_value("ndofs", projector.get_n_dofs());
           table_B.add_value("ncells", projector.get_n_cells());

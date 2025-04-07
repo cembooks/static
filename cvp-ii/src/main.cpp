@@ -28,8 +28,7 @@ using namespace StaticScalarSolver;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the
- * [Current vector potential (cvp-ii/)](@ref page_cvp_ii)
+ * that implements the *Current vector potential* [(cvp-ii/)](@ref page_cvp_ii)
  * numerical experiment.
  *****************************************************************************/
 class BatchCVPII : public SettingsCVPII
@@ -44,8 +43,7 @@ public:
     std::string dir = "Data/circle-linear/";
 
     std::cout << "Program: cvp-ii\n"
-              << "Dimensions: "
-              << "2\n"
+              << "Dimensions: 2\n"
               << "Writing to: " << dir << "\n";
 
     MainOutputTable table_T(2);
@@ -97,7 +95,8 @@ public:
                                  &exact_solution,
                                  Settings::print_time_tables,
                                  Settings::project_exact_solution,
-                                 Settings::log_cg_convergence);
+                                 Settings::log_cg_convergence,
+                                 true);
 
         table_J.add_value("ndofs", projector.get_n_dofs());
         table_J.add_value("ncells", projector.get_n_cells());

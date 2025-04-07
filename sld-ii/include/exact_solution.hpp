@@ -27,7 +27,7 @@ using namespace dealii;
 
 /**
  * \brief Describes exact solution, \f$\Theta\f$, of the
- * [Magnetostatic shield - 2 (sld-ii/)](@ref page_sld_ii)
+ * *Magnetostatic shield - 2* [(sld-ii/)](@ref page_sld_ii)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
 template<int dim>
@@ -51,7 +51,7 @@ private:
 
 /**
  * \brief Describes exact solution, \f$\vec{H}\f$, of the
- * [Magnetostatic shield - 2 (sld-ii/)](@ref page_sld_ii)
+ * *Magnetostatic shield - 2* [(sld-ii/)](@ref page_sld_ii)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
 template<int dim>
@@ -61,30 +61,6 @@ class ExactSolutionSLDII_H
 {
 public:
   ExactSolutionSLDII_H()
-    : Function<dim>(dim)
-  {
-  }
-
-  virtual void vector_value_list(
-    const std::vector<Point<dim>>& r,
-    std::vector<Vector<double>>& values) const final;
-
-private:
-  ExactSolutionSLDII_THETA<dim> theta;
-};
-
-/**
- * \brief Describes exact solution, \f$\vec{B}\f$, of the
- * [Magnetostatic shield - 2 (sld-ii/)](@ref page_sld_ii)
- * numerical experiment in two and three dimensions.
- *****************************************************************************/
-template<int dim>
-class ExactSolutionSLDII_B
-  : public Function<dim>
-  , public SettingsSLDII
-{
-public:
-  ExactSolutionSLDII_B()
     : Function<dim>(dim)
   {
   }
@@ -109,41 +85,10 @@ ExactSolutionSLDII_H<dim>::vector_value_list(
   Tensor<1, dim> grad;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    grad = theta.gradient(r.at(i));
+    grad = theta.gradient(r[i]);
 
     for (unsigned int j = 0; j < dim; j++)
-      values.at(i)[j] = -grad[j];
-  }
-}
-
-template<int dim>
-void
-ExactSolutionSLDII_B<dim>::vector_value_list(
-  const std::vector<Point<dim>>& r,
-  std::vector<Vector<double>>& values) const
-{
-  Assert(values.size() == r.size(),
-         ExcDimensionMismatch(values.size(), r.size()));
-
-  Tensor<1, dim> grad;
-  double mu;
-
-  for (unsigned int i = 0; i < r.size(); i++) {
-    if (r.at(i).norm() < a) {
-      // Inside the shield.
-      mu = mu_1;
-    } else if (r.at(i).norm() < b) {
-      // In the wall of the shield.
-      mu = mu_2;
-    } else {
-      // Outside the shield.
-      mu = mu_3;
-    }
-
-    grad = theta.gradient(r.at(i));
-
-    for (unsigned int j = 0; j < dim; j++)
-      values.at(i)[j] = -mu * grad[j];
+      values[i][j] = -grad[j];
   }
 }
 

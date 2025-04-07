@@ -29,8 +29,7 @@ using namespace StaticVectorSolver;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the
- * [Thick spherical coil (ssol-ii/)](@ref page_ssol_ii)
+ * that implements the *Thick spherical coil* [(ssol-ii/)](@ref page_ssol_ii)
  * numerical experiment.
  *****************************************************************************/
 class BatchSSOLII : public SettingsSSOLII
@@ -52,11 +51,11 @@ public:
     MainOutputTable table_J(3);
     MainOutputTable table_B(3);
 
-    for (unsigned int p = 0; p < 1; p++) {
+    for (unsigned int p = 0; p < 3; p++) {
       table_J.clear();
       table_B.clear();
 
-      for (unsigned int r = 14; r < 18; r++) {
+      for (unsigned int r = 6; r < 10; r++) {
         table_J.add_value("r", r);
         table_J.add_value("p", p);
 
@@ -72,7 +71,7 @@ public:
         if (SettingsSSOLII::print_time_tables)
           std::cout << "Time table T \n";
 
-        SolverSSOLII_T stage0(p, 1, r, fname);
+        SolverSSOLII_T stage0(p, 2, r, fname);
 
         stage0.clear();
 
@@ -88,7 +87,7 @@ public:
         ExactSolutionSSOLII_Jf exact_solution_Jf;
 
         ProjectTtoJ<1> stage1(p,
-                              1,
+                              2,
                               stage0.get_tria(),
                               stage0.get_dof_handler(),
                               stage0.get_solution(),
@@ -96,7 +95,8 @@ public:
                               &exact_solution_Jf,
                               Settings::print_time_tables,
                               Settings::project_exact_solution,
-                              Settings::log_cg_convergence);
+                              Settings::log_cg_convergence,
+                              true);
 
         stage1.clear();
 
@@ -105,8 +105,7 @@ public:
         table_J.add_value("L2", stage1.get_L2_norm());
         table_J.add_value("H1", 0.0);
 
-        // Stage 2
-        // --------------------------------------------------------------
+        // Stage 2 -------------------------------------------------------------
         std::cout << "Stage 2: solving for A ...\n";
 
         fname =
@@ -116,7 +115,7 @@ public:
           std::cout << "Time table A \n";
 
         SolverSSOLII_A stage2(p,
-                              1,
+                              2,
                               r,
                               stage0.get_tria(),
                               stage0.get_dof_handler(),
@@ -137,7 +136,7 @@ public:
         ExactSolutionSSOLII_B exact_solution_B;
 
         ProjectAtoB<3> stage3(p,
-                              1,
+                              2,
                               stage0.get_tria(),
                               stage2.get_dof_handler(),
                               stage2.get_solution(),
@@ -145,7 +144,8 @@ public:
                               &exact_solution_B,
                               Settings::print_time_tables,
                               Settings::project_exact_solution,
-                              Settings::log_cg_convergence);
+                              Settings::log_cg_convergence,
+                              true);
 
         table_B.add_value("ndofs", stage3.get_n_dofs());
         table_B.add_value("ncells", stage3.get_n_cells());

@@ -20,23 +20,23 @@ double
 ExactSolutionCVPII_T::value(const Point<2>& r,
                             const unsigned int component) const
 {
-  if (r.norm() < SettingsCVPII::a1)
-    return 0.5 * (a2 * a2 - a1 * a1);
+  if (r.norm() < SettingsCVPII::a)
+    return 0.5 * (b * b - a * a);
 
-  if (r.norm() > SettingsCVPII::a2)
+  if (r.norm() > SettingsCVPII::b)
     return 0.0;
 
-  return -0.5 * (r[0] * r[0] + r[1] * r[1] - a2 * a2);
+  return -0.5 * (r[0] * r[0] + r[1] * r[1] - b * b);
 }
 
 Tensor<1, 2>
 ExactSolutionCVPII_T::gradient(const Point<2>& r,
                                const unsigned int component) const
 {
-  if (r.norm() < SettingsCVPII::a1)
+  if (r.norm() < SettingsCVPII::a)
     return Point<2>();
 
-  if (r.norm() > SettingsCVPII::a2)
+  if (r.norm() > SettingsCVPII::b)
     return Point<2>();
 
   return -r;
@@ -57,7 +57,7 @@ ExactSolutionCVPII_Jf::vector_value_list(
 
   auto v = values.begin();
   for (auto p : r) {
-    if ((p.norm() > SettingsCVPII::a1) && (p.norm() < SettingsCVPII::a2)) {
+    if ((p.norm() > SettingsCVPII::a) && (p.norm() < SettingsCVPII::b)) {
       (*v)[0] = -p[1];
       (*v)[1] = p[0];
     } else {

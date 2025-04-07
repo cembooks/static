@@ -23,7 +23,7 @@ using namespace Misc;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the Effect of curved boundaries
+ * that implements the *Effect of curved boundaries*
  * [(cbnd/)](@ref page_cbnd) numerical experiment.
  *****************************************************************************/
 class BatchCBND : public SettingsCBND

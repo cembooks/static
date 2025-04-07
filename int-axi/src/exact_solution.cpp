@@ -104,10 +104,10 @@ ExactSolutionINTAXI_E<true>::vector_value_list(
   Tensor<1, 2> phi;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    phi = PHI.gradient(r.at(i));
+    phi = PHI.gradient(r[i]);
 
-    values.at(i)[0] = -phi[0];
-    values.at(i)[1] = -phi[1];
+    values[i][0] = -phi[0];
+    values[i][1] = -phi[1];
   }
 }
 
@@ -123,10 +123,10 @@ ExactSolutionINTAXI_E<false>::vector_value_list(
   Tensor<1, 2> phi;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    phi = PHI.gradient(r.at(i));
+    phi = PHI.gradient(r[i]);
 
-    values.at(i)[0] = -phi[0];
-    values.at(i)[1] = -phi[1];
+    values[i][0] = -phi[0];
+    values[i][1] = -phi[1];
   }
 }
 
@@ -145,13 +145,13 @@ ExactSolutionINTAXI_D<true>::vector_value_list(
   for (unsigned int i = 0; i < r.size(); i++) {
     ep = ep_2;
 
-    if (r.at(i)[0] < d)
+    if (r[i][0] < d)
       ep = ep_1;
 
-    phi = PHI.gradient(r.at(i));
+    phi = PHI.gradient(r[i]);
 
-    values.at(i)[0] = -ep * phi[0];
-    values.at(i)[1] = -ep * phi[1];
+    values[i][0] = -ep * phi[0];
+    values[i][1] = -ep * phi[1];
   }
 }
 
@@ -170,13 +170,13 @@ ExactSolutionINTAXI_D<false>::vector_value_list(
   for (unsigned int i = 0; i < r.size(); i++) {
     ep = ep_2;
 
-    if (r.at(i).norm() < d)
+    if (r[i].norm() < d)
       ep = ep_1;
 
-    phi = PHI.gradient(r.at(i));
+    phi = PHI.gradient(r[i]);
 
-    values.at(i)[0] = -ep * phi[0];
-    values.at(i)[1] = -ep * phi[1];
+    values[i][0] = -ep * phi[0];
+    values[i][1] = -ep * phi[1];
   }
 }
 

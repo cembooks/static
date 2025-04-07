@@ -23,8 +23,9 @@
 using namespace dealii;
 
 /**
- * \brief Describes exact solution, \f$\Phi\f$, of the Effect of curved
- * boundaries [(cbnd/)](@ref page_cbnd) numerical experiment.
+ * \brief Describes exact solution, \f$\Phi\f$, of the
+ * *Effect of curved boundaries* [(cbnd/)](@ref page_cbnd)
+ * numerical experiment.
  *****************************************************************************/
 template<int dim>
 class ExactSolutionCBND_PHI

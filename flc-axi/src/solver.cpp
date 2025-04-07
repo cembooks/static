@@ -58,25 +58,8 @@ SolverFLCAXI<false>::make_mesh()
     } else if (cell_r < b) {
       cell->set_material_id(mid_2);
     }
-
-    for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; f++) {
-      if (cell->face(f)->at_boundary() &&
-          ((cell->face(f)->boundary_id() == bid_in) ||
-           (cell->face(f)->boundary_id() == bid_out))) {
-        cell->face(f)->set_all_manifold_ids(1);
-      }
-
-      double dif_norm_1 = 0.0;
-      double dif_norm_2 = 0.0;
-      for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_face; v++) {
-        dif_norm_1 += std::abs(cell->face(f)->vertex(v).norm() - d_1);
-        dif_norm_2 += std::abs(cell->face(f)->vertex(v).norm() - d_2);
-      }
-
-      if ((dif_norm_1 < eps) || (dif_norm_2 < eps))
-        cell->face(f)->set_all_manifold_ids(1);
-    }
   }
 
+  Solver<2>::triangulation.set_all_manifold_ids(1);
   Solver<2>::triangulation.set_manifold(1, sphere);
 }

@@ -88,10 +88,10 @@ ExactSolutionINT_E<2>::vector_value_list(
   Tensor<1, 2> phi;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    phi = PHI.gradient(r.at(i));
+    phi = PHI.gradient(r[i]);
 
-    values.at(i)[0] = -phi[0];
-    values.at(i)[1] = -phi[1];
+    values[i][0] = -phi[0];
+    values[i][1] = -phi[1];
   }
 }
 
@@ -107,11 +107,11 @@ ExactSolutionINT_E<3>::vector_value_list(
   Tensor<1, 3> phi;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    phi = PHI.gradient(r.at(i));
+    phi = PHI.gradient(r[i]);
 
-    values.at(i)[0] = -phi[0];
-    values.at(i)[1] = -phi[1];
-    values.at(i)[2] = -phi[2];
+    values[i][0] = -phi[0];
+    values[i][1] = -phi[1];
+    values[i][2] = -phi[2];
   }
 }
 
@@ -130,13 +130,13 @@ ExactSolutionINT_D<2>::vector_value_list(
   for (unsigned int i = 0; i < r.size(); i++) {
     ep = ep_2;
 
-    if (r.at(i).norm() < d)
+    if (r[i].norm() < d)
       ep = ep_1;
 
-    phi = PHI.gradient(r.at(i));
+    phi = PHI.gradient(r[i]);
 
-    values.at(i)[0] = -ep * phi[0];
-    values.at(i)[1] = -ep * phi[1];
+    values[i][0] = -ep * phi[0];
+    values[i][1] = -ep * phi[1];
   }
 }
 
@@ -155,14 +155,14 @@ ExactSolutionINT_D<3>::vector_value_list(
   for (unsigned int i = 0; i < r.size(); i++) {
     ep = ep_2;
 
-    if (r.at(i).norm() < d)
+    if (r[i].norm() < d)
       ep = ep_1;
 
-    phi = PHI.gradient(r.at(i));
+    phi = PHI.gradient(r[i]);
 
-    values.at(i)[0] = -ep * phi[0];
-    values.at(i)[1] = -ep * phi[1];
-    values.at(i)[2] = -ep * phi[2];
+    values[i][0] = -ep * phi[0];
+    values[i][1] = -ep * phi[1];
+    values[i][2] = -ep * phi[2];
   }
 }
 #pragma GCC diagnostic pop

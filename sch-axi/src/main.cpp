@@ -24,7 +24,7 @@ using namespace Misc;
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
  * that implements the
- * [Axisymmetric - surface charge (sch-axi/)](@ref page_sch_axi)
+ * *Axisymmetric - surface charge* [(sch-axi/)](@ref page_sch_axi)
  * numerical experiment.
  *****************************************************************************/
 class BatchSCHAXI : public SettingsSCHAXI

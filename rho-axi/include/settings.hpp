@@ -19,7 +19,7 @@ using namespace dealii;
 
 /**
  * \brief Global settings for the
- * [Axisymmetric - volume charge (rho-axi/)](@ref page_rho_axi)
+ * *Axisymmetric - volume charge* [(rho-axi/)](@ref page_rho_axi)
  * numerical experiment.
  *****************************************************************************/
 class SettingsRHOAXI : public Constants::Physics
@@ -31,7 +31,7 @@ public:
    * \brief If greater than zero, limits the amount of threads used in the
    * simulations.
    *****************************************************************************/
-  const unsigned int nr_threads_max = 8;
+  const unsigned int nr_threads_max = 0;
 
   /**
    * \brief The permittivity of free space.
@@ -42,6 +42,18 @@ public:
    * \brief The volume free-charge density.
    *****************************************************************************/
   const double rho = 1.0 * ep_0;
+
+  /**
+   * \brief The width of the rectangle around the origin in the second mesh
+   * (half-circle).
+   *****************************************************************************/
+  const double d = 0.2;
+
+  /**
+   * \brief The radius of the circle that encloses the rectangle in the middle
+   * of the mesh.
+   *****************************************************************************/
+  const double rd = sqrt(2) * d;
 
   /**
    * \brief The radius of the tube in the two- dimensional version of the
@@ -78,7 +90,7 @@ public:
   const double eps = 1e-12;
 
   /**
-   * \brief If set to true, the program will print the time tables on the
+   * \brief If set to true, the program will print time tables on the
    * screen.
    *****************************************************************************/
   const bool print_time_tables = false;
@@ -88,7 +100,7 @@ public:
    *
    * The exact solution will be modeled on the same mesh and by the same finite
    * elements that are used to model the solution. The projected exact solution
-   * will be saved in the vtk file next to the solution. This option can be
+   * will be saved in the vtu file next to the solution. This option can be
    * useful when debugging.
    *****************************************************************************/
   const bool project_exact_solution = false;

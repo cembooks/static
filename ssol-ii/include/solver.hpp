@@ -15,10 +15,15 @@
 #include <deal.II/base/function.h>
 #include <deal.II/base/tensor_function.h>
 #include <deal.II/base/vectorization.h>
+
 #include <deal.II/lac/precondition.h>
 #include <deal.II/lac/solver_cg.h>
 #include <deal.II/lac/solver_control.h>
 #include <deal.II/lac/sparse_direct.h>
+
+#include <deal.II/grid/grid_in.h>
+#include <deal.II/grid/grid_tools.h>
+#include <deal.II/grid/manifold_lib.h>
 
 #include <string>
 
@@ -31,8 +36,7 @@ using namespace StaticVectorSolver;
 
 /**
  * \brief Solves for the current vector potential, \f$\vec{T}\f$, in the
- * [Thick spherical coil (ssol-ii/)](@ref page_ssol_ii)
- * numerical experiment.
+ * *Thick spherical coil* [(ssol-ii/)](@ref page_ssol_ii) numerical experiment.
  *****************************************************************************/
 class SolverSSOLII_T
   : public SettingsSSOLII
@@ -46,14 +50,12 @@ public:
    *
    * @param[in] p - The degree of the Nedelec finite elements.
    * @param[in] mapping_degree - The degree of the interpolating polynomials
-   *used for mapping. Setting it to 1 will do in the most of the cases. Note,
-   *that it makes sense to attach a meaningful manifold to the triangulation if
-   *this parameter is greater than 1.
+   * used for mapping.
    * @param[in] r - The parameter that encodes the degree of mesh refinement.
-   * Must coincide with one of the values set in ssol-ii/gmsh/build. This
-   *parameter is used to compose the name of the mesh file to be uploaded from
-   * ssol-ii/gmsh/data/.
-   * @param[in] fname - The name of the vtk file without extension to save
+   * Must coincide with one of the values set in <br> ssol-ii/gmsh/build. This
+   * parameter is used to compose the name of the mesh file to be uploaded
+   * from <br> ssol-ii/gmsh/data/.
+   * @param[in] fname - The name of the vtu file without extension to save
    * the data.
    *****************************************************************************/
   SolverSSOLII_T(unsigned int p,
@@ -62,12 +64,13 @@ public:
                  std::string fname)
     : Solver1<3, 0>(p,
                     mapping_degree,
-                    3.0,
+                    2,
                     0.0,
                     fname,
                     nullptr,
                     SettingsSSOLII::print_time_tables,
-                    false)
+                    false,
+                    true)
     , r(r)
     , fname(fname)
   {
@@ -83,12 +86,14 @@ private:
   virtual void make_mesh() override final;
   virtual void fill_dirichlet_stack() override final;
   virtual void solve() override final;
+
+  const SphericalManifold<3> sphere;
+  const Functions::ZeroFunction<3> dirichlet_bc{ 3 };
 };
 
 /**
  * \brief Solves for the magnetic vector potential, \f$\vec{A}\f$, in the
- * [Thick spherical coil (ssol-ii/)](@ref page_ssol_ii)
- * numerical experiment.
+ * *Thick spherical coil* [(ssol-ii/)](@ref page_ssol_ii) numerical experiment.
  *****************************************************************************/
 class SolverSSOLII_A
   : public SettingsSSOLII
@@ -102,20 +107,18 @@ public:
    *
    * @param[in] p - The degree of the Nedelec finite elements.
    * @param[in] mapping_degree - The degree of the interpolating polynomials
-   *used for mapping. Setting it to 1 will do in the most of the cases. Note,
-   *that it makes sense to attach a meaningful manifold to the triangulation if
-   *this parameter is greater than 1.
+   * used for mapping.
    * @param[in] r - The parameter that encodes the degree of mesh refinement.
-   * Must coincide with one of the values set in ssol-ii/gmsh/build. This
-   *parameter is used to compose the name of the mesh file to be uploaded from
-   * ssol-ii/gmsh/data/.
+   * Must coincide with one of the values set in <br> ssol-ii/gmsh/build. This
+   * parameter is used to compose the name of the mesh file to be uploaded
+   * from <br> ssol-ii/gmsh/data/.
    * @param[in] triangulation_T - The triangulation created at the 0-th stage of
    * the simulation.
    * @param[in] dof_handler_T - The dof handler created at the 0-th stage of the
    * simulation.
    * @param[in] solution_T - The degrees of freedom that describe the current
    * vector potential computed at the 0-th stage of the simulation.
-   * @param[in] fname - The name of the vtk file without extension to save
+   * @param[in] fname - The name of the vtu file without extension to save
    * the data.
    *****************************************************************************/
   SolverSSOLII_A(unsigned int p,
@@ -130,14 +133,23 @@ public:
                     triangulation_T,
                     dof_handler_T,
                     solution_T,
+                    2,
                     0.0,
                     fname,
                     nullptr,
                     SettingsSSOLII::print_time_tables,
-                    false)
+                    false,
+                    true)
     , r(r)
     , fname(fname)
   {
+    for (auto cell : Solver2<3, 2>::triangulation_T.active_cell_iterators()) {
+      for (unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; f++) {
+        if (cell->face(f)->at_boundary() && (cell->face(f)->boundary_id() == 1))
+          cell->face(f)->set_boundary_id(2);
+      }
+    }
+
     Solver2<3, 2>::run();
   }
 
@@ -147,7 +159,7 @@ private:
   const unsigned int r;
   const std::string fname;
 
-  // Solver2 parasites on triangulations of other solvers.
+  // Solver2 reuses triangulations of other solvers.
   // No make_mesh() this time around.
   virtual void fill_dirichlet_stack() override final;
   virtual void solve() override final;

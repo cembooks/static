@@ -11,29 +11,28 @@
 
 r = 5; //@1
 
-d1 = 0.2;
-a1 = 0.3;
-a2 = 0.5;
-b = 1.0;
+d1 = 0.1;
+a = 0.3;
+b = 0.5;
+d2 = 1.0;
 
-d13 = d1 / Sqrt(3);
-a13 = a1 / Sqrt(3);
-a23 = a2 / Sqrt(3);
+a3 = a / Sqrt(3);
 b3 = b / Sqrt(3);
+d23 = d2 / Sqrt(3);
 
 Point(1) = {0,0,0};
 
-Point(2) = { d13, d13, d13};
-Point(3) = {-d13, d13, d13};
+Point(2) = { d1, d1, d1};
+Point(3) = {-d1, d1, d1};
 
-Point(4) = { a13, a13, a13};
-Point(5) = {-a13, a13, a13};
+Point(4) = { a3, a3, a3};
+Point(5) = {-a3, a3, a3};
 
-Point(6) = { a23, a23, a23};
-Point(7) = {-a23, a23, a23};
+Point(6) = { b3, b3, b3};
+Point(7) = {-b3, b3, b3};
 
-Point(8) = { b3, b3, b3};
-Point(9) = {-b3, b3, b3};
+Point(8) = { d23, d23, d23};
+Point(9) = {-d23, d23, d23};
 
 Line(1) = {2, 4};
 Line(2) = {4, 6};

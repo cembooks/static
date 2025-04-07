@@ -11,12 +11,7 @@
 
 #define BOOST_ALLOW_DEPRECATED_HEADERS
 
-#include <deal.II/grid/grid_in.h>
-#include <deal.II/grid/grid_out.h>
-#include <deal.II/grid/grid_tools.h>
-
 #include "solver.hpp"
-#include <fstream>
 
 using namespace StaticVectorSolver;
 
@@ -34,21 +29,16 @@ SolverCVPI::make_mesh()
   for (auto cell : Solver1<3>::triangulation.active_cell_iterators()) {
     cell->set_material_id(mid_1); // The cell is outside the coil.
 
-    if ((cell->center().norm() > a1) && (cell->center().norm() < a2))
+    if ((cell->center().norm() > a) && (cell->center().norm() < b))
       cell->set_material_id(mid_2); // The cell is inside the coil.
 
     for (unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; f++) {
-      double dif_norm_a1 = 0.0;
-      double dif_norm_a2 = 0.0;
-      double dif_norm_b = 0.0;
+      double dif_norm = 0.0;
+      for (unsigned int v = 1; v < GeometryInfo<3>::vertices_per_face; v++)
+        dif_norm += std::abs(cell->face(f)->vertex(0).norm() -
+                             cell->face(f)->vertex(v).norm());
 
-      for (unsigned int v = 0; v < GeometryInfo<3>::vertices_per_face; v++) {
-        dif_norm_a1 += std::abs(cell->face(f)->vertex(v).norm() - a1);
-        dif_norm_a2 += std::abs(cell->face(f)->vertex(v).norm() - a2);
-        dif_norm_b += std::abs(cell->face(f)->vertex(v).norm() - b);
-      }
-
-      if ((dif_norm_a1 < eps) || (dif_norm_a2 < eps) || (dif_norm_b < eps))
+      if ((dif_norm < eps) && (cell->center().norm() > rd1))
         cell->face(f)->set_all_manifold_ids(1);
     }
   }
@@ -65,8 +55,10 @@ SolverCVPI::fill_dirichlet_stack()
 void
 SolverCVPI::solve()
 {
-  ReductionControl control(
-    Solver1<3>::system_rhs.size(), 1e-8, 1e-5, false, false);
+  SolverControl control(1000 * Solver1<3>::system_rhs.size(),
+                        1e-6 * Solver1<3>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+./run-all
+
+./combine_data_1 -d ssol-i -f sphere -lb 12 -la 4 -p 0 -s table_B -a B
+

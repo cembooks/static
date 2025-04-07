@@ -24,10 +24,10 @@ ExactSolutionRHO_PHI<2>::value(const Point<2>& r,
 {
 
   if (r.norm() <= a) {
-    return rho * pow(a, 2) * (1.0 + 2.0 * log(b / a) - pow(r.norm() / a, 2)) /
+    return rho_0 * pow(a, 2) * (1.0 + 2.0 * log(b / a) - pow(r.norm() / a, 2)) /
            (4.0 * ep_0);
   } else {
-    return rho * pow(a, 2) * log(b / r.norm()) / (2.0 * ep_0);
+    return rho_0 * pow(a, 2) * log(b / r.norm()) / (2.0 * ep_0);
   }
 
   return 0.0;
@@ -40,9 +40,9 @@ ExactSolutionRHO_PHI<2>::gradient(const Point<2>& r,
 {
 
   if (r.norm() <= a) {
-    return -rho * r / (2 * ep_0);
+    return -rho_0 * r / (2 * ep_0);
   } else {
-    return -rho * pow(a, 2) * r / (2.0 * ep_0 * r.norm_square());
+    return -rho_0 * pow(a, 2) * r / (2.0 * ep_0 * r.norm_square());
   }
 
   return Point<2>();
@@ -54,12 +54,12 @@ ExactSolutionRHO_PHI<3>::value(const Point<3>& r,
                                const unsigned int component) const
 {
   if (r.norm() <= a) {
-    return rho *
+    return rho_0 *
            (pow(a, 2) + 2.0 * pow(a, 3) * (1.0 / a - 1.0 / b) -
             r.norm_square()) /
            (6.0 * ep_0);
   } else {
-    return rho * pow(a, 3) * (1.0 / r.norm() - 1.0 / b) / (3.0 * ep_0);
+    return rho_0 * pow(a, 3) * (1.0 / r.norm() - 1.0 / b) / (3.0 * ep_0);
   }
   return 0.0;
 }
@@ -70,9 +70,9 @@ ExactSolutionRHO_PHI<3>::gradient(const Point<3>& r,
                                   const unsigned int component) const
 {
   if (r.norm() < a) {
-    return -rho * r / (3.0 * ep_0);
+    return -rho_0 * r / (3.0 * ep_0);
   } else {
-    return -rho * pow(a, 3) * r / (3.0 * ep_0 * pow(r.norm(), 3));
+    return -rho_0 * pow(a, 3) * r / (3.0 * ep_0 * pow(r.norm(), 3));
   }
 
   return Point<3>();

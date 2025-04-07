@@ -11,12 +11,7 @@
 
 #define BOOST_ALLOW_DEPRECATED_HEADERS
 
-#include <deal.II/grid/grid_in.h>
-#include <deal.II/grid/grid_out.h>
-#include <deal.II/grid/grid_tools.h>
-
 #include "solver.hpp"
-#include <fstream>
 
 using namespace StaticScalarSolver;
 
@@ -24,59 +19,31 @@ void
 SolverCVPII::make_mesh()
 {
   GridIn<2> gridin;
-  Triangulation<2> tria_tmp;
+  gridin.attach_triangulation(Solver<2>::triangulation);
 
-  gridin.attach_triangulation(tria_tmp);
   std::ifstream ifs("../../gmsh/data/circle_r" + std::to_string(r) + ".msh");
   gridin.read_msh(ifs);
 
-  std::tuple<std::vector<Point<2>>, std::vector<CellData<2>>, SubCellData>
-    mesh_description;
-
-  mesh_description = GridTools::get_coarse_mesh_description(tria_tmp);
-
-  GridTools::invert_all_negative_measure_cells(std::get<0>(mesh_description),
-                                               std::get<1>(mesh_description));
-
-  GridTools::consistently_order_cells(std::get<1>(mesh_description));
-
-  Solver<2>::triangulation.create_triangulation(std::get<0>(mesh_description),
-                                                std::get<1>(mesh_description),
-                                                std::get<2>(mesh_description));
-
   for (auto cell : Solver<2>::triangulation.active_cell_iterators()) {
-    cell->set_material_id(
-      mid_1); // The cell is outside the current-carrying region.
+    cell->set_material_id(mid_1); // The cell is outside the
+                                  // current-carrying region.
 
-    if ((cell->center().norm() > a1) && (cell->center().norm() < a2))
-      cell->set_material_id(
-        mid_2); // The cell is inside the current-carrying region.
+    if ((cell->center().norm() > a) && (cell->center().norm() < b))
+      cell->set_material_id(mid_2); // The cell is inside the
+                                    // current-carrying region.
 
     for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; f++) {
-      double dif_norm_a1 = 0.0;
-      double dif_norm_a2 = 0.0;
-      double dif_norm_b = 0.0;
+      double dif_norm = 0.0;
+      for (unsigned int v = 1; v < GeometryInfo<2>::vertices_per_face; v++)
+        dif_norm += std::abs(cell->face(f)->vertex(0).norm() -
+                             cell->face(f)->vertex(v).norm());
 
-      for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_face; v++) {
-        dif_norm_a1 += std::abs(cell->face(f)->vertex(v).norm() - a1);
-        dif_norm_a2 += std::abs(cell->face(f)->vertex(v).norm() - a2);
-        dif_norm_b += std::abs(cell->face(f)->vertex(v).norm() - b);
-      }
-
-      if ((dif_norm_a1 < eps) || (dif_norm_a2 < eps) || (dif_norm_b < eps))
+      if ((dif_norm < eps) && (cell->center().norm() > rd1))
         cell->face(f)->set_all_manifold_ids(1);
     }
   }
 
   Solver<2>::triangulation.set_manifold(1, sphere);
-
-  GridOut gridout;
-  GridOutFlags::Msh msh_flags(true, true);
-  gridout.set_flags(msh_flags);
-
-  std::ofstream ofs("../../gmsh/data/circle_r" + std::to_string(r) +
-                    "_reordered.msh");
-  gridout.write_msh(Solver<2>::triangulation, ofs);
 }
 
 void
@@ -88,8 +55,10 @@ SolverCVPII::fill_dirichlet_stack()
 void
 SolverCVPII::solve()
 {
-  ReductionControl control(
-    Solver<2>::system_rhs.size(), 0.0, 1e-8, false, false);
+  SolverControl control(Solver<2>::system_rhs.size(),
+                        1e-12 * Solver<2>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (Settings::log_cg_convergence)
     control.enable_history_data();

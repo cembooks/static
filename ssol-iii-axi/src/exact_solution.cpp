@@ -28,12 +28,11 @@ ExactSolutionSSOLIIIAXI_B::vector_value_list(
   Tensor<1, 3> B;
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    B =
-      magnetic_field_coil(0.0, r.at(i)[0], r.at(i)[1], K_0, mu_0, a2, b2) +
-      magnetic_field_core(0.0, r.at(i)[0], r.at(i)[1], H_0, mu_r, mu_0, a1, b1);
+    B = magnetic_field_coil(0.0, r[i][0], r[i][1], K_0, mu_0, a2, b2) +
+        magnetic_field_core(0.0, r[i][0], r[i][1], H_0, mu_r, mu_0, a1, b1);
 
-    values.at(i)[0] = r.at(i)[0] * B[1];
-    values.at(i)[1] = r.at(i)[0] * B[2];
+    values[i][0] = r[i][0] * B[1];
+    values[i][1] = r[i][0] * B[2];
   }
 }
 
@@ -50,14 +49,14 @@ ExactSolutionSSOLIIIAXI_H::vector_value_list(
   double coef;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    if ((r.at(i).norm() > a1) && (r.at(i).norm() < b1)) {
+    if ((r[i].norm() > a1) && (r[i].norm() < b1)) {
       coef = mu;
     } else {
       coef = mu_0;
     }
 
-    values.at(i)[0] = values.at(i)[0] / coef;
-    values.at(i)[1] = values.at(i)[1] / coef;
+    values[i][0] = values[i][0] / coef;
+    values[i][1] = values[i][1] / coef;
   }
 }
 

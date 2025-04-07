@@ -31,7 +31,7 @@ ExactSolutionCVPI_Jf::vector_value_list(
 
   auto v = values.begin();
   for (auto p : r) {
-    if ((p.norm() > SettingsCVPI::a1) && (p.norm() < SettingsCVPI::a2)) {
+    if ((p.norm() > SettingsCVPI::a) && (p.norm() < SettingsCVPI::b)) {
       (*v)[0] = -p[1];
       (*v)[1] = p[0];
       (*v)[2] = 0.0;
@@ -57,8 +57,8 @@ DirichletBC_CVPI::vector_value_list(const std::vector<Point<3>>& r,
          ExcDimensionMismatch(values.size(), r.size()));
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    values.at(i)[0] = 0.0;
-    values.at(i)[1] = 0.0;
-    values.at(i)[2] = 0.0;
+    values[i][0] = 0.0;
+    values[i][1] = 0.0;
+    values[i][2] = 0.0;
   }
 }

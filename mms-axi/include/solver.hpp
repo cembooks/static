@@ -31,9 +31,8 @@
 using namespace StaticScalarSolver;
 
 /**
- * \brief Implements the
- * [Axisymmetric - method of manufactured solutions (mms-axi/)](@ref
- *page_mms_axi) numerical experiment.
+ * \brief Implements the *Axisymmetric - method of manufactured solutions*
+ * [(mms-axi/)](@ref page_mms_axi) numerical experiment.
  *****************************************************************************/
 template<int dim>
 class SolverMMSAXI
@@ -51,8 +50,8 @@ public:
    * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
    * @param[in] r - The parameter that encodes the degree of mesh refinement.
    * Must coincide with one of the values set in mms-axi/gmsh/build. This
-   *parameter is used to compose the name of the mesh file to be uploaded from
-   * mms-axi/gmsh/data/.
+   * parameter is used to compose the name of the mesh file to be uploaded
+   * from mms-axi/gmsh/data/.
    * @param[in] fname - The name of the vtk file without extension to save
    * the data.
    *****************************************************************************/
@@ -128,8 +127,10 @@ template<int dim>
 void
 SolverMMSAXI<dim>::solve()
 {
-  ReductionControl control(
-    Solver<dim>::system_rhs.size(), 0.0, 1e-8, false, false);
+  SolverControl control(Solver<dim>::system_rhs.size(),
+                        1e-8 * Solver<dim>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();

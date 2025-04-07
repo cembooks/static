@@ -32,7 +32,7 @@
 using namespace StaticScalarSolver;
 
 /**
- * \brief Implements the solver of the Interface between dielectrics
+ * \brief Implements the solver of the *Interface between dielectrics*
  * [(int/)](@ref page_int) numerical experiment.
  *****************************************************************************/
 template<int dim>
@@ -50,14 +50,12 @@ public:
    * finite elements,
    * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
    * @param[in] mapping_degree - The degree of the interpolating polynomials
-   * used for mapping. Setting it to 1 will do in the most of the cases. Note,
-   * that it makes sense to attach a meaningful manifold to the triangulation
-   * if this parameter is greater than 1.
+   * used for mapping.
    * @param[in] r - The parameter that encodes the degree of mesh refinement.
    * Must coincide with one of the values set in int/gmsh/build. This parameter
    * is used to compose the name of the mesh file to be uploaded from
    * int/gmsh/data/.
-   * @param[in] fname - The name of the vtk file without extension to save
+   * @param[in] fname - The name of the vtu file without extension to save
    * the data.
    *****************************************************************************/
   SolverINT(unsigned int p,
@@ -170,8 +168,8 @@ SolverINT<dim>::make_mesh()
     }
   }
 
-  Solver<dim>::triangulation.set_all_manifold_ids(0);
-  Solver<dim>::triangulation.set_manifold(0, sphere);
+  Solver<dim>::triangulation.set_all_manifold_ids(1);
+  Solver<dim>::triangulation.set_manifold(1, sphere);
 }
 
 template<int dim>

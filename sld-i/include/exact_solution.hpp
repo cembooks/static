@@ -27,7 +27,7 @@ using namespace dealii;
 
 /**
  * \brief Describes exact solution, \f$\Psi\f$, of the
- * [Magnetostatic shield - 1 (sld-i/)](@ref page_sld_i)
+ * *Magnetostatic shield - 1* [(sld-i/)](@ref page_sld_i)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
 template<int dim>
@@ -51,7 +51,7 @@ private:
 
 /**
  * \brief Describes exact solution, \f$\vec{H}\f$, of the
- * [Magnetostatic shield - 1 (sld-i/)](@ref page_sld_i)
+ * *Magnetostatic shield - 1* [(sld-i/)](@ref page_sld_i)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
 template<int dim>
@@ -75,7 +75,7 @@ private:
 
 /**
  * \brief Describes exact solution, \f$\vec{B}\f$, of the
- * [Magnetostatic shield - 1 (sld-i/)](@ref page_sld_i)
+ * *Magnetostatic shield - 1* [(sld-i/)](@ref page_sld_i)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
 template<int dim>
@@ -109,10 +109,10 @@ ExactSolutionSLDI_H<dim>::vector_value_list(
   Tensor<1, dim> grad;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    grad = psi.gradient(r.at(i));
+    grad = psi.gradient(r[i]);
 
     for (unsigned int j = 0; j < dim; j++)
-      values.at(i)[j] = -grad[j];
+      values[i][j] = -grad[j];
   }
 }
 
@@ -129,10 +129,10 @@ ExactSolutionSLDI_B<dim>::vector_value_list(
   double mu;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    if (r.at(i).norm() < a) {
+    if (r[i].norm() < a) {
       // Inside the shield.
       mu = mu_1;
-    } else if (r.at(i).norm() < b) {
+    } else if (r[i].norm() < b) {
       // In the wall of the shield.
       mu = mu_2;
     } else {
@@ -140,10 +140,10 @@ ExactSolutionSLDI_B<dim>::vector_value_list(
       mu = mu_3;
     }
 
-    grad = psi.gradient(r.at(i));
+    grad = psi.gradient(r[i]);
 
     for (unsigned int j = 0; j < dim; j++)
-      values.at(i)[j] = -mu * grad[j];
+      values[i][j] = -mu * grad[j];
   }
 }
 

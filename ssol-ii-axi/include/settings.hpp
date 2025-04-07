@@ -19,7 +19,7 @@ using namespace dealii;
 
 /**
  * \brief Global settings for the
- * [Axisymmetric - thick spherical coil (ssol-ii-axi)](@ref page_ssol_ii_axi)
+ * *Axisymmetric - thick spherical coil* [(ssol-ii-axi)](@ref page_ssol_ii_axi)
  * numerical experiment.
  *****************************************************************************/
 class SettingsSSOLIIAXI : public Constants::Physics
@@ -31,7 +31,7 @@ public:
    * \brief If greater than zero, limits the amount of threads used in the
    * simulations.
    *****************************************************************************/
-  const unsigned int nr_threads_max = 8;
+  const unsigned int nr_threads_max = 0;
 
   /**
    * \brief The permeability of free space.
@@ -43,6 +43,17 @@ public:
    * density.
    *****************************************************************************/
   const double K_0 = 1.0;
+
+  /**
+   * \brief The width of the rectangle in the middle of the mesh.
+   *****************************************************************************/
+  const double d1 = 0.1;
+
+  /**
+   * \brief The radius of the circle that encloses the rectangle in the middle
+   * of the mesh.
+   *****************************************************************************/
+  const double rd1 = sqrt(2) * d1;
 
   /**
    * \brief The inner radius of the coil.
@@ -78,7 +89,7 @@ public:
   /**
    * \brief The ID of the curved section of the boundary of the problem domain.
    * The boundary ID is set in the geo files that are located in the
-   * ssol-ii-axi/gmsh directory. Is not used in this configuration.
+   * ssol-ii-axi/gmsh directory.
    *****************************************************************************/
   const types::boundary_id bid_infty = 4;
 
@@ -96,7 +107,7 @@ public:
   const double eps = 1e-12;
 
   /**
-   * \brief If set to true, the program will print the time tables on the
+   * \brief If set to true, the program will print time tables on the
    * screen.
    *****************************************************************************/
   const bool print_time_tables = false;
@@ -106,7 +117,7 @@ public:
    *
    * The exact solutions will be modeled on the same mesh and by the same finite
    * elements that are used to model the solution. The projected exact solution
-   * will be saved in the vtk file next to the solution. This option can be
+   * will be saved in the vtu file next to the solution. This option can be
    * useful when debugging.
    *****************************************************************************/
   const bool project_exact_solution = false;

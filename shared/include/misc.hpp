@@ -57,9 +57,14 @@ public:
    *
    * @param[in] new_column - The name of the new column to be appended.
    *****************************************************************************/
-  void append_new_order(std::string new_clmn) { new_order.push_back(new_clmn); }
+  void append_new_order(std::string new_column)
+  {
+    new_order.push_back(new_column);
+  }
 
   virtual void format();
+
+  virtual ~MainOutputTable() = default;
 
 private:
   int dimensions;

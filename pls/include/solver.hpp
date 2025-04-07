@@ -29,9 +29,8 @@
 using namespace StaticScalarSolver;
 
 /**
- * \brief Implements the
- * [Planes of symmetry (pls/)](@ref page_pls)
- * numerical experiment.
+ * \brief Implements the *Planes of symmetry*
+ * [(pls/)](@ref page_pls) numerical experiment.
  *****************************************************************************/
 template<int dim>
 class SolverPLS
@@ -95,8 +94,10 @@ template<int dim>
 void
 SolverPLS<dim>::solve()
 {
-  ReductionControl control(
-    Solver<dim>::system_rhs.size(), 0.0, 1e-8, false, false);
+  SolverControl control(Solver<dim>::system_rhs.size(),
+                        1e-8 * Solver<dim>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();

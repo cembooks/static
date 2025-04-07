@@ -57,15 +57,15 @@ ExactSolutionMWR_H::vector_value_list(const std::vector<Point<2>>& r,
   double coef;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    if (r.at(i).norm() < a) {
+    if (r[i].norm() < a) {
       coef = mu;
     } else {
       coef = mu_0;
     }
 
-    grad_A = A.gradient(r.at(i));
-    values.at(i)[0] = grad_A[1] / coef;
-    values.at(i)[1] = -grad_A[0] / coef;
+    grad_A = A.gradient(r[i]);
+    values[i][0] = grad_A[1] / coef;
+    values[i][1] = -grad_A[0] / coef;
   }
 }
 
@@ -79,9 +79,9 @@ ExactSolutionMWR_B::vector_value_list(const std::vector<Point<2>>& r,
   Tensor<1, 2> grad_A;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    grad_A = A.gradient(r.at(i));
-    values.at(i)[0] = grad_A[1];
-    values.at(i)[1] = -grad_A[0];
+    grad_A = A.gradient(r[i]);
+    values[i][0] = grad_A[1];
+    values[i][1] = -grad_A[0];
   }
 }
 

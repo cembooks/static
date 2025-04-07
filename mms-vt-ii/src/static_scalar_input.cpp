@@ -82,10 +82,10 @@ StaticScalarSolver::PdeRhsCvp<2, 0>::value_list(
   Tensor<1, 2> Jf;
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    Jf = volume_free_current_density(r.at(i)[0], r.at(i)[1], mu_0, k);
+    Jf = volume_free_current_density(r[i][0], r[i][1], mu_0, k);
 
-    values.at(i)[0] = Jf[0];
-    values.at(i)[1] = Jf[1];
+    values[i][0] = Jf[0];
+    values[i][1] = Jf[1];
   }
 }
 
@@ -126,9 +126,9 @@ StaticScalarSolver::RobinRhs<2, 0>::value_list(
   Tensor<1, 2> Jf;
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    Jf = volume_free_current_density(r.at(i)[0], r.at(i)[1], mu_0, k);
+    Jf = volume_free_current_density(r[i][0], r[i][1], mu_0, k);
 
-    values.at(i) = -n.at(i)[0] * Jf[1] + n.at(i)[1] * Jf[0];
+    values[i] = -n[i][0] * Jf[1] + n[i][1] * Jf[0];
   }
 }
 

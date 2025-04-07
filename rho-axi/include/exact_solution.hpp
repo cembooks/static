@@ -20,7 +20,7 @@ using namespace dealii;
 
 /**
  * \brief Describes exact solutions, \f$\Phi\f$, of the
- * [Axisymmetric - volume charge (rho-axi/)](@ref page_rho_axi)
+ * *Axisymmetric - volume charge* [(rho-axi/)](@ref page_rho_axi)
  * numerical experiment.
  *****************************************************************************/
 template<bool is_cylinder>

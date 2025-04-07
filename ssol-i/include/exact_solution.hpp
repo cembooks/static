@@ -21,7 +21,7 @@ using namespace dealii;
 
 /**
  * \brief Describes the exact solution, \f$\vec{B}\f$, of the
- * [Thin spherical coil (ssol-i/)](@ref page_ssol_i)
+ * *Thin spherical coil* [(ssol-i/)](@ref page_ssol_i)
  * numerical experiment.
  *****************************************************************************/
 class ExactSolutionSSOLI_B

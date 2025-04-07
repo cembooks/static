@@ -1,4 +1,4 @@
 #!/bin/bash
 
-./clone -d 3 -f sphere.geo -r 14 1 17
+./clone -d 3 -f sphere.geo -r 6 1 9
 

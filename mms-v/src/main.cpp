@@ -28,9 +28,8 @@ using namespace StaticVectorSolver;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the
- * [Method of manufactured solutions, vector potential (mms-v/)](@ref
- *page_mms_v) numerical experiment.
+ * that implements the *Method of manufactured solutions, vector potential*
+ * [(mms-v/)](@ref page_mms_v) numerical experiment.
  *****************************************************************************/
 class BatchMMSV : public SettingsMMSV
 {
@@ -46,10 +45,14 @@ public:
     std::string dir;
     std::string fname;
 
+    unsigned int mapping_degree;
+
     if (HYPERCUBE__ == 1) {
       dir = (DIMENSION__ == 2) ? "Data/square/" : "Data/cube/";
+      mapping_degree = 1;
     } else {
       dir = (DIMENSION__ == 2) ? "Data/circle/" : "Data/sphere/";
+      mapping_degree = 2;
     }
 
     std::cout << "Program: mms-v\n"
@@ -57,6 +60,8 @@ public:
               << "Writing to: " << dir << "\n";
 
     MainOutputTable table(DIMENSION__);
+
+    ExactSolutionMMSV_B<DIMENSION__> exact_solution;
 
     for (unsigned int p = 0; p < 3; p++) {
       table.clear();
@@ -69,18 +74,16 @@ public:
         table.add_value("r", r);
         table.add_value("p", p);
 
-        SolverMMSV<DIMENSION__> problem(p, r, fname);
+        SolverMMSV<DIMENSION__> problem(p, mapping_degree, r, fname);
 
         std::cout << "Projecting A in H(curl) to B in H(div) ...\n";
-
-        ExactSolutionMMSV_B<DIMENSION__> exact_solution;
 
 #if DIMENSION__ == 3
         fname =
           dir + "solution_B_p" + std::to_string(p) + "_r" + std::to_string(r);
 
         ProjectAtoB projector(p,
-                              1,
+                              mapping_degree,
                               problem.get_tria(),
                               problem.get_dof_handler(),
                               problem.get_solution(),
@@ -88,14 +91,15 @@ public:
                               &exact_solution,
                               Settings::print_time_tables,
                               Settings::project_exact_solution,
-                              Settings::log_cg_convergence);
+                              Settings::log_cg_convergence,
+                              true);
 #endif
 #if DIMENSION__ == 2
         fname =
           dir + "solution_B_p" + std::to_string(p) + "_r" + std::to_string(r);
 
         ProjectAxyToBz projector(p,
-                                 1,
+                                 mapping_degree,
                                  problem.get_tria(),
                                  problem.get_dof_handler(),
                                  problem.get_solution(),
@@ -103,7 +107,8 @@ public:
                                  &exact_solution,
                                  Settings::print_time_tables,
                                  Settings::project_exact_solution,
-                                 Settings::log_cg_convergence);
+                                 Settings::log_cg_convergence,
+                                 true);
 #endif
         table.add_value("ndofs", problem.get_n_dofs());
         table.add_value("ncells", problem.get_n_cells());

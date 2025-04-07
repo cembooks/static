@@ -52,16 +52,16 @@ StaticVectorSolver::PdeRhs<3, 0>::value_list(
 
   if ((mid == mid_1) || (mid == mid_2))
     for (unsigned int i = 0; i < values.size(); i++) {
-      values.at(i)[0] = 0.0;
-      values.at(i)[1] = 0.0;
-      values.at(i)[2] = 0.0;
+      values[i][0] = 0.0;
+      values[i][1] = 0.0;
+      values[i][2] = 0.0;
     }
 
   if (mid == mid_3)
     for (unsigned int i = 0; i < values.size(); i++) {
-      values.at(i)[0] = -K_0 * r.at(i)[1];
-      values.at(i)[1] = K_0 * r.at(i)[0];
-      values.at(i)[2] = 0.0;
+      values[i][0] = -K_0 * r[i][1];
+      values[i][1] = K_0 * r[i][0];
+      values[i][2] = 0.0;
     }
 }
 
@@ -81,7 +81,7 @@ StaticVectorSolver::Gamma<3, 0>::value_list(const std::vector<Point<3>>& r,
   Assert(r.size() == n.size(), ExcDimensionMismatch(r.size(), n.size()));
 
   for (unsigned int i = 0; i < values.size(); i++)
-    values[i] = 1.0 / r.at(i).norm();
+    values[i] = 0.0;
 }
 
 template<>
@@ -100,12 +100,10 @@ StaticVectorSolver::RobinRhs<3, 0>::value_list(
 
   Assert(r.size() == n.size(), ExcDimensionMismatch(r.size(), n.size()));
 
-  Tensor<1, 3> Jf;
-
   for (unsigned int i = 0; i < r.size(); i++) {
-    values.at(i)[0] = 0.0;
-    values.at(i)[1] = 0.0;
-    values.at(i)[2] = 0.0;
+    values[i][0] = 0.0;
+    values[i][1] = 0.0;
+    values[i][2] = 0.0;
   }
 }
 
@@ -148,6 +146,9 @@ double
 StaticVectorSolver::Weight<3, 1>::value(const Point<3>& r,
                                         const unsigned int component) const
 {
+  if (r.norm() > d2)
+    return 0.0;
+
   return 1.0;
 }
 
@@ -187,9 +188,9 @@ StaticVectorSolver::PdeRhs<3, 2>::value_list(
          ExcDimensionMismatch(r.size(), values.size()));
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    values.at(i)[0] = 0.0;
-    values.at(i)[1] = 0.0;
-    values.at(i)[2] = 0.0;
+    values[i][0] = 0.0;
+    values[i][1] = 0.0;
+    values[i][2] = 0.0;
   }
 }
 
@@ -209,7 +210,7 @@ StaticVectorSolver::Gamma<3, 2>::value_list(const std::vector<Point<3>>& r,
   Assert(r.size() == n.size(), ExcDimensionMismatch(r.size(), n.size()));
 
   for (unsigned int i = 0; i < values.size(); i++)
-    values[i] = 1.0 / (mu_0 * r.at(i).norm());
+    values[i] = 1.0 / (mu_0 * r[i].norm());
 }
 
 template<>
@@ -229,7 +230,9 @@ StaticVectorSolver::RobinRhs<3, 2>::value_list(
   Assert(r.size() == n.size(), ExcDimensionMismatch(r.size(), n.size()));
 
   for (unsigned int i = 0; i < r.size(); i++) {
-    values.at(i) = 0.0;
+    values[i][0] = 0.0;
+    values[i][1] = 0.0;
+    values[i][2] = 0.0;
   }
 }
 
@@ -271,6 +274,9 @@ double
 StaticVectorSolver::Weight<3, 3>::value(const Point<3>& r,
                                         const unsigned int component) const
 {
+  if (r.norm() > d2)
+    return 0.0;
+
   return 1.0;
 }
 

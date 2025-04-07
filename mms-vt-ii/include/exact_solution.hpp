@@ -48,7 +48,7 @@ volume_free_current_density(double x, double y, double mu_0, double k)
 }
 
 inline Tensor<1, 2>
-vector_potential(double x, double y, double k)
+magnetic_vector_potential(double x, double y, double k)
 {
   Tensor<1, 2> A;
 
@@ -78,8 +78,8 @@ current_vector_potential(double x, double y, double mu_0, double k)
 
 /**
  * \brief Describes exact solution, \f$ T \f$, of the
- * [Method of manufactured solutions, vector potential (mms-vt-ii/)](@ref
- *page_mms_vt_ii) numerical experiment.
+ * *Method of manufactured solutions, vector potential*
+ * [(mms-vt-ii/)](@ref page_mms_vt_ii) numerical experiment.
  *****************************************************************************/
 class ExactSolutionMMSVTII_T
   : public Function<2>
@@ -98,8 +98,8 @@ public:
 
 /**
  * \brief Describes exact solution, \f$\vec{J}_{f}\f$, of the
- * [Method of manufactured solutions, vector potential (mms-vt-ii/)](@ref
- *page_mms_vt_ii) numerical experiment.
+ * *Method of manufactured solutions, vector potential*
+ * [(mms-vt-ii/)](@ref page_mms_vt_ii) numerical experiment.
  *****************************************************************************/
 class ExactSolutionMMSVTII_Jf
   : public Function<2>
@@ -118,8 +118,8 @@ public:
 
 /**
  * \brief Describes exact solution, \f$ B \f$, of the
- * [Method of manufactured solutions, vector potential (mms-vt-ii/)](@ref
- *page_mms_vt_ii) numerical experiment.
+ * *Method of manufactured solutions, vector potential*
+ * [(mms-vt-ii/)](@ref page_mms_vt_ii) numerical experiment.
  *****************************************************************************/
 class ExactSolutionMMSVTII_B
   : public Function<2>
@@ -135,15 +135,15 @@ public:
 
 /**
  * \brief Describes the Dirichlet boundary condition for \f$ T \f$, in the
- * [Method of manufactured solutions, vector potential (mms-vt-ii/)](@ref
- *page_mms_vt_ii) numerical experiment.
+ * *Method of manufactured solutions, vector potential*
+ * [(mms-vt-ii/)](@ref page_mms_vt_ii) numerical experiment.
  *****************************************************************************/
-class DirichletBC_T
+class DirichletBC_MMSVTII_T
   : public Function<2>
   , public SettingsMMSVTII
 {
 public:
-  DirichletBC_T(){};
+  DirichletBC_MMSVTII_T(){};
 
   virtual void value_list(const std::vector<Point<2>>& r,
                           std::vector<double>& values,
@@ -152,15 +152,15 @@ public:
 
 /**
  * \brief Describes the Dirichlet boundary condition for \f$\vec{A}\f$, in the
- * [Method of manufactured solutions, vector potential (mms-vt-ii/)](@ref
- *page_mms_vt_ii) numerical experiment.
+ * *Method of manufactured solutions, vector potential*
+ * [(mms-vt-ii/)](@ref page_mms_vt_ii) numerical experiment.
  *****************************************************************************/
-class DirichletBC_A
+class DirichletBC_MMSVTII_A
   : public Function<2>
   , public SettingsMMSVTII
 {
 public:
-  DirichletBC_A()
+  DirichletBC_MMSVTII_A()
     : Function<2>(2)
   {
   }

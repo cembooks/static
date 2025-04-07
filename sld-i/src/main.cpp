@@ -26,7 +26,7 @@ using namespace Misc;
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
  * that implements the
- * [Magnetostatic shield - 1 (sld-i/)](@ref page_sld_i)
+ * *Magnetostatic shield - 1* [(sld-i/)](@ref page_sld_i)
  * numerical experiment.
  *****************************************************************************/
 class BatchSLDI : public SettingsSLDI
@@ -101,7 +101,8 @@ public:
               false,
               Settings::print_time_tables,
               Settings::project_exact_solution,
-              Settings::log_cg_convergence);
+              Settings::log_cg_convergence,
+              true);
 
             table_H.add_value("ndofs", projector.get_n_dofs());
             table_H.add_value("ncells", projector.get_n_cells());
@@ -131,7 +132,8 @@ public:
               false,
               Settings::print_time_tables,
               Settings::project_exact_solution,
-              Settings::log_cg_convergence);
+              Settings::log_cg_convergence,
+              true);
 
             table_B.add_value("ndofs", projector.get_n_dofs());
             table_B.add_value("ncells", projector.get_n_cells());

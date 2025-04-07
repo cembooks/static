@@ -31,8 +31,8 @@ using namespace StaticScalarSolver;
 
 /**
  * \brief Implements the
- * [Axisymmetric - thick spherical coil with magnetic core (ssol-iii-axi/)](@ref
- *page_ssol_iii_axi) numerical experiment.
+ * *Axisymmetric - thick spherical coil with magnetic core*
+ * [(ssol-iii-axi/)](@ref page_ssol_iii_axi) numerical experiment.
  *****************************************************************************/
 class SolverSSOLIIIAXI
   : public SettingsSSOLIIIAXI
@@ -48,14 +48,12 @@ public:
    * finite elements,
    * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
    * @param[in] mapping_degree - The degree of the interpolating polynomials
-   *used for mapping. Setting it to 1 will do in the most of the cases. Note,
-   *that it makes sense to attach a meaningful manifold to the triangulation if
-   *this parameter is greater than 1.
+   * used for mapping.
    * @param[in] r - The parameter that encodes the degree of mesh refinement.
    * Must coincide with one of the values set in ssol-iii-axi/gmsh/build. This
    * parameter is used to compose the name of the mesh file to be uploaded from
    * ssol-iii-axi/gmsh/data/.
-   * @param[in] fname - The name of the vtk file without extension to save
+   * @param[in] fname - The name of the vtu file without extension to save
    * the data.
    *****************************************************************************/
   SolverSSOLIIIAXI(unsigned int p,
@@ -70,11 +68,26 @@ public:
                 true,
                 true,
                 SettingsSSOLIIIAXI::print_time_tables,
-                false)
+                SettingsSSOLIIIAXI::project_exact_solution,
+                true)
     , r(r)
     , fname(fname)
+    , fe_slice(1)
   {
-    Solver<2>::run();
+    TimerOutput::OutputFrequency tf = (SettingsSSOLIIIAXI::print_time_tables)
+                                        ? TimerOutput::summary
+                                        : TimerOutput::never;
+
+    TimerOutput timer(std::cout, tf, TimerOutput::cpu_and_wall_times_grouped);
+
+    {
+      TMR("Solver run");
+      Solver<2>::run();
+    }
+    {
+      TMR("Data slice");
+      data_slice(fname);
+    }
   }
 
   ~SolverSSOLIIIAXI() = default;
@@ -85,6 +98,17 @@ private:
 
   const dealii::Functions::ZeroFunction<2> dirichlet_function;
 
+  // The amount of global mesh refinements that need to be done to the
+  // one-dimensional mesh used for the plot of potential vs. r coordinate.
+  const unsigned int nr_slice_global_refs = 10;
+
+  // These four data members are needed for making the plot of potential
+  // vs. r  coordinate.
+  Triangulation<1, 2> triangulation_slice;
+  FE_Q<1, 2> fe_slice;
+  DoFHandler<1, 2> dof_handler_slice;
+  Vector<double> solution_slice;
+
   SphericalManifold<2> sphere;
 
   virtual void make_mesh() override final;
@@ -92,6 +116,9 @@ private:
   virtual void solve() override final;
 
   void mark_materials();
+
+  // This function makes the plot of potential vs. r coordinate.
+  void data_slice(std::string fname);
 };
 
 #endif

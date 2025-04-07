@@ -26,7 +26,7 @@ using namespace dealii;
 
 /**
  * \brief Describes exact solution, \f$ A \f$, of the
- * [Magnetic wire (mwr/)](@ref page_mwr)
+ * *Magnetic wire* [(mwr/)](@ref page_mwr)
  * numerical experiment.
  *****************************************************************************/
 class ExactSolutionMWR_A
@@ -46,8 +46,7 @@ public:
 
 /**
  * \brief Describes exact solution, \f$\vec{H}\f$, of the
- * [Magnetic wire (mwr/)](@ref page_mwr)
- * numerical experiment.
+ * *Magnetic wire* [(mwr/)](@ref page_mwr) numerical experiment.
  *****************************************************************************/
 class ExactSolutionMWR_H
   : public Function<2>
@@ -69,8 +68,7 @@ private:
 
 /**
  * \brief Describes exact solution, \f$\vec{B}\f$, of the
- * [Magnetic wire (mwr/)](@ref page_mwr)
- * numerical experiment.
+ * *Magnetic wire* [(mwr/)](@ref page_mwr) numerical experiment.
  *****************************************************************************/
 class ExactSolutionMWR_B
   : public Function<2>

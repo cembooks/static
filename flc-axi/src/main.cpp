@@ -26,7 +26,7 @@ using namespace Misc;
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
  * that implements the
- * [Axisymmetric - floating conductor (flc-axi/)](@ref page_flc_axi)
+ * *Axisymmetric - floating conductor* [(flc-axi/)](@ref page_flc_axi)
  * numerical experiment.
  *****************************************************************************/
 class BatchFLCAXI : public SettingsFLCAXI

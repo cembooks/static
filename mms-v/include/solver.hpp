@@ -15,6 +15,7 @@
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/grid_tools.h>
+#include <deal.II/grid/manifold_lib.h>
 
 #include <string>
 
@@ -25,9 +26,8 @@
 using namespace StaticVectorSolver;
 
 /**
- * \brief Implements the
- * [Method of manufactured solutions, vector potential (mms-v/)](@ref
- *page_mms_v) numerical experiment.
+ * \brief Implements the *Method of manufactured solutions, vector potential*
+ * [(mms-v/)](@ref page_mms_v) numerical experiment.
  *****************************************************************************/
 template<int dim>
 class SolverMMSV
@@ -41,22 +41,28 @@ public:
    * The constructor.
    *
    * @param[in] p - The degree of the Nedelec finite elements.
+   * @param[in] mapping_degree - The degree of the interpolating polynomials
+   * used for mapping.
    * @param[in] r - The parameter that encodes the degree of mesh refinement.
    * Must coincide with one of the values set in mms-v/gmsh/build. This
-   *parameter is used to compose the name of the mesh file to be uploaded from
-   * mms-v/gmsh/data/.
-   * @param[in] fname - The name of the vtk file without extension to save
+   * parameter is used to compose the name of the mesh file to be uploaded
+   * from mms-v/gmsh/data/.
+   * @param[in] fname - The name of the vtu file without extension to save
    * the data.
    *****************************************************************************/
-  SolverMMSV(unsigned int p, unsigned int r, std::string fname)
+  SolverMMSV(unsigned int p,
+             unsigned int mapping_degree,
+             unsigned int r,
+             std::string fname)
     : Solver1<dim>(p,
-                   1,
+                   mapping_degree,
                    3,
-                   0.0, // 0.01/mu_0,
+                   0.0,
                    fname,
                    &exact_solution,
                    print_time_tables,
-                   project_exact_solution)
+                   project_exact_solution,
+                   true)
     , r(r)
     , fname(fname)
   {
@@ -89,6 +95,8 @@ private:
   virtual void make_mesh() override final;
   virtual void fill_dirichlet_stack() override final;
   virtual void solve() override final;
+
+  const SphericalManifold<dim> sphere;
 };
 
 template<int dim>
@@ -102,8 +110,10 @@ template<int dim>
 void
 SolverMMSV<dim>::solve()
 {
-  ReductionControl control(
-    Solver1<dim>::system_rhs.size(), 0.0, 1e-12, false, false);
+  SolverControl control(1000 * Solver1<dim>::system_rhs.size(),
+                        1e-6 * Solver1<dim>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();
@@ -147,5 +157,25 @@ SolverMMSV<dim>::make_mesh()
 
   std::ifstream ifs(fname_mesh);
   gridin.read_msh(ifs);
+
+  Solver1<dim>::triangulation.reset_all_manifolds();
+
+  if (HYPERCUBE__ != 1) {
+    for (auto cell : Solver1<dim>::triangulation.active_cell_iterators()) {
+
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; f++) {
+
+        double dif_norm = 0.0;
+        for (unsigned int v = 1; v < GeometryInfo<dim>::vertices_per_face; v++)
+          dif_norm += std::abs(cell->face(f)->vertex(0).norm() -
+                               cell->face(f)->vertex(v).norm());
+
+        if ((dif_norm < eps) && (cell->center().norm() > rd1))
+          cell->face(f)->set_all_manifold_ids(1);
+      }
+    }
+  }
+
+  Solver1<dim>::triangulation.set_manifold(1, sphere);
 }
 #endif

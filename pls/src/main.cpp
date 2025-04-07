@@ -23,9 +23,8 @@ using namespace Misc;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the
- * [Planes of symmetry (pls/)](@ref page_pls)
- * numerical experiment.
+ * that implements the *Planes of symmetry*
+ * [(pls/)](@ref page_pls) numerical experiment.
  *****************************************************************************/
 class BatchPLS : public SettingsPLS
 {

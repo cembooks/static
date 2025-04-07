@@ -30,7 +30,7 @@
 using namespace StaticScalarSolver;
 
 /**
- * \brief Implements the solver of the Effect of curved boundaries
+ * \brief Implements the solver of the *Effect of curved boundaries*
  * [(cbnd/)](@ref page_cbnd) numerical experiment.
  *****************************************************************************/
 template<int dim>
@@ -48,9 +48,7 @@ public:
    * finite elements,
    * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
    * @param[in] mapping_degree - The degree of the interpolating polynomials
-   * used for mapping. Setting it to 1 will do in the most of the cases. Note,
-   * that it makes sense to attach a meaningful manifold to the triangulation
-   * if this parameter is greater than 1.
+   * used for mapping.
    * @param[in] r - The parameter that encodes the degree of mesh refinement.
    * Must coincide with one of the values set in cbnd/gmsh/build. This parameter
    * is used to compose the name of the mesh file to be uploaded from
@@ -59,18 +57,18 @@ public:
    * the data.
    *****************************************************************************/
   SolverCBND(unsigned int p,
-             unsigned int mappipng_degree,
+             unsigned int mapping_degree,
              unsigned int r,
              std::string fname)
     : Solver<dim>(p,
-                  mappipng_degree,
+                  mapping_degree,
                   1, // The right-hand side is free-current density.
                   fname,
                   &exact_solution,
                   false, // Is axisymmetric.
                   false, // Is vector potential.
                   print_time_tables,
-                  project_exact_solution)
+                  project_exact_solution) // , true)
     , r(r)
     , fname(fname)
     , dirichlet_function_in(1.0)

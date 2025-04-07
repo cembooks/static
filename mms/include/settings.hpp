@@ -18,7 +18,7 @@
 using namespace dealii;
 
 /**
- * \brief Global settings for the Method of manufactured solutions
+ * \brief Global settings for the *Method of manufactured solutions*
  * [(mms/)](@ref page_mms) numerical experiment.
  *****************************************************************************/
 class SettingsMMS : public Constants::Physics
@@ -30,7 +30,7 @@ public:
    * \brief If greater than zero, limits the amount of threads used in the
    * simulations.
    *****************************************************************************/
-  const unsigned int nr_threads_max = 8;
+  const unsigned int nr_threads_max = 0;
 
   /**
    * \brief The permittivity of free space.
@@ -64,7 +64,7 @@ public:
   const double eps = 1e-12;
 
   /**
-   * \brief If set to true, the program will print the time tables on the
+   * \brief If set to true, the program will print time tables on the
    * screen.
    *****************************************************************************/
   const bool print_time_tables = false;

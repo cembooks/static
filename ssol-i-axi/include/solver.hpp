@@ -31,7 +31,7 @@ using namespace StaticScalarSolver;
 
 /**
  * \brief Implements the
- * [Axisymmetric - thin spherical coil (ssol-i-axi)](@ref page_ssol_i_axi)
+ * *Axisymmetric - thin spherical coil* [(ssol-i-axi)](@ref page_ssol_i_axi)
  * numerical experiment.
  *****************************************************************************/
 class SolverSSOLIAXI
@@ -48,14 +48,12 @@ public:
    * finite elements,
    * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
    * @param[in] mapping_degree - The degree of the interpolating polynomials
-   *used for mapping. Setting it to 1 will do in the most of the cases. Note,
-   *that it makes sense to attach a meaningful manifold to the triangulation if
-   *this parameter is greater than 1.
+   * used for mapping.
    * @param[in] r - The parameter that encodes the degree of mesh refinement.
    * Must coincide with one of the values set in ssol-i-axi/gmsh/build. This
-   *parameter is used to compose the name of the mesh file to be uploaded from
-   * ssol-i-axi/gmsh/data/.
-   * @param[in] fname - The name of the vtk file without extension to save
+   * parameter is used to compose the name of the mesh file to be uploaded
+   * from ssol-i-axi/gmsh/data/.
+   * @param[in] fname - The name of the vtu file without extension to save
    * the data.
    *****************************************************************************/
   SolverSSOLIAXI(unsigned int p,
@@ -70,7 +68,8 @@ public:
                 true,
                 true,
                 SettingsSSOLIAXI::print_time_tables,
-                SettingsSSOLIAXI::project_exact_solution)
+                SettingsSSOLIAXI::project_exact_solution,
+                true)
     , r(r)
     , fname(fname)
     , fe_slice(1)

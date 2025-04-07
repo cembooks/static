@@ -71,6 +71,6 @@ message(STATUS "TARGET=${TARGET}")
 
 endforeach(TARGET)
 
-target_compile_options(${TARGET_CIRCLE} PRIVATE -DDOMAIN__=0)
-target_compile_options(${TARGET_SQUARE} PRIVATE -DDOMAIN__=1)
+target_compile_options(${TARGET_CIRCLE} PRIVATE -DDOMAIN__=1)
+target_compile_options(${TARGET_SQUARE} PRIVATE -DDOMAIN__=0)
 

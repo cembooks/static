@@ -23,9 +23,8 @@ using namespace Misc;
 
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
- * that implements the
- * [Volume charge (rho/)](@ref page_rho)
- * numerical experiment.
+ * that implements the *Volume charge*
+ * [(rho/)](@ref page_rho) numerical experiment.
  *****************************************************************************/
 class BatchRHO : public SettingsRHO
 {

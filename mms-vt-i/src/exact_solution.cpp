@@ -32,11 +32,11 @@ ExactSolutionMMSVTI_Jf::vector_value_list(
   Tensor<1, 3> Jf;
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    Jf = volume_free_current_density(r.at(i)[0], r.at(i)[1], mu_0, k);
+    Jf = volume_free_current_density(r[i][0], r[i][1], mu_0, k);
 
-    values.at(i)[0] = Jf[0];
-    values.at(i)[1] = Jf[1];
-    values.at(i)[2] = Jf[2];
+    values[i][0] = Jf[0];
+    values[i][1] = Jf[1];
+    values[i][2] = Jf[2];
   }
 }
 
@@ -56,22 +56,23 @@ ExactSolutionMMSVTI_B::vector_value_list(
   Tensor<1, 3> B;
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    B = magnetic_field(r.at(i)[0], r.at(i)[1], k);
+    B = magnetic_field(r[i][0], r[i][1], k);
 
-    values.at(i)[0] = B[0];
-    values.at(i)[1] = B[1];
-    values.at(i)[2] = B[2];
+    values[i][0] = B[0];
+    values[i][1] = B[1];
+    values[i][2] = B[2];
   }
 }
 
-DirichletBC_T::DirichletBC_T()
+DirichletBC_MMSVTI_T::DirichletBC_MMSVTI_T()
   : Function<3>(3)
 {
 }
 
 void
-DirichletBC_T::vector_value_list(const std::vector<Point<3>>& r,
-                                 std::vector<Vector<double>>& values) const
+DirichletBC_MMSVTI_T::vector_value_list(
+  const std::vector<Point<3>>& r,
+  std::vector<Vector<double>>& values) const
 {
   Assert(values.size() == r.size(),
          ExcDimensionMismatch(values.size(), r.size()));
@@ -79,22 +80,23 @@ DirichletBC_T::vector_value_list(const std::vector<Point<3>>& r,
   Tensor<1, 3> T;
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    T = current_vector_potential(r.at(i)[0], r.at(i)[1], mu_0, k);
+    T = current_vector_potential(r[i][0], r[i][1], mu_0, k);
 
-    values.at(i)[0] = T[0];
-    values.at(i)[1] = T[1];
-    values.at(i)[2] = T[2];
+    values[i][0] = T[0];
+    values[i][1] = T[1];
+    values[i][2] = T[2];
   }
 }
 
-DirichletBC_A::DirichletBC_A()
+DirichletBC_MMSVTI_A::DirichletBC_MMSVTI_A()
   : Function<3>(3)
 {
 }
 
 void
-DirichletBC_A::vector_value_list(const std::vector<Point<3>>& r,
-                                 std::vector<Vector<double>>& values) const
+DirichletBC_MMSVTI_A::vector_value_list(
+  const std::vector<Point<3>>& r,
+  std::vector<Vector<double>>& values) const
 {
   Assert(values.size() == r.size(),
          ExcDimensionMismatch(values.size(), r.size()));
@@ -102,10 +104,10 @@ DirichletBC_A::vector_value_list(const std::vector<Point<3>>& r,
   Tensor<1, 3> A;
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    A = vector_potential(r.at(i)[0], r.at(i)[1], k);
+    A = magnetic_vector_potential(r[i][0], r[i][1], k);
 
-    values.at(i)[0] = A[0];
-    values.at(i)[1] = A[1];
-    values.at(i)[2] = A[2];
+    values[i][0] = A[0];
+    values[i][1] = A[1];
+    values[i][2] = A[2];
   }
 }

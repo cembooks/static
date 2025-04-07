@@ -31,8 +31,7 @@ using namespace StaticScalarSolver;
 
 /**
  * \brief Implements the
- * [Magnetic wire (mwr/)](@ref page_mwr)
- * numerical experiment.
+ * *Magnetic wire* [(mwr/)](@ref page_mwr) numerical experiment.
  *****************************************************************************/
 class SolverMWR
   : public SettingsMWR
@@ -48,14 +47,12 @@ public:
    * finite elements,
    * [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html).
    * @param[in] mapping_degree - The degree of the interpolating polynomials
-   *used for mapping. Setting it to 1 will do in the most of the cases. Note,
-   *that it makes sense to attach a meaningful manifold to the triangulation if
-   *this parameter is greater than 1.
+   * used for mapping.
    * @param[in] r - The parameter that encodes the degree of mesh refinement.
    * Must coincide with one of the values set in mwr/gmsh/build. This parameter
    * is used to compose the name of the mesh file to be uploaded from
    * mwr/gmsh/data/.
-   * @param[in] fname - The name of the vtk file without extension to save
+   * @param[in] fname - The name of the vtu file without extension to save
    * the data.
    *****************************************************************************/
   SolverMWR(unsigned int p,
@@ -70,7 +67,8 @@ public:
                 false,
                 true,
                 SettingsMWR::print_time_tables,
-                SettingsMWR::project_exact_solution)
+                SettingsMWR::project_exact_solution,
+                true)
     , r(r)
     , fname(fname)
     , fe_slice(1)
@@ -98,7 +96,7 @@ private:
   const std::string fname;
 
   const ExactSolutionMWR_A exact_solution;
-  const dealii::Functions::ZeroFunction<2> dirichlet_function;
+  const dealii::Functions::ZeroFunction<2> dirichlet;
 
   // The amount of global mesh refinements that need to be done to the
   // one-dimensional mesh used for the plot of potential vs. x coordinate.

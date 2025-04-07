@@ -24,7 +24,7 @@ using namespace Misc;
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
  * that implements the
- * [Axisymmetric - volume charge (rho-axi/)](@ref page_rho_axi)
+ * *Axisymmetric - volume charge* [(rho-axi/)](@ref page_rho_axi)
  * numerical experiment.
  *****************************************************************************/
 class BatchRHOAXI : public SettingsRHOAXI

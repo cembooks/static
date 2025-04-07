@@ -32,12 +32,11 @@ ExactSolutionSSOLIII_Jf::vector_value_list(
   Tensor<1, 3> Jf;
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    Jf = volume_free_current_density(
-      r.at(i)[0], r.at(i)[1], r.at(i)[2], K_0, a2, b2);
+    Jf = volume_free_current_density(r[i][0], r[i][1], r[i][2], K_0, a2, b2);
 
-    values.at(i)[0] = Jf[0];
-    values.at(i)[1] = Jf[1];
-    values.at(i)[2] = Jf[2];
+    values[i][0] = Jf[0];
+    values[i][1] = Jf[1];
+    values[i][2] = Jf[2];
   }
 }
 
@@ -57,13 +56,11 @@ ExactSolutionSSOLIII_B::vector_value_list(
   Tensor<1, 3> B;
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    B = magnetic_field_coil(
-          r.at(i)[0], r.at(i)[1], r.at(i)[2], K_0, mu_0, a2, b2) +
-        magnetic_field_core(
-          r.at(i)[0], r.at(i)[1], r.at(i)[2], H_0, mu_r, mu_0, a1, b1);
+    B = magnetic_field_coil(r[i][0], r[i][1], r[i][2], K_0, mu_0, a2, b2) +
+        magnetic_field_core(r[i][0], r[i][1], r[i][2], H_0, mu_r, mu_0, a1, b1);
 
-    values.at(i)[0] = B[0];
-    values.at(i)[1] = B[1];
-    values.at(i)[2] = B[2];
+    values[i][0] = B[0];
+    values[i][1] = B[1];
+    values[i][2] = B[2];
   }
 }

@@ -79,21 +79,25 @@ namespace StaticVectorSolver {
  * difference between StaticVectorSolver::Solver1 and
  * StaticVectorSolver::Solver2 can be described as the following. All inputs
  * to StaticVectorSolver::Solver1 must be given in a form of an analytical
- * expression so they can be codded in class templates derived from
- * [Function](https://www.dealii.org/current/doxygen/deal.II/classFunction.html#a8c6e33c27ac2c3c2be40af1f954b71a7)
- * class template of deal.II. The same holds for StaticVectorSolver::Solver2
- * with an exception of the input that describes the right-hand side of the
- * partial differential equation. The input on the right-hand side of the
- * partial differential equation fed into the StaticVectorSolver::Solver2 class
- * template must be a current vector potential, \f$\vec{T}\f$, expressed in a
- * form of a field function. That is, \f$\vec{T}\f$ fed into
- * StaticVectorSolver::Solver2 is a result of another deal.II simulation. This
- * allows to solve the curl-curl equation for \f$\vec{A}\f$ observing the
- * compatibility condition. The diagram below illustrates how this can be done
- * in two- and three- dimensions.
+ * expressions. The same holds for StaticVectorSolver::Solver2 with an exception
+ * of the input that describes the right-hand side of the partial differential
+ * equation. The input on the right-hand side of the partial differential
+ * equation fed into the StaticVectorSolver::Solver2 class template must be a
+ * current vector potential, \f$\vec{T}\f$, expressed in a form of a field
+ * function. That is, \f$\vec{T}\f$ fed to StaticVectorSolver::Solver2 is a
+ * result of another deal.II simulation. This allows to solve the curl-curl
+ * equation for \f$\vec{A}\f$ observing the compatibility condition. The diagram
+ * below illustrates how this can be done in two- and three- dimensions.
  *
  * @anchor diagram_svst2
  * ![](svst_svst/diagram_svst2.svg)
+ *
+ * Recall that we do not gauge the magnetic vector potential, \f$\vec{A}\f$,
+ * explicitly. Consequently, the conservative part of simulated \f$\vec{A}\f$
+ * is unknown. For this reason, it does not make mush sense to evaluate or
+ * visualize \f$\vec{A}\f$. Instead, we evaluate the simulated \f$\vec{A}\f$
+ * indirectly by computing and evaluating the corresponding magnetic field,
+ * \f$\vec{B}\f$, in the third stage, see the diagram above.
  *
  * The magnetic vector potential is modeled by the
  * [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
@@ -134,20 +138,26 @@ namespace StaticVectorSolver {
  *   Alternatively, the user may call individual member functions (such as
  *   fill_dirichlet_stack(), setup(), etc.) in a proper order.
  *
- * According to the deal.II documentation of
+ * Note that there is no `make_mesh()` function this time. The
+ * StaticVectorSolver::Solver2 class template reuses the meshes created by
+ * other solvers. To this end, the reference to the mesh is passed as the
+ * third input parameter to the constructor.
+ *
+ * It is assumed that the object that has been used to calculate
+ * \f$\vec{T}\f$ (or \f$T\f$ in 2D) is still in the computer memory such that
+ * the triangulation, the degrees of freedom, and the handler of the degrees of
+ * freedom are accessible while \f$\vec{A}\f$ is computed. An object of
+ * the StaticVectorSolver::Solver2 class template reuses the triangulation by
+ * creating an additional dof handler associated with the
  * [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
- * finite elements, several aspects of the implementation of the Nedelec
- * elements are still experimental. At this moment only globally refined meshes
- * with consistent orientation of faces are allowed. This class utilizes
- * FE_Nedelec finite elements. Consequently, all restrictions applied to the
- * FE_Nedelec finite elements apply to this class template.
+ * finite elements. That is, \f$\vec{T}\f$ and \f$\vec{A}\f$ share the same
+ * triangulation. Two separate DoFHandler objects are used for
+ * \f$\vec{T}\f$ and \f$\vec{A}\f$.
  *
- * The boundaries of the mesh must be labeled such that the
- * <code>boundary_id()</code> member function of a face object returns the
- * corresponding boundary ID. The boundary ID's must obey the following
- * convention.
+ * The boundaries of the mesh must be labeled such that the `boundary_id()`
+ * member function of a face object returns the corresponding boundary ID. The
+ * boundary ID's must obey the following convention.
  *
- *  @anchor veis_bnd_convention
  * - The Dirichlet boundary conditions are applied on the boundaries with odd
  *   boundary ID's.
  * - The Robin boundary conditions are applied on the boundaries with even
@@ -161,19 +171,35 @@ namespace StaticVectorSolver {
  *   This boundary condition can also be imposed
  *   by assigning to a boundary an even ID greater than zero, and
  *   setting \f$ \gamma \f$ and \f$\vec{Q}\f$ to zero in the
- *   <code>value_list</code> methods of the classes
- *   StaticVectorSolver::Gamma and StaticVectorSolver::RobinRhs.
+ *   `value_list` methods of the classes StaticVectorSolver::Gamma and
+ *   StaticVectorSolver::RobinRhs.
  *
- * It is assumed that the object that has been used to calculate \f$\vec{T}\f$
- * (or \f$T\f$ in 2D) is still in the computer memory such that the
- * triangulation, the degrees of freedom, and the handler of the degrees of
- * freedom are accessible while \f$\vec{A}\f$ is computed. An object of
- * the StaticVectorSolver::Solver2 class template reuses the triangulation by
- * creating an additional dof handler associated with the
- * [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
- * finite elements. That is, \f$\vec{T}\f$ and \f$\vec{A}\f$ share the same
- * triangulation. Two separate DoFHandler objects are used for
- * \f$\vec{T}\f$ and \f$\vec{A}\f$.
+ * The constructor's argument `type_of_pde_rhs` switches the operation of the
+ * class template between following two modes:
+ *
+ * - The parameter `type_of_pde_rhs` equals any unsigned integer except for 2.
+ *   In this mode both integrals of the functional associated with the
+ *   right-hand side of the partial differential equation are computed.
+ *   The integrals associated with the righ-hand side read
+ *   \f[\iiint_{\Omega}
+ *   \vec{T}\cdot\bigg(\vec{\nabla}\times\vec{A}\bigg) dV -
+ *   \underbrace{
+ *   \iint_{\Gamma_{\Omega}}\vec{T}\cdot\bigg(\hat{n}\times\vec{A}\bigg)dS
+ *   }_{\text{Boundary integral}}
+ *   \f]
+ *   in a three dimensional space and
+ *   \f[
+ *   \iint_{\Omega}T\bigg(\vec{\nabla}\overset{S}{\times}\vec{A}\bigg)dS-
+ *   \underbrace{
+ *   \int_{\Gamma_{\Omega}}T\bigg(\hat{n}\overset{S}{\times}\vec{A}\bigg)dl
+ *   }_{\text{Boundary integral}}
+ *   \f]
+ *   in a two-dimensional space.
+ *
+ * - `type_of_pde_rhs=2`. In this mode the boundary integral in the expression
+ *   above is not computed. This can be done if \f$\vec{T}\f$ (or \f$T\f$ in
+ *   2D) is forced to zero by the homogeneous Dirichlet boundary condition in
+ *   the first stage of the simulation. This mode saves simulation time.
  *
  * The algorithm walks synchronously through both DoFHandler objects and
  * assembles the system matrix and the right-hand side.
@@ -215,6 +241,8 @@ public:
    * describes the current vector potential, \f$\vec{T}\f$.
    * @param[in] solution_T - A reference to the degrees of freedom that describe
    * the current vector potential, \f$\vec{T}\f$.
+   * @param[in] type_of_pde_rhs - If equals 2, the boundary integral
+   * \f$I_{b3-2}\f$ is neglected.
    * @param[in] eta_squared - The gauging parameter, \f$\eta^2\f$, in the
    * [partial differential equation](@ref page_veibvp).
    * @param[in] fname - The name of the output files without extension. Names of
@@ -227,9 +255,9 @@ public:
    * @param[in] print_time_tables - If true, prints time tables on the screen.
    * @param[in] project_exact_solution - If true, projects the exact solution
    * onto the space spanned by the Nedelec finite elements and saves
-   * the result into the vtk file next to the solution. This may be useful for
-   * debugging purposes as a comparison between the projected exact solution and
-   * the solution to the boundary value problem can yield a hint on where to
+   * the result into the output file next to the solution. This may be useful
+   *for debugging purposes as a comparison between the projected exact solution
+   *and the solution to the boundary value problem can yield a hint on where to
    * search for bugs.
    * @param[in] write_higher_order_cells - Switches between the two modes of
    * operation of the save() function, see the description of save().
@@ -239,6 +267,7 @@ public:
           const Triangulation<dim>& triangulation_T,
           const DoFHandler<dim>& dof_handler_T,
           const Vector<double>& solution_T,
+          unsigned int type_of_pde_rhs = 0,
           double eta_squared = 0.0,
           std::string fname = "data",
           const Function<dim>* exact_solution = nullptr,
@@ -257,6 +286,7 @@ public:
     //        fe(dof_handler_T.get_fe().degree-1),
     , fe(p)
     , mapping_degree(mapping_degree)
+    , type_of_pde_rhs(type_of_pde_rhs)
     , eta_squared(eta_squared)
     , fname(fname)
     , exact_solution(exact_solution)
@@ -327,11 +357,11 @@ public:
    * \brief Projects exact solution.
    *
    * The mesh and the finite elements, are the same as are used for the
-   * numerical solution of the boundary vale problem. The exact solution will be
-   * saved in the vtk file next to the numerical solution to the boundary value
-   * problem. This function works properly only if the exact solution is
-   * submitted to the constructor via the input parameter
-   * <code>exact_solution</code> and <code>project_exact_solution=true</code>.
+   * numerical solution of the boundary value problem. The exact solution will
+   * be saved in the output file next to the numerical solution to the boundary
+   * value problem. This function works properly only if the exact solution is
+   * submitted to the constructor via the input parameter `exact_solution` and
+   * `project_exact_solution=true`.
    *****************************************************************************/
   void project_exact_solution_fcn();
 
@@ -342,6 +372,8 @@ public:
    * - The calculated potential under the name "VectorField".
    * - The \f$L^2\f$ error norm associated with the calculated potential under
    *   the name "L2norm". One value per mesh cell is saved.
+   * - The \f$L^{\infty}\f$ error norm associated with the calculated potential
+   *   under the name "LinftyNorm". One value per mesh cell is saved.
    * - The exact solution expressed as a linear combination of the shape
    *   functions of the
    *   [FE_Nedelec](https://www.dealii.org/current/doxygen/deal.II/classFE__Nedelec.html)
@@ -349,20 +381,40 @@ public:
    *   "VectorField" and "VectorFieldExact" are modeled by exactly the same
    *   finite elements.
    *
-   * The "L2norm" and "VectorFieldExact" are saved only if an exact solution
-   * is submitted to the constructor. Moreover, "VectorFieldExact" is
-   * calculated and saved only if <code>project_exact_solution = true</code>.
+   * The "L2norm", \f$L^{\infty}\f$, and "VectorFieldExact" are saved only if
+   * an exact solution is submitted to the constructor. Moreover,
+   * "VectorFieldExact" is calculated and saved only if
+   * `project_exact_solution = true`.
    *
-   * If <code>write_higher_order_cells = false</code>, the name of the file is
-   * computed by appending ".vtk" to the string contained by the parameter
-   * <code>fname</code> passed to the constructor. The vtk file can be
-   * inspected with a help of [Visit](https://visit.llnl.gov)
-   * or [Paraview](www.paraview.org). Higher-order cells are not saved.
-   * If <code>write_higher_order_cells = true</code>, the data is saved into
-   * fname.vtu file preserving the higher-order cells. The file can be viewed
+   * If `write_higher_order_cells = false`, the name of the file is computed by
+   * appending ".vtk" to the string contained by the parameter `fname` passed
+   * to the constructor. The file can be inspected with a help of
+   * [VisIt](https://visit.llnl.gov) or [Paraview](www.paraview.org).
+   * Higher-order cells are saved as regular quadrilaterals and hexahedra.
+   * If `write_higher_order_cells = true`, the name of the file is computed by
+   * appending ".vtu" to the string contained by the parameter `fname`. The
+   * data is saved preserving the higher-order cells. The file can be viewed
    * with a help of [Paraview](www.paraview.org) version 5.5.0 or higher.
+   * [VisIt](https://visit.llnl.gov) cannot load higher-order cells.
    ****************************************************************************/
   void save() const;
+
+  /**
+   * \brief Saves the system matrix and the right-hand side into a csv file.
+   *
+   * All the zeros are included into the csv files. This is a very dumb and
+   * inefficient way of saving sparse matrices. On the positive side - it is
+   * very easy and straightforward to read the csv files. This function may be
+   * useful for debugging. One can assemble the system on a coarse mesh
+   * (so there are a few mesh cells and the system matrix is small) and export
+   * the system matrix together with the right-hand side into another program
+   * such as Matlab or GNU Octave for an analysis.
+   *
+   * @param[in] fname - A stem of the names of the output files. The matrix
+   * will be saved into fname_matrix.csv file. The right-hand side will be save
+   * into fname_rhs.csv file.
+   *****************************************************************************/
+  void save_matrix_and_rhs_to_csv(std::string fname) const;
 
   /**
    * \brief Releases computer memory associated with system matrix and
@@ -544,6 +596,7 @@ protected:
 
 private:
   const unsigned int mapping_degree;
+  const unsigned int type_of_pde_rhs;
   const double eta_squared;
   const std::string fname;
   const Function<dim>* exact_solution;
@@ -573,6 +626,7 @@ private:
                         const DoFHandler<dim>& dof_hand_T,
                         const Vector<double>& dofs_T,
                         unsigned int mapping_degree,
+                        unsigned int type_of_pde_rhs,
                         double eta_squared);
 
     AssemblyScratchData(const AssemblyScratchData& scratch_data);
@@ -595,27 +649,24 @@ private:
     const unsigned int n_q_points_face;
 
     std::vector<double> the_coefficient_list;
-
     std::vector<Tensor<1, dim>> vector_values;
     std::vector<Tensor<1, dim>> vector_values_face;
-
     std::vector<double> values;
     std::vector<double> values_face;
-
     std::vector<double> gamma_list;
     std::vector<Tensor<1, dim>> robin_rhs_list;
     std::vector<Tensor<1, dim>> free_surface_current_list;
 
-    const FEValuesExtractors::Vector ve;
-    const FEValuesExtractors::Scalar se;
-
     const DoFHandler<dim>& dof_hand_T;
     const Vector<double>& dofs_T;
 
+    const unsigned int type_of_pde_rhs;
+    const double eta_squared;
+    const FEValuesExtractors::Vector ve;
+    const FEValuesExtractors::Scalar se;
     bool do_robin;
     bool do_K;
     bool do_T_on_boundary;
-    const double eta_squared;
   };
 
   struct AssemblyCopyData
@@ -691,8 +742,12 @@ Solver2<dim, stage>::assemble()
     *this,
     &Solver2::system_matrix_local,
     &Solver2::copy_local_to_global,
-    AssemblyScratchData(
-      fe, dof_handler_T, solution_T, mapping_degree, eta_squared),
+    AssemblyScratchData(fe,
+                        dof_handler_T,
+                        solution_T,
+                        mapping_degree,
+                        type_of_pde_rhs,
+                        eta_squared),
     AssemblyCopyData());
 }
 
@@ -702,6 +757,7 @@ Solver2<dim, stage>::AssemblyScratchData::AssemblyScratchData(
   const DoFHandler<dim>& dof_hand_T,
   const Vector<double>& dofs_T,
   unsigned int mapping_degree,
+  unsigned int type_of_pde_rhs,
   double eta_squared)
   : mapping(mapping_degree)
   , qt(fe.degree - 1)
@@ -734,11 +790,12 @@ Solver2<dim, stage>::AssemblyScratchData::AssemblyScratchData(
   , gamma_list(n_q_points_face)
   , robin_rhs_list(n_q_points_face)
   , free_surface_current_list(n_q_points_face)
-  , ve(0)
-  , se(0)
   , dof_hand_T(dof_hand_T)
   , dofs_T(dofs_T)
+  , type_of_pde_rhs(type_of_pde_rhs)
   , eta_squared(eta_squared)
+  , ve(0)
+  , se(0)
 {
 }
 
@@ -776,11 +833,12 @@ Solver2<dim, stage>::AssemblyScratchData::AssemblyScratchData(
   , gamma_list(n_q_points_face)
   , robin_rhs_list(n_q_points_face)
   , free_surface_current_list(n_q_points_face)
-  , ve(0)
-  , se(0)
   , dof_hand_T(scratch_data.dof_hand_T)
   , dofs_T(scratch_data.dofs_T)
+  , type_of_pde_rhs(scratch_data.type_of_pde_rhs)
   , eta_squared(scratch_data.eta_squared)
+  , ve(0)
+  , se(0)
 {
 }
 
@@ -829,19 +887,19 @@ Solver2<dim, stage>::system_matrix_local(const IteratorPair& IP,
       for (unsigned int j = 0; j < scratch_data.dofs_per_cell;
            ++j) { // Integral I_a1+I_a3 in recipes (1) and (2).
         copy_data.cell_matrix(i, j) +=
-          ((1 / scratch_data.the_coefficient_list[q_index]) * // 1 / mu
-             scratch_data.fe_values[VE].curl(i, q_index) *    // curl N_i
-             scratch_data.fe_values[VE].curl(j, q_index)      // curl N_j
-           + scratch_data.eta_squared *                       // eta^2
-               scratch_data.fe_values[VE].value(i, q_index) * // N_i
-               scratch_data.fe_values[VE].value(j, q_index)   // N_j
+          ((1.0 / scratch_data.the_coefficient_list[q_index]) * // 1 / mu
+             scratch_data.fe_values[VE].curl(i, q_index) *      // curl N_i
+             scratch_data.fe_values[VE].curl(j, q_index)        // curl N_j
+           + scratch_data.eta_squared *                         // eta^2
+               scratch_data.fe_values[VE].value(i, q_index) *   // N_i
+               scratch_data.fe_values[VE].value(j, q_index)     // N_j
            ) *
           scratch_data.fe_values.JxW(q_index); // dV (dS in 2D)
       }
 
       if (dim == 2) { // Integral I_b3-1 in recipe (2).
         copy_data.cell_rhs(i) +=
-          scratch_data.values.at(q_index) *                // T
+          scratch_data.values[q_index] *                   // T
           scratch_data.fe_values[VE].curl(i, q_index)[0] * // curl_s N_i
           scratch_data.fe_values.JxW(q_index);             // dS
       } else if (dim == 3) { // Integral I_b3-1 in recipe (1).
@@ -866,12 +924,14 @@ Solver2<dim, stage>::system_matrix_local(const IteratorPair& IP,
     scratch_data.do_K =
       ((cell->user_index() > 0) && (cell->face(f)->user_index() > 0));
 
-    scratch_data.do_T_on_boundary = (cell->face(f)->at_boundary());
+    scratch_data.do_T_on_boundary =
+      ((cell->face(f)->at_boundary()) && (type_of_pde_rhs != 2));
 
     Assert(!(scratch_data.do_robin && scratch_data.do_K), ExcInternalError());
 
     if (scratch_data.do_robin || scratch_data.do_K ||
         scratch_data.do_T_on_boundary) {
+
       scratch_data.fe_face_values.reinit(cell, f);
       scratch_data.fe_face_values_T.reinit(cell_T, f);
 
@@ -907,7 +967,7 @@ Solver2<dim, stage>::system_matrix_local(const IteratorPair& IP,
 
       if (scratch_data.do_T_on_boundary) {
         if (dim == 2) {
-          scratch_data.fe_face_values_T.get_function_values(
+          scratch_data.fe_face_values_T[SE].get_function_values(
             scratch_data.dofs_T, scratch_data.values_face);
         } else if (dim == 3) {
           scratch_data.fe_face_values_T[VE].get_function_values(
@@ -932,10 +992,10 @@ Solver2<dim, stage>::system_matrix_local(const IteratorPair& IP,
                   (scratch_data.fe_face_values.normal_vector(q_index_face)[0] *
                      scratch_data.fe_face_values[VE].value(j, q_index_face)[1] -
                    scratch_data.fe_face_values.normal_vector(q_index_face)[1] *
-                     scratch_data.fe_face_values[VE].value(
-                       j, q_index_face)[0]) * //    s           s
+                     scratch_data.fe_face_values[VE].value(j,
+                                                           q_index_face)[0]) *
                   scratch_data.fe_face_values.JxW(
-                    q_index_face);   // (n x N_i) . (n x N_j) dl
+                    q_index_face);   // (n xs N_i)(n xs N_j) dl
               } else if (dim == 3) { // Integral I_a2 in recipe (1).
                 copy_data.cell_matrix(i, j) +=
                   scratch_data.gamma_list[q_index_face] * // gamma
@@ -1004,7 +1064,7 @@ Solver2<dim, stage>::system_matrix_local(const IteratorPair& IP,
           if (scratch_data.do_T_on_boundary) {
             if (dim == 2) { // Integral I_b3-2 in recipe (2).
               copy_data.cell_rhs(i) -=
-                scratch_data.values.at(q_index_face) * // T
+                scratch_data.values_face[q_index_face] * // T
                 (scratch_data.fe_face_values.normal_vector(q_index_face)[0] *
                    scratch_data.fe_face_values[VE].value(i, q_index_face)[1] -
                  scratch_data.fe_face_values.normal_vector(q_index_face)[1] *
@@ -1160,6 +1220,33 @@ Solver2<dim, stage>::save() const
   }
 
   ofs.close();
+}
+
+template<int dim, int stage>
+void
+Solver2<dim, stage>::save_matrix_and_rhs_to_csv(std::string fname) const
+{
+  std::ofstream ofs_matrix(fname + "_matrix.csv");
+  std::ofstream ofs_rhs(fname + "_rhs.csv");
+
+  for (unsigned int i = 0; i < system_matrix.m(); ++i) {
+    ofs_rhs << system_rhs(i);
+    if (i < (system_matrix.m() - 1))
+      ofs_rhs << "\n";
+
+    for (unsigned int j = 0; j < system_matrix.n(); ++j) {
+      ofs_matrix << std::scientific << std::setprecision(16)
+                 << system_matrix.el(i, j);
+
+      if (j < (system_matrix.m() - 1))
+        ofs_matrix << ", ";
+    }
+    if (i < (system_matrix.m() - 1))
+      ofs_matrix << "\n";
+  }
+
+  ofs_rhs.close();
+  ofs_matrix.close();
 }
 
 } // namespace StaticVectorSolver

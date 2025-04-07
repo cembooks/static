@@ -11,54 +11,38 @@
 
 #define BOOST_ALLOW_DEPRECATED_HEADERS
 
-#include <deal.II/grid/grid_in.h>
-#include <deal.II/grid/grid_out.h>
-#include <deal.II/grid/grid_tools.h>
-
 #include "solver.hpp"
-#include <fstream>
 
 void
 SolverMMSVTII_T::make_mesh()
 {
   GridIn<2> gridin;
-  Triangulation<2> tria_tmp;
 
-  gridin.attach_triangulation(tria_tmp);
+  gridin.attach_triangulation(Solver<2, 0>::triangulation);
 #if DOMAIN__ == 0
-  std::ifstream ifs("../../gmsh/data/circle_r" + std::to_string(r) + ".msh");
-#elif DOMAIN__ == 1
   std::ifstream ifs("../../gmsh/data/square_r" + std::to_string(r) + ".msh");
+#elif DOMAIN__ == 1
+  std::ifstream ifs("../../gmsh/data/circle_r" + std::to_string(r) + ".msh");
 #endif
   gridin.read_msh(ifs);
 
-  std::tuple<std::vector<Point<2>>, std::vector<CellData<2>>, SubCellData>
-    mesh_description;
+#if DOMAIN__ == 1
+  Solver<2, 0>::triangulation.reset_all_manifolds();
 
-  mesh_description = GridTools::get_coarse_mesh_description(tria_tmp);
+  double dif_norm;
 
-  GridTools::invert_all_negative_measure_cells(std::get<0>(mesh_description),
-                                               std::get<1>(mesh_description));
+  for (auto cell : Solver<2, 0>::triangulation.active_cell_iterators()) {
+    for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; f++) {
+      dif_norm = std::abs(cell->face(f)->vertex(0).norm() -
+                          cell->face(f)->vertex(1).norm());
 
-  GridTools::consistently_order_cells(std::get<1>(mesh_description));
+      if ((dif_norm < eps) && (cell->center().norm() > rd1))
+        cell->face(f)->set_all_manifold_ids(1);
+    }
+  }
 
-  Solver<2, 0>::triangulation.create_triangulation(
-    std::get<0>(mesh_description),
-    std::get<1>(mesh_description),
-    std::get<2>(mesh_description));
-
-  GridOut gridout;
-  GridOutFlags::Msh msh_flags(true, true);
-  gridout.set_flags(msh_flags);
-
-#if DOMAIN__ == 0
-  std::ofstream ofs("../../gmsh/data/circle_r" + std::to_string(r) +
-                    "_reordered.msh");
-#elif DOMAIN__ == 1
-  std::ofstream ofs("../../gmsh/data/square_r" + std::to_string(r) +
-                    "_reordered.msh");
+  Solver<2, 0>::triangulation.set_manifold(1, sphere);
 #endif
-  gridout.write_msh(Solver<2, 0>::triangulation, ofs);
 }
 
 void
@@ -70,8 +54,10 @@ SolverMMSVTII_T::fill_dirichlet_stack()
 void
 SolverMMSVTII_T::solve()
 {
-  ReductionControl control(
-    Solver<2, 0>::system_rhs.size(), 0.0, 1e-12, false, false);
+  SolverControl control(1000 * Solver<2, 0>::system_rhs.size(),
+                        1e-12 * Solver<2, 0>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();
@@ -116,8 +102,10 @@ SolverMMSVTII_A::fill_dirichlet_stack()
 void
 SolverMMSVTII_A::solve()
 {
-  ReductionControl control(
-    Solver2<2, 2>::system_rhs.size(), 0.0, 1e-12, false, false);
+  SolverControl control(1000 * Solver2<2, 2>::system_rhs.size(),
+                        1e-12 * Solver2<2, 2>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();

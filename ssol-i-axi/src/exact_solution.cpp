@@ -21,28 +21,36 @@ double
 ExactSolutionSSOLIAXI_A::value(const Point<2>& p,
                                const unsigned int component) const
 {
-  double r = p.norm();
-  double sin_theta = p[0] / r;
+  double s = p.norm();
+  double r = p[0];
+  double M = mu_0 * K_0 * a * pow(r, 2) / 3.0;
 
-  if (r < a) {
-    return p[0] * mu_0 * K_0 * a * p[0] / 3.0;
+  if (s < a) {
+    return M;
   } else {
-    return p[0] * mu_0 * K_0 * pow(a, 4) * sin_theta / (3.0 * pow(r, 2));
+    return M * pow(a, 3) / pow(s, 3);
   }
 }
 
 Tensor<1, 2>
-ExactSolutionSSOLIAXI_A::gradient(const Point<2>& r,
+ExactSolutionSSOLIAXI_A::gradient(const Point<2>& p,
                                   const unsigned int component) const
 {
+
+  double s = p.norm();
+  double r = p[0];
+  double z = p[1];
+  double M1 = mu_0 * K_0 * a / 3.0;
+  double M2 = M1 * pow(a, 3);
+
   Point<2> grad_A;
 
-  if (r.norm() <= a) {
-    grad_A(0) = 0.0;
+  if (s < a) {
+    grad_A(0) = 2.0 * M1 * r;
     grad_A(1) = 0.0;
   } else {
-    grad_A(0) = 0.0;
-    grad_A(1) = 0.0;
+    grad_A(0) = M2 * (2.0 * r / pow(s, 3) - 3.0 * pow(r, 3) / pow(s, 5));
+    grad_A(1) = -M2 * (3.0 * z * pow(r, 2) / pow(s, 5));
   }
 
   return grad_A;
@@ -92,33 +100,7 @@ ExactSolutionSSOLIAXI_B::vector_value_list(
     (*v)[0] = pp[0] * B[1];
     (*v)[1] = pp[0] * B[2];
 
-    // The exact solution above is the scaled magnetic field, B' = rB. If you
-    // would like to have the magnetic field itself, B, replace the two lines
-    // above with the following two lines. In this case, you also need to make
-    // similar changes to the files project_Hgrad_to_Hdiv.hpp and
-    // project_Hgrad_to_Hcurl.hpp. Search comments in these two files for
-    // instructions.
-    //
-    //    (*v)[0] = B[1];
-    //    (*v)[1] = B[2];
-
     v++;
-  }
-}
-
-void
-ExactSolutionSSOLIAXI_H::vector_value_list(
-  const std::vector<Point<2>>& r,
-  std::vector<Vector<double>>& values) const
-{
-  Assert(values.size() == r.size(),
-         ExcDimensionMismatch(values.size(), r.size()));
-
-  B.vector_value_list(r, values);
-
-  for (unsigned int i = 0; i < r.size(); i++) {
-    values.at(i)[0] = values.at(i)[0] / mu_0;
-    values.at(i)[1] = values.at(i)[1] / mu_0;
   }
 }
 

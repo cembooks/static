@@ -86,19 +86,18 @@ namespace StaticScalarSolver {
  *
  * The table below lists the recommended settings for switching between
  * different types of problems. The letters in the first column of the table
- * correspond to the seven diagrams above. The <code>dim</code> parameter is
- * the input parameter of the class template. The other three parameters,
- * <code>type_of_pde_rhs</code>, <code>axisymmetric</code>, and
- * <code>vector_potential</code>, are passed as input parameters to the
- * constructor of the class.
+ * correspond to the seven diagrams above. The `dim` parameter is the input
+ * parameter of the class template. The other three parameters,
+ * `type_of_pde_rhs`, `axisymmetric`, and `vector_potential`, are passed as
+ * input parameters to the constructor of the class.
  *
  * Insert | dim | type_of_pde_rhs | axisymmetric | vector_potential |
  * -------|-----|-----------------|--------------|------------------|
- * A), C) |  3  |       1         |    false     |     false        |
- * B), D) |  2  |       1         |  true/false  |     false        |
- *   E)   |  2  |       1         |    false     |     true         |
- *   F)   |  2  |       1         |    false     |     true         |
- *   G)   |  2  |       2         |    false     |     true         |
+ * A), C) |  3  |     0 or 1      |    false     |     false        |
+ * B), D) |  2  |     0 or 1      |true or false |     false        |
+ *   E)   |  2  |     0 or 1      |    false     |     true         |
+ *   F)   |  2  |     0 or 1      |    false     |     true         |
+ *   G)   |  2  |     2 or 3      |    false     |     true         |
  *
  * A user of this class is supposed to do the following.
  *
@@ -118,7 +117,7 @@ namespace StaticScalarSolver {
  *
  * - Instantiate class templates
  *   StaticScalarSolver::TheCoefficient, StaticScalarSolver::PdeRhs
- *   (or StaticScalarSolver::PdeRhsCvp if <code>type_of_pde_rhs=2</code>),
+ *   (or StaticScalarSolver::PdeRhsCvp if `type_of_pde_rhs=2`),
  *   StaticScalarSolver::Gamma, StaticScalarSolver::RobinRhs, and
  *   StaticScalarSolver::FreeSurfaceCharge, StaticScalarSolver::Weight.
  *
@@ -130,10 +129,9 @@ namespace StaticScalarSolver {
  *   fill_dirichlet_stack(), setup(), solve(), save()) in a proper order.
  *
  * @anchor seis_bnd_convention
- * The boundaries of the mesh must be labeled such that the
- * <code>boundary_id</code> member function of a face object returns the
- * corresponding boundary ID. The boundary ID's must obey the following
- * convention.
+ * The boundaries of the mesh must be labeled such that the `boundary_id` member
+ * function of a face object returns the corresponding boundary ID. The boundary
+ * ID's must obey the following convention.
  * - The Dirichlet boundary conditions are applied on the boundaries with odd
  *   boundary ID's.
  * - The Robin boundary conditions are applied on the boundaries with
@@ -147,44 +145,63 @@ namespace StaticScalarSolver {
  *   [functional](@ref seibvp_functional).
  *   This boundary condition can also be imposed by assigning to a boundary an
  *   even ID greater than zero, and setting \f$ \sigma \f$ and \f$ \gamma \f$
- *   to zero in the <code>value_list(...)</code> methods of the class templates
+ *   to zero in the `value_list(...)` methods of the class templates
  *   StaticScalarSolver::RobinRhs and StaticScalarSolver::Gamma.
  *
- * The constructor's argument <code>type_of_pde_rhs</code> toggles the
- * operation of the class template between two modes. In the first mode,
- * <code>type_of_pde_rhs = 1</code>, the right-hand side of the partial
- * differential equation is assumed to be a scalar field. Let us for the sake
- * of illustration assume it is the free-charge density \f$\rho_f\f$. The
- * corresponding integral in the variational formulation
- * reads \f[ \iiint_{\Omega} \rho_f \Phi dV \f] in three dimensions
- * and \f[ \iint_{\Omega} \rho_f \Phi dS \f] in two dimensions. In the first
- * mode the objects derived form this class template evaluate the values
- * of \f$\rho_f\f$ at quadrature points by calling
- * StaticScalarSolver::PdeRhs::value_list. In the second mode,
- * <code>type_pde_rhs = 2</code>,
- * the class template solves for the two-dimensional current vector potential,
- * \f$T\f$, which is an out-of-plane vector. The second mode works only in two
- * dimensions (the class template StaticVectorSolver::Solver1 must be used for
- * calculating the current vector potential in three dimensions). In the second
- * mode the right-hand side of the partial differential equation is assumed to
- * be \f$ \vec{\nabla} \overset{S}{\times}\vec{J}_f \f$. In the corresponding
- * integral of the variational formulation, the curl is "shifted" to the current
- * vector potential, \f$T\f$, by application of a Green's identity (for more
- * details see the discussion that led to the color box "Recipe for static
- * scalar solver in 2D (current vect. potential)" in the book):
- * \f[
- * \iint_{\Omega} T \bigg(\vec{\nabla} \overset{S}{\times} \vec{J}_f\bigg) dS =
- * \iint_{\Omega} \vec{J}_f \cdot \bigg(\vec{\nabla} \overset{V}{\times} T\bigg)
- * dS - \oint_{\Gamma} \vec{J}_f \cdot \bigg(\hat{n} \overset{V}{\times} T
- * \bigg) dl \f] That is to say, in the second mode the input at the right-hand
- * side of the partial differential equation is not a scalar field (such as
- * \f$\rho_f\f$), but a two-dimensional vector field, \f$\vec{J}_f\f$. The class
- * template calls an object of the type StaticScalarSolver::PdeRhsCvp to
- * evaluate the values of \f$\vec{J}_f\f$ at quadrature points.
+ * The constructor's argument `type_of_pde_rhs` switches the operation of the
+ * class template between following four modes:
  *
- * Setting <code>type_pde_rhs = 0</code> is the same as setting
- * <code>type_pde_rhs = 1</code> and \f$\rho_f = 0\f$. In this case algorithm
- * saves some time on calling StaticScalarSolver::PdeRhs::value_list.
+ * - `type_of_pde_rhs = 1`. In this mode the right-hand side of the partial
+ * differential equation is assumed to be a scalar field. Let us for the sake
+ * of illustration assume that we are computing the electric scalar potential,
+ * \f$\Phi\f$, and that the right-hand side is the free-charge density,
+ * \f$\rho_f\f$. Then the partial differential equation reads
+ * \f[
+ * - \vec{\nabla} \cdot \big( \epsilon \vec{\nabla} \Phi \big)= \rho_f.
+ * \f]
+ * The corresponding integral in the variational formulation
+ * reads
+ * \f[
+ * \iiint_{\Omega} \rho_f \Phi dV
+ * \f]
+ * in three dimensions and
+ * \f[
+ * \iint_{\Omega} \rho_f \Phi dS
+ * \f]
+ * in two dimensions. In this mode the values of \f$\rho_f\f$ at quadrature
+ * points are computed by calling StaticScalarSolver::PdeRhs::value_list.
+ *
+ * - `type_pde_rhs = 0`. Setting `type_pde_rhs = 0` is the same as setting
+ * `type_pde_rhs = 1` and \f$\rho_f = 0\f$. In this mode algorithm saves some
+ * time on calling StaticScalarSolver::PdeRhs::value_list and evaluating the
+ * two integrals above.
+ *
+ * - `type_pde_rhs = 3`. In this mode the class template computes the
+ * two-dimensional current vector potential, \f$T\f$, by solving the following
+ * partial differential equation:
+ * \f[
+ * - \vec{\nabla} \cdot \big(\vec{\nabla} T \big)=
+ *   \vec{\nabla} \overset{S}{\times}\vec{J}_f.
+ * \f]
+ * This mode works only in two dimensions (the class template
+ * StaticVectorSolver::Solver1 must be used for calculating the current vector
+ * potential in three dimensions). The following two integrals represent the
+ * right-hand side of the partial differential equation in the functional:
+ * \f[
+ * \iint_{\Omega}\vec{J}_f\cdot\bigg(\vec{\nabla}\overset{V}{\times}T\bigg)dS-
+ * \underbrace{\oint_{\Gamma} \vec{J}_f \cdot \bigg(\hat{n} \overset{V}{\times}
+ * T \bigg) dl}_{\text{Boundary integral}}. \f] That is to say, in this mode
+ * the source on the right-hand side of the partial differential equation is
+ * not a scalar field (such as \f$\rho_f\f$), but a two-dimensional vector
+ * field, \f$\vec{J}_f\f$. The class template calls an object of the type
+ * StaticScalarSolver::PdeRhsCvp to evaluate the values of \f$\vec{J}_f\f$ at
+ * quadrature points.
+ *
+ * - `type_pde_rhs = 2`. There is only one difference between this mode and the
+ * mode `type_pde_rhs = 3`. In this mode the boundary integral, see above,
+ * is not computed. This can save simulation time if \f$\vec{J}_f = 0\f$ on the
+ * boundary by definition of the problem, see [(cvp-ii)](@ref page_cvp_ii)
+ * numerical experiment for an example.
  *
  * This class template utilizes the
  * [WorkStream](https://www.dealii.org/current/doxygen/deal.II/namespaceWorkStream.html)
@@ -229,7 +246,7 @@ public:
    * polynomials used for mapping. Setting it to 1 will do in the most of the
    * cases. Note, that it makes sense to attach a meaningful manifold to the
    * triangulation if this parameter is greater than 1.
-   * @param[in] type_of_pde_rhs - Toggles between the two modes of operation,
+   * @param[in] type_of_pde_rhs - Switches between four modes of operation,
    * see above.
    * @param[in] fname - The name of the output files without extension.
    * @param[in] exact_solution - Points to an object that describes the exact
@@ -237,17 +254,16 @@ public:
    * responsibility of the user to make sure that the object exists at the time
    * of the execution of run() or compute_error_norms().
    * @param[in] axisymmetric - If true, assumes that the problem is
-   * axisymmetric. If <code>axisymmetric = true</code>, <code>dim</code> must
-   * equal 2.
+   * axisymmetric. If `axisymmetric = true`, `dim` must equal 2.
    * @param[in] vector_potential - If true, assumes that the problem is
    * two-dimensional and formulated in terms of the magnitude of vector
    * potential, \f$A\f$, or in terms of the scaled magnitude of vector
    * potential, \f$A'\f$, or current vector potential, \f$T\f$. If
-   * <code>vector_potential = true</code>, <code>dim</code> must equal 2.
+   * `vector_potential = true`, `dim` must equal 2.
    * @param[in] print_time_tables - If true, prints time tables on the screen.
    * @param[in] project_exact_solution - If true, projects the exact solution
    * onto the space spanned by the Lagrange finite elements (FE_Q) and saves the
-   * result into the vtk file next to the solution. This may be useful for
+   * result into the output file next to the solution. This may be useful for
    * debugging purposes as a comparison between the projected exact solution and
    * the solution to the boundary value problem can yield a hint on where to
    * search for bugs.
@@ -275,7 +291,9 @@ public:
     , project_exact_solution(project_exact_solution)
     , write_higher_order_cells(write_higher_order_cells)
   {
-    Assert(p < 5, ExcInternalError());
+    Assert(((dim == 2) || (dim == 3)), ExcInternalError());
+    Assert(p < 6, ExcInternalError());
+    Assert(type_of_pde_rhs < 4, ExcInternalError());
 
     if (axisymmetric) {
       Assert(
@@ -285,7 +303,8 @@ public:
       Assert(
         type_of_pde_rhs < 2,
         ExcMessage(
-          "The settings axisymmetric=true and type_of_pde_rhs=2 are not compatible. \
+          "The settings axisymmetric=true and type_of_pde_rhs>1 (corresponds to \
+the modes for computing the current vector potential) are not compatible. \
 An out-of-plane scalar current vector potential implies that the free-current \
 density is an in-plane vector. Strictly speaking, it is impossible to setup a \
 curl-curl equation on an axisymmetric problem domain if the free-current density \
@@ -295,18 +314,28 @@ is an in-plane vector. Charge conservation will fail."));
     if (vector_potential) {
       Assert(dim == 2,
              ExcMessage(
-               "The setting vector_potential=true can only be used if dim=2. \
-That is, StaticScalarSolver::Solver can only be used if the vector potential \
-is an out-of-plane vector on a two-dimensional problem domain."));
+               "The setting vector_potential=true can only be used if dim=2."));
+      Assert(((type_of_pde_rhs == 2) || (type_of_pde_rhs == 3)),
+             ExcMessage("The setting vector_potential=true can only be used if \
+type_of_pde_rhs=2 or type_of_pde_rhs=3."));
     }
 
-    if (type_of_pde_rhs == 2) {
-      Assert(
-        dim == 2,
-        ExcMessage(
-          "The setting type_of_pde_rhs=2 switches the solver into the mode for \
-calculating current vector potential. In this mode dim must be set to 2."));
-      Assert(vector_potential, ExcInternalError());
+    if ((type_of_pde_rhs == 0) || (type_of_pde_rhs == 1)) {
+      Assert(!vector_potential,
+             ExcMessage(
+               "The settings type_of_pde_rhs=0 and type_of_pde_rhs=1 can only \
+be used if vector_potential=false."));
+    }
+
+    if ((type_of_pde_rhs == 2) || (type_of_pde_rhs == 3)) {
+      Assert(dim == 2,
+             ExcMessage(
+               "The settings type_of_pde_rhs=2 and type_of_pde_rhs=3 can only \
+be used if dim=2."));
+      Assert(vector_potential,
+             ExcMessage(
+               "The settings type_of_pde_rhs=2 and type_of_pde_rhs=3 can only \
+be used if vector_potential=true"));
     }
   }
 
@@ -317,9 +346,9 @@ calculating current vector potential. In this mode dim must be set to 2."));
    * This function must be overridden by the user. It must generate or load
    * the mesh, label the boundaries, and, if necessary, assign user IDs. This
    * function is an ideal place for binding manifolds to the mesh. The last is
-   * a reasonable thing to do if <code>mapping_degree > 1</code>. The mesh must
-   * be stored in the data member of this
-   * class, StaticScalarSolver::Solver::triangulation.
+   * a reasonable thing to do if `mapping_degree > 1`. The mesh must be stored
+   * in the data member of this class,
+   * StaticScalarSolver::Solver::triangulation.
    *****************************************************************************/
   virtual void make_mesh() = 0;
 
@@ -384,17 +413,16 @@ calculating current vector potential. In this mode dim must be set to 2."));
    * \brief Projects exact solution.
    *
    * The mesh and the finite elements are the same as are used for the
-   * numerical solution of the boundary vale problem. The exact solution will
-   * be saved in the vtk file next to the numerical solution to the boundary
+   * numerical solution of the boundary value problem. The exact solution will
+   * be saved in the output file next to the numerical solution to the boundary
    * value problem. This function works properly only if the exact solution
    * is submitted to the constructor via the input parameter
-   * <code>exact_solution</code> and
-   * <code>project_exact_solution = true</code>.
+   * `exact_solution` and `project_exact_solution = true`.
    *****************************************************************************/
   void project_exact_solution_fcn();
 
   /**
-   * \brief Saves simulation results into a vtk file.
+   * \brief Saves simulation results into a vtk or vtu file.
    *
    * The following data are saved:
    * - The calculated potential under the name "ScalarField".
@@ -402,26 +430,30 @@ calculating current vector potential. In this mode dim must be set to 2."));
    *   the name "L2norm". One value per mesh cell is saved.
    * - The \f$H^1\f$ error norm associated with the calculated potential under
    *   the name "H1seminorm". One value per mesh cell is saved.
+   * - The \f$L^{\infty}\f$ error norm associated with the calculated potential
+   *   under the name "LinftyNorm". One value per mesh cell is saved.
    * - The exact solution expressed as a linear combination of the shape
    *   functions of the
    *   [FE_Q](https://www.dealii.org/current/doxygen/deal.II/classFE__Q.html)
-   *   finite elements is saved under the name "ScalarFieldExact". The
+   *   `finite elements is saved under the name "ScalarFieldExact". The
    *   "Scalarfield" and "SclalarFieldExact" are modeled by exactly the same
    *   finite elements.
    *
-   * The "L2norm", "H1seminorm", and "ScalarFieldExact" are saved only if an
-   * exact solution is submitted to the constructor. Moreover,
+   * The "L2norm", "H1seminorm", "LinftyNorm", and "ScalarFieldExact" are
+   * saved only if an exact solution is submitted to the constructor. Moreover,
    * "ScalarFieldExact" is calculated and saved only
-   * if <code>project_exact_solution = true</code>.
+   * if `project_exact_solution = true`.
    *
-   * If <code>write_higher_order_cells = false</code>, the name of the file is
-   * computed by appending ".vtk" to the string contained by the parameter
-   * <code>fname</code> passed to the constructor. The vtk file can be
-   * inspected with a help of [Visit](https://visit.llnl.gov)
-   * or [Paraview](www.paraview.org). Higher-order cells are not saved.
-   * If <code>write_higher_order_cells = true</code>, the data is saved into
-   * fname.vtu file preserving the higher-order cells. The file can be viewed
+   * If `write_higher_order_cells = false`, the name of the file is computed by
+   * appending ".vtk" to the string contained by the parameter `fname` passed
+   * to the constructor. The file can be inspected with a help of
+   * [VisIt](https://visit.llnl.gov) or [Paraview](www.paraview.org).
+   * Higher-order cells are saved as regular quadrilaterals and hexahedra.
+   * If `write_higher_order_cells = true`, the name of the file is computed by
+   * appending ".vtu" to the string contained by the parameter `fname`. The
+   * data is saved preserving the higher-order cells. The file can be viewed
    * with a help of [Paraview](www.paraview.org) version 5.5.0 or higher.
+   * [VisIt](https://visit.llnl.gov) cannot load higher-order cells.
    *****************************************************************************/
   void save() const;
 
@@ -508,7 +540,7 @@ calculating current vector potential. In this mode dim must be set to 2."));
   }
 
   /**
-   * \brief Returns the value of <code>type_of_pde_rhs</code>.
+   * \brief Returns the value of `type_of_pde_rhs`.
    *****************************************************************************/
   unsigned int get_type_of_pde_rhs() const { return type_of_pde_rhs; }
 
@@ -896,9 +928,10 @@ Solver<dim, stage>::system_matrix_local(
 
   scratch_data.fe_values.reinit(cell);
 
-  if (scratch_data.type_of_pde_rhs ==
-      2) { // The coefficient equals 1.0 if the current vector potential, T, is
-           // computed.
+  if ((scratch_data.type_of_pde_rhs == 2) ||
+      (scratch_data.type_of_pde_rhs == 3)) {
+    // The coefficient equals 1.0 if the current vector potential, T, is
+    // computed.
     for (unsigned int q_index = 0; q_index < scratch_data.n_q_points; ++q_index)
       scratch_data.the_coefficient_list[q_index] = 1.0;
   } else {
@@ -916,7 +949,8 @@ Solver<dim, stage>::system_matrix_local(
       cell->user_index(),
       scratch_data.pde_rhs_list);
 
-  if (scratch_data.type_of_pde_rhs == 2)
+  if ((scratch_data.type_of_pde_rhs == 2) ||
+      (scratch_data.type_of_pde_rhs == 3))
     scratch_data.pde_rhs_cvp.value_list(
       scratch_data.fe_values.get_quadrature_points(),
       cell->material_id(),
@@ -953,6 +987,7 @@ Solver<dim, stage>::system_matrix_local(
             scratch_data.fe_values.JxW(q_index);                         // dV
           break;
         case 2:
+        case 3:
           // Integral I_b3-1 in recipe (4).
           copy_data.cell_rhs(i) +=
             (scratch_data.pde_rhs_cvp_list[q_index][0] *
@@ -979,10 +1014,10 @@ Solver<dim, stage>::system_matrix_local(
 
     scratch_data.do_kappa =
       ((cell->user_index() > 0) && (cell->face(f)->user_index() > 0) &&
-       (scratch_data.type_of_pde_rhs != 2));
+       (scratch_data.type_of_pde_rhs < 2));
 
     scratch_data.do_Jf_on_boundary =
-      (cell->face(f)->at_boundary() && (scratch_data.type_of_pde_rhs == 2));
+      (cell->face(f)->at_boundary() && (scratch_data.type_of_pde_rhs == 3));
 
     Assert(
       !(scratch_data.do_robin && scratch_data.do_kappa),
@@ -1089,9 +1124,9 @@ do_Jf_on_boundary and do_kappa are mutually exclusive."));
             // Integral I_b3-2 in recipe (4).
             copy_data.cell_rhs(i) -=
               scratch_data.fe_face_values.shape_value(i, q_index_face) *
-              (scratch_data.pde_rhs_cvp_list_face.at(q_index_face)[0] *
+              (scratch_data.pde_rhs_cvp_list_face[q_index_face][0] *
                  scratch_data.fe_face_values.normal_vector(q_index_face)[1] -
-               scratch_data.pde_rhs_cvp_list_face.at(q_index_face)[1] *
+               scratch_data.pde_rhs_cvp_list_face[q_index_face][1] *
                  scratch_data.fe_face_values.normal_vector(
                    q_index_face)[0] //        V
                ) *

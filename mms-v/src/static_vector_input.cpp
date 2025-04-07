@@ -35,7 +35,7 @@ TheCoefficient<3>::value_list(const std::vector<Point<3>>& r,
 
   auto v = values.begin();
   for (auto p : r) {
-    *v = mu_0 * (pow(p[0], 2) + pow(p[1], 2) + 1);
+    *v = mu_0 * (pow(p[0], 2) + pow(p[1], 2) + 1.0);
     v++;
   }
 }
@@ -52,7 +52,7 @@ TheCoefficient<2>::value_list(const std::vector<Point<2>>& r,
 
   auto v = values.begin();
   for (auto p : r) {
-    *v = mu_0 * (pow(p[0], 2) + pow(p[1], 2) + 1);
+    *v = mu_0 * (pow(p[0], 2) + pow(p[1], 2) + 1.0);
     v++;
   }
 }

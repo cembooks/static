@@ -26,8 +26,8 @@ using namespace Misc;
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
  * that implements the
- * [Axisymmetric - thick spherical coil with magnetic core (ssol-iii-axi/)](@ref
- *page_ssol_iii_axi) numerical experiment.
+ * *Axisymmetric - thick spherical coil with magnetic core*
+ * [(ssol-iii-axi/)](@ref page_ssol_iii_axi) numerical experiment.
  *****************************************************************************/
 class BatchSSOLIIIAXI : public SettingsSSOLIIIAXI
 {
@@ -82,7 +82,8 @@ public:
                                      &exact_solution,
                                      Settings::print_time_tables,
                                      Settings::project_exact_solution,
-                                     Settings::log_cg_convergence);
+                                     Settings::log_cg_convergence,
+                                     true);
 
           table_H.add_value("ndofs", projector.get_n_dofs());
           table_H.add_value("ncells", projector.get_n_cells());
@@ -110,7 +111,8 @@ public:
                                      &exact_solution,
                                      Settings::print_time_tables,
                                      Settings::project_exact_solution,
-                                     Settings::log_cg_convergence);
+                                     Settings::log_cg_convergence,
+                                     true);
 
           table_B.add_value("ndofs", projector.get_n_dofs());
           table_B.add_value("ncells", projector.get_n_cells());

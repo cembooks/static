@@ -26,7 +26,8 @@ using namespace dealii;
 
 /**
  * \brief Describes exact solution, \f$\Phi\f$, of the
- * [Axisymmetric - interface between dielectrics (int-axi/)](@ref page_int_axi)
+ * *Axisymmetric - interface between dielectrics*
+ * [(int-axi/)](@ref page_int_axi)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
 template<bool is_cylinder>
@@ -51,7 +52,8 @@ private:
 
 /**
  * \brief Describes exact solution, \f$\vec{E}\f$, of the
- * [Axisymmetric - interface between dielectrics (int-axi/)](@ref page_int_axi)
+ * *Axisymmetric - interface between dielectrics*
+ * [(int-axi/)](@ref page_int_axi)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
 template<bool is_cylinder>
@@ -75,7 +77,8 @@ private:
 
 /**
  * \brief Describes exact solution, \f$\vec{D}\f$, of the
- * [Axisymmetric - interface between dielectrics (int-axi/)](@ref page_int_axi)
+ * *Axisymmetric - interface between dielectrics*
+ * [(int-axi/)](@ref page_int_axi)
  * numerical experiment in two and three dimensions.
  *****************************************************************************/
 template<bool is_cylinder>

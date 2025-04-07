@@ -25,9 +25,8 @@
 using namespace dealii;
 
 /**
- * \brief Describes exact solution, \f$\Phi\f$, of the
- * [Surface charge (sch/)](@ref page_sch)
- * numerical experiment.
+ * \brief Describes exact solution, \f$\Phi\f$, of the *Surface charge*
+ * [(sch/)](@ref page_sch) numerical experiment.
  *****************************************************************************/
 template<int dim>
 class ExactSolutionSCH_PHI

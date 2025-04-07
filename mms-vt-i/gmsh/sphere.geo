@@ -11,16 +11,15 @@
 
 r = 7; //@1
 
-d1 = 0.5;
+d1 = 0.25;
 a = 1.0;
 
 a3 = a / Sqrt(3);
-d13 = d1 / Sqrt(3);
 
 Point(1) = {0,0,0};
 
-Point(2) = { d13, d13, d13};
-Point(3) = {-d13, d13, d13};
+Point(2) = { d1, d1, d1};
+Point(3) = {-d1, d1, d1};
 
 Point(4) = { a3, a3, a3};
 Point(5) = {-a3, a3, a3};

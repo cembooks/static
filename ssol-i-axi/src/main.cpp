@@ -26,7 +26,7 @@ using namespace Misc;
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
  * that implements the
- * [Axisymmetric - thin spherical coil (ssol-i-axi)](@ref page_ssol_i_axi)
+ * *Axisymmetric - thin spherical coil* [(ssol-i-axi)](@ref page_ssol_i_axi)
  * numerical experiment.
  *****************************************************************************/
 class BatchSSOLIAXI : public SettingsSSOLIAXI
@@ -45,12 +45,10 @@ public:
               << "Writing to: " << dir << "\n";
 
     MainOutputTable table_A(2);
-    MainOutputTable table_H(2);
     MainOutputTable table_B(2);
 
     for (unsigned int p = 1; p < 4; p++) {
       table_A.clear();
-      table_H.clear();
       table_B.clear();
 
       for (unsigned int r = 15; r < 19;
@@ -71,34 +69,6 @@ public:
         table_A.add_value("H1", problem.get_H1_norm() / mu_0);
 
         problem.clear();
-        { // Calculate auxiliary H-field.
-          fname =
-            dir + "solution_H_p" + std::to_string(p) + "_r" + std::to_string(r);
-
-          table_H.add_value("r", r);
-          table_H.add_value("p", p);
-
-          if (SettingsSSOLIAXI::print_time_tables)
-            std::cout << "Time table H \n";
-
-          ExactSolutionSSOLIAXI_H exact_solution;
-
-          ProjectAphiToHrz projector(p - 1,
-                                     problem.get_mapping_degree(),
-                                     problem.get_tria(),
-                                     problem.get_dof_handler(),
-                                     problem.get_solution(),
-                                     fname,
-                                     &exact_solution,
-                                     Settings::print_time_tables,
-                                     Settings::project_exact_solution,
-                                     Settings::log_cg_convergence);
-
-          table_H.add_value("ndofs", projector.get_n_dofs());
-          table_H.add_value("ncells", projector.get_n_cells());
-          table_H.add_value("L2", projector.get_L2_norm());
-          table_H.add_value("H1", 0.0);
-        }
         { // Calculate the magnetic field.
           fname =
             dir + "solution_B_p" + std::to_string(p) + "_r" + std::to_string(r);
@@ -120,7 +90,8 @@ public:
                                      &exact_solution,
                                      Settings::print_time_tables,
                                      Settings::project_exact_solution,
-                                     Settings::log_cg_convergence);
+                                     Settings::log_cg_convergence,
+                                     true);
 
           table_B.add_value("ndofs", projector.get_n_dofs());
           table_B.add_value("ncells", projector.get_n_cells());
@@ -131,9 +102,6 @@ public:
       // Saving convergence tables
       std::cout << "Table A\n";
       table_A.save(dir + "table_A_p" + std::to_string(p));
-
-      std::cout << "Table H\n";
-      table_H.save(dir + "table_H_p" + std::to_string(p));
 
       std::cout << "Table B\n";
       table_B.save(dir + "table_B_p" + std::to_string(p));

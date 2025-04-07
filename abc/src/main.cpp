@@ -23,7 +23,7 @@ using namespace Misc;
 
 /**
  * \brief An extended version of the convergence table used in
- * [Asymptotic boundary condition (abc/)](@ref page_abc)
+ * *Asymptotic boundary condition* [(abc/)](@ref page_abc)
  * numerical experiment.
  *****************************************************************************/
 class MainOutputTableABC : public MainOutputTable
@@ -52,7 +52,7 @@ public:
 /**
  * \brief This is a wrap-around class. It contains the main loop of the program
  * that implements the
- * [Asymptotic boundary condition (abc/)](@ref page_abc)
+ * *Asymptotic boundary condition* [(abc/)](@ref page_abc)
  * numerical experiment.
  *****************************************************************************/
 class BatchABC : public SettingsABC
@@ -101,7 +101,8 @@ public:
             p,
             2,
             r,
-            dir + "solution_p" + std::to_string(p) + "_r" + std::to_string(r));
+            dir + "solution_p" + std::to_string(p) + "_m" + std::to_string(m) +
+              "_r" + std::to_string(r));
           problem.get_L2_norm();
           table_PHI.add_value("ndofs", problem.get_n_dofs());
           table_PHI.add_value("ncells", problem.get_n_cells());

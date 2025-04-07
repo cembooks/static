@@ -12,21 +12,24 @@
 r = 5; //@1
 
 d1 = 0.05;
-a = 0.2 / Sqrt(3);
-b = 0.4 / Sqrt(3);
+a = 0.2;
+b = 0.4;
 d2 = 0.8;
 d3 = 2.0;
+
+a3 = a / Sqrt(3);
+b3 = b / Sqrt(3);
 
 Point(0) = { 0, 0, 0};
 
 Point(1) = { d1, d1, d1};
 Point(2) = { d1,-d1, d1};
 
-Point(3) = { a, a, a};
-Point(4) = { a,-a, a};
+Point(3) = { a3, a3, a3};
+Point(4) = { a3,-a3, a3};
 
-Point(5) = { b, b, b};
-Point(6) = { b,-b, b};
+Point(5) = { b3, b3, b3};
+Point(6) = { b3,-b3, b3};
 
 Point(7) = { d2, d2, d2};
 Point(8) = { d2,-d2, d2};
@@ -47,6 +50,7 @@ Line(8) = {8, 10};
 Line(9) = {1, 2};
 
 Circle(10) = {3, 0, 4};
+
 Circle(11) = {5, 0, 6};
 
 Line(12) = {7, 8};
@@ -142,7 +146,7 @@ Physical Volume(64) = {289};
 
 // ... and comment out the next line.
 
-Physical Surface(1) = {75, 559, 439, 679, 195, 315};
+Physical Surface(1) = {75, 439, 195, 315, 559, 679};
 
 Recombine Surface "*";
 Recombine Volume "*";

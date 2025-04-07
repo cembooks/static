@@ -40,10 +40,11 @@ SolverSSOLIIAXI::mark_materials()
     if ((cell->center().norm() < b) && (cell->center().norm() > a))
       cell->set_material_id(mid_2);
 
-    for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; f++)
-      if (std::abs(cell->face(f)->vertex(1).norm() -
-                   cell->face(f)->vertex(0).norm()) < eps)
-        cell->face(f)->set_all_manifold_ids(1);
+    if (cell->center().norm() > rd1)
+      for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; f++)
+        if (std::abs(cell->face(f)->vertex(1).norm() -
+                     cell->face(f)->vertex(0).norm()) < eps)
+          cell->face(f)->set_all_manifold_ids(1);
   }
 
   Solver<2>::triangulation.set_manifold(1, sphere);
@@ -79,8 +80,10 @@ SolverSSOLIIAXI::data_slice(std::string fname)
 void
 SolverSSOLIIAXI::solve()
 {
-  ReductionControl control(
-    Solver<2>::system_rhs.size(), 0.0, 1e-12, false, false);
+  SolverControl control(Solver<2>::system_rhs.size(),
+                        1e-8 * Solver<2>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();

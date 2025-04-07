@@ -8,12 +8,12 @@ set grid lw 1 lc rgb "black"
 
 set key font ",16"
 
-set xtics font ",8"
-set ytics font ",8"
+set xtics font ",16"
+set ytics font ",16"
 
 set title font ",16"
 
-set title "Magnetic vector potential, A"
+set title "Circle"
 
 plot "./Data/circle/solution_A_p3_r8_slice.gpi" u 1:3 w lp lw 2 pt 0 \
 lc rgb "black" tit "Potential"

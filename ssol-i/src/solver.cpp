@@ -11,10 +11,6 @@
 
 #define BOOST_ALLOW_DEPRECATED_HEADERS
 
-#include <deal.II/grid/grid_in.h>
-#include <deal.II/grid/grid_out.h>
-#include <deal.II/grid/grid_tools.h>
-
 #include "solver.hpp"
 #include <fstream>
 
@@ -39,8 +35,10 @@ SolverSSOLI::fill_dirichlet_stack()
 void
 SolverSSOLI::solve()
 {
-  ReductionControl control(
-    Solver1<3>::system_rhs.size(), 0.0, 1e-8, false, false);
+  SolverControl control(1000 * Solver1<3>::system_rhs.size(),
+                        1e-6 * Solver1<3>::system_rhs.l2_norm(),
+                        false,
+                        false);
 
   if (log_cg_convergence)
     control.enable_history_data();
@@ -79,10 +77,18 @@ SolverSSOLI::mark_materials()
 
   for (auto cell : Solver1<3>::triangulation.active_cell_iterators()) {
     for (unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; ++f) {
+
+      double dif_norm = 0.0;
       double dif_norm_a = 0.0;
 
-      for (unsigned int v = 0; v < GeometryInfo<3>::vertices_per_face; v++)
+      for (unsigned int v = 0; v < GeometryInfo<3>::vertices_per_face; v++) {
         dif_norm_a += std::abs(cell->face(f)->vertex(v).norm() - a);
+        dif_norm += std::abs(cell->face(f)->vertex(0).norm() -
+                             cell->face(f)->vertex(v).norm());
+      }
+
+      if ((dif_norm < eps) && (cell->center().norm() > rd1))
+        cell->face(f)->set_all_manifold_ids(1);
 
       if (dif_norm_a < eps)
         if (std::abs(cell->center().norm()) < a) {
@@ -91,4 +97,6 @@ SolverSSOLI::mark_materials()
         }
     }
   }
+
+  Solver1<3>::triangulation.set_manifold(1, sphere);
 }

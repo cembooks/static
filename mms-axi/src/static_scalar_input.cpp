@@ -110,8 +110,8 @@ PdeRhsCvp<2>::value_list(const std::vector<Point<2>>& r,
          ExcDimensionMismatch(r.size(), values.size()));
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    values.at(i)[0] = 0.0;
-    values.at(i)[1] = 0.0;
+    values[i][0] = 0.0;
+    values[i][1] = 0.0;
   }
 }
 
@@ -126,9 +126,9 @@ PdeRhsCvp<3>::value_list(const std::vector<Point<3>>& r,
          ExcDimensionMismatch(r.size(), values.size()));
 
   for (unsigned int i = 0; i < values.size(); i++) {
-    values.at(i)[0] = 0.0;
-    values.at(i)[1] = 0.0;
-    values.at(i)[2] = 0.0;
+    values[i][0] = 0.0;
+    values[i][1] = 0.0;
+    values[i][2] = 0.0;
   }
 }
 

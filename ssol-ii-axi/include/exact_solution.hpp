@@ -81,7 +81,7 @@ magnetic_field(double x,
 
 /**
  * \brief Describes exact solution, \f$ A' \f$, of the
- * [Axisymmetric - thick spherical coil (ssol-ii-axi)](@ref page_ssol_ii_axi)
+ * *Axisymmetric - thick spherical coil* [(ssol-ii-axi)](@ref page_ssol_ii_axi)
  * numerical experiment.
  *****************************************************************************/
 class ExactSolutionSSOLIIAXI_A
@@ -101,7 +101,7 @@ public:
 
 /**
  * \brief Describes exact solutions, \f$\vec{B}'\f$, of the
- * [Axisymmetric - thick spherical coil (ssol-ii-axi)](@ref page_ssol_ii_axi)
+ * *Axisymmetric - thick spherical coil* [(ssol-ii-axi)](@ref page_ssol_ii_axi)
  * numerical experiment.
  *****************************************************************************/
 class ExactSolutionSSOLIIAXI_B
@@ -125,7 +125,7 @@ private:
 
 /**
  * \brief Describes exact solution, \f$\vec{H}'\f$, of the
- * [Axisymmetric - thick spherical coil (ssol-ii-axi)](@ref page_ssol_ii_axi)
+ * *Axisymmetric - thick spherical coil* [(ssol-ii-axi)](@ref page_ssol_ii_axi)
  * numerical experiment.
  *****************************************************************************/
 class ExactSolutionSSOLIIAXI_H

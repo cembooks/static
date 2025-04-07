@@ -12,26 +12,26 @@
 r = 5; //@1
 
 d1 = 0.1;
-a1 = 0.3;
-a2 = 0.5;
-b = 1.0;
+a = 0.3;
+b = 0.5;
+d2 = 1.0;
 
 Point(0) = { 0, 0, 0};
 Point(1) = { d1, 0 , 0};
 Point(2) = { d1, d1, 0};
 Point(3) = { 0, d1, 0};
 
-Point(4) = {a1, 0, 0};
-Point(5) = {a1/Sqrt(2), a1/Sqrt(2), 0};
-Point(6) = { 0, a1 , 0};
+Point(4) = {a, 0, 0};
+Point(5) = {a/Sqrt(2), a/Sqrt(2), 0};
+Point(6) = { 0, a , 0};
 
-Point(7) = {a2, 0, 0};
-Point(8) = {a2/Sqrt(2), a2/Sqrt(2), 0};
-Point(9) = { 0, a2, 0};
+Point(7) = {b, 0, 0};
+Point(8) = {b/Sqrt(2), b/Sqrt(2), 0};
+Point(9) = { 0, b, 0};
 
-Point(10) = {b, 0, 0};
-Point(11) = {b/Sqrt(2), b/Sqrt(2), 0};
-Point(12) = { 0, b, 0};
+Point(10) = {d2, 0, 0};
+Point(11) = {d2/Sqrt(2), d2/Sqrt(2), 0};
+Point(12) = { 0, d2, 0};
 
 Line(1) = {1, 4};
 Line(2) = {4, 7};

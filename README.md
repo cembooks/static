@@ -50,7 +50,7 @@ following:
 
 sudo apt-get install gmsh gnuplot texlive parallel
 
-3) Install a program for viewing vtk files. [Visit](https://visit.llnl.gov) 
+3) Install a program for viewing vtk files. [VisIt](https://visit.llnl.gov) 
 software package of the Lawrence Livermore National Laboratory is a good option.
 
 4) Extract the archive of the supplemental computer to static/ directory.

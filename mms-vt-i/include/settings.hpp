@@ -19,8 +19,8 @@ using namespace dealii;
 
 /**
  * \brief Global settings for the
- * [Method of manufactured solutions, vector potential (mms-vt-i/)](@ref
- *page_mms_vt_i) numerical experiment.
+ * *Method of manufactured solutions, vector potential*
+ * [(mms-vt-i/)](@ref page_mms_vt_i) numerical experiment.
  *****************************************************************************/
 class SettingsMMSVTI : public Constants::Physics
 {
@@ -31,7 +31,7 @@ public:
    * \brief If greater than zero, limits the amount of threads used in the
    * simulations.
    *****************************************************************************/
-  const unsigned int nr_threads_max = 8;
+  const unsigned int nr_threads_max = 0;
 
   /**
    * \brief The permeability of free space.
@@ -42,6 +42,17 @@ public:
    * \brief The scaling parameter.
    *****************************************************************************/
   const double k = 1.0 * pi;
+
+  /**
+   * \brief The half-side of the cube in the middle of the spherical mesh.
+   *****************************************************************************/
+  const double d1 = 0.25;
+
+  /**
+   * \brief The radius of the circle (sphere) that encloses the square (cube) in
+   * the middle of the mesh.
+   *****************************************************************************/
+  const double rd1 = sqrt(3) * d1;
 
   /**
    * \brief The Dirichlet boundary condition will be applied to the boundaries
@@ -56,7 +67,13 @@ public:
   const types::boundary_id bid_robin = 2;
 
   /**
-   * \brief If set to true, the program will print the time tables on the
+   * \brief Two values in double format are considered to be equal if the
+   * absolute value of their difference is less than eps.
+   *****************************************************************************/
+  const double eps = 1e-12;
+
+  /**
+   * \brief If set to true, the program will print time tables on the
    * screen.
    *****************************************************************************/
   const bool print_time_tables = false;
@@ -66,10 +83,10 @@ public:
    *
    * The exact solution will be modeled on the same mesh and by the same finite
    * elements that are used to model the solution. The projected exact solution
-   * will be saved in the vtk file next to the solution. This option can be
+   * will be saved in the vtu file next to the solution. This option can be
    * useful when debugging.
    *****************************************************************************/
-  const bool project_exact_solution = true;
+  const bool project_exact_solution = false;
 
   /**
    * \brief If set to true, saves the residual at each iteration of the
