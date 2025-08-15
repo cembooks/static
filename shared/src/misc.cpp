@@ -14,6 +14,7 @@
 #include "misc.hpp"
 
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 using namespace Misc;
